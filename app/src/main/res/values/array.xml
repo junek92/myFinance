@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="curNames">
+        <item>US dollar</item>
+        <item>Euro</item>
+        <item>Bulgarian lev</item>
+    </string-array>
+
+    <string-array name="curValues">
+        <item> USD</item>
+        <item> EUR</item>
+        <item> BGN</item>
+    </string-array>
+</resources>

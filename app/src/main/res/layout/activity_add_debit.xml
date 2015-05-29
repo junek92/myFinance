@@ -1,0 +1,202 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/addDebit_app_bar"
+        layout="@layout/app_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/addDebit_date"
+
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="72dp"
+
+                android:text="@string/add_main"
+                android:textColor="#000000"
+                android:alpha="0.87"
+                android:fontFamily="sans-serif-black"
+                android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/addDebit_textAcc"
+
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/addDebit_date"
+
+            android:text="@string/add_account"
+            android:textColor="#000000"
+            android:alpha="0.87"
+            android:fontFamily="sans-serif-black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/addDebit_spinnerAcc"
+
+
+            android:popupBackground="@color/myWhite"
+            android:popupElevation="6dp"
+
+            android:layout_width="180dp"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/addDebit_date"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/addDebit_textCat"
+
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/addDebit_textAcc"
+
+            android:text="@string/add_category"
+            android:textColor="#000000"
+            android:alpha="0.87"
+            android:fontFamily="sans-serif-black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/addDebit_spinnerCat"
+
+
+            android:popupBackground="@color/myWhite"
+            android:popupElevation="6dp"
+
+            android:layout_width="180dp"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/addDebit_spinnerAcc"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/addDebit_textAmount"
+
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/addDebit_textCat"
+
+            android:text="@string/add_amount"
+            android:textColor="#000000"
+            android:alpha="0.87"
+            android:fontFamily="sans-serif-black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/addDebit_editAmount"
+            android:elevation="1dp"
+
+            android:layout_width="144dp"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="17dp"
+            android:layout_below="@id/addDebit_spinnerCat"
+
+            android:inputType="numberDecimal"
+            android:hint="@string/add_amountHint"
+            android:textColor="#000000"
+            android:alpha="0.54"
+            android:fontFamily="sans-serif-regular"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/addDebit_textCurrency"
+
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd = "64dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/addDebit_textCat"
+            android:layout_alignParentEnd="true"
+
+            android:text="@string/add_currency"
+            android:textColor="#000000"
+            android:alpha="0.87"
+            android:fontFamily="sans-serif-black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/addDebit_textDesc"
+
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/addDebit_textAmount"
+
+            android:text="@string/add_description"
+            android:textColor="#000000"
+            android:alpha="0.87"
+            android:fontFamily="sans-serif-black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/addDebit_editDesc"
+            android:elevation="1dp"
+
+            android:layout_width="180dp"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="26dp"
+            android:layout_below="@id/addDebit_editAmount"
+
+            android:inputType="text"
+            android:hint="@string/add_descriptionHint"
+            android:textColor="#000000"
+            android:alpha="0.54"
+            android:fontFamily="sans-serif-regular"
+            android:textSize="18sp"
+            android:maxLength="40" />
+
+        <Button
+            android:id="@+id/addDebit_btnAdd"
+            android:elevation="2dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+
+            android:text="@string/add_btnAdd"
+            android:textAllCaps="true"
+            android:textColor="#ffffff"
+            android:alpha="1"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="14sp"
+
+            android:background="@color/accentColor"
+            android:onClick="addDebitTransaction"
+            />
+    </RelativeLayout>
+</LinearLayout>

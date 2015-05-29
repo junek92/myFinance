@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#4CAF50</color>
+    <color name="primaryColorDark">#388E3C</color>
+    <color name="primaryColorLight">#81C784</color>
+    <color name="accentColor">#F44336</color>
+
+    <color name="myWhite">#FFFFFF</color>
+    <color name="myBlack">#000000</color>
+
+    <color name="myPieColorBase">#8A56E2</color>
+
+    <color name="myPieColor1">#cab2d6</color>
+    <color name="myPieColor2">#ff7f00</color>
+    <color name="myPieColor3">#fdbf6f</color>
+    <color name="myPieColor4">#e31a1c</color>
+    <color name="myPieColor5">#fb9a99</color>
+    <color name="myPieColor6">#33a02c</color>
+    <color name="myPieColor7">#b2df8a</color>
+    <color name="myPieColor8">#1f78b4</color>
+    <color name="myPieColor9">#a6cee3</color>
+
+</resources>

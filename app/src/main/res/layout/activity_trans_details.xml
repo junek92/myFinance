@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/details_app_bar"
+        layout="@layout/app_bar"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp">
+        <TextView
+            android:id="@+id/details_text"
+
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="72dp"
+
+            android:text="@string/trans_details_text"
+            android:textColor="#000000"
+            android:alpha="0.54"
+            android:fontFamily="sans-serif-black"
+            android:textSize="24sp"
+            />
+
+        <ExpandableListView
+            android:id="@+id/details_expand"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/details_text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

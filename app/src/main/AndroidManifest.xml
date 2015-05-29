@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.kirilov.ivan.myfinance" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_icon_wallet"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".HistoryActivity"
+            android:label="@string/history_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".PieMonthlyActivity"
+            android:label="@string/pie_monthly_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.HistoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.HistoryActivity"/>
+        </activity>
+
+        <activity
+            android:name=".TransDetailsActivity"
+            android:label="@string/trans_details_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".TransUpdateActivity"
+            android:label="@string/trans_update_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.TransDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.TransDetailsActivity"/>
+        </activity>
+
+        <activity
+            android:name=".AddDebitActivity"
+            android:label="@string/addDebit_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".AddCreditActivity"
+            android:label="@string/addCredit_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".PrefActivity"
+            android:label="@string/addCredit_title">
+
+        </activity>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:title="Settings">
+
+        <ListPreference
+            android:title="Chose currency"
+            android:summary="Select the currency that you would like to use"
+            android:key="used_currency"
+            android:defaultValue="USD"
+            android:entries="@array/curNames"
+            android:entryValues="@array/curValues" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Info">
+
+        <PreferenceScreen
+            android:title="Android Dev"
+            android:summary="Some tests to launch new tab in browser">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://developer.android.com" />
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

@@ -1,0 +1,126 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/main_app_bar"
+
+        layout="@layout/app_bar" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/main_drawer_layout"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+            <TextView
+                android:id="@+id/main_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+
+                android:text="@string/main_date"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:alpha="0.54"
+                android:fontFamily="sans-serif-black"
+                android:textSize="24sp"
+                />
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/main_pieChart"
+
+                android:layout_below="@+id/main_date"
+                android:layout_width="match_parent"
+                android:layout_height="360dp" />
+
+            <TextView
+                android:id="@+id/main_textBalance"
+                android:elevation="2dp"
+
+                android:layout_width="128dp"
+                android:layout_height="54dp"
+
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:background="#000000"
+
+                android:text="@string/main_def_balance"
+                android:textColor="@color/myWhite"
+                android:fontFamily="sans-serif-bold"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:alpha="0.87"
+
+                android:onClick="DetailsActivity"/>
+
+            <Button
+                android:id="@+id/main_btn_addDebit"
+                android:elevation="2dp"
+
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_circle_red"
+                android:onClick="addDebit"
+
+
+
+                android:text="@string/main_addDebit"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:textScaleX="1.5"
+                android:gravity="center_horizontal|top"
+                android:textColor="@color/myWhite"/>
+
+            <Button
+                android:id="@+id/main_btn_addCredit"
+                android:elevation="2dp"
+
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_circle_green"
+                android:onClick="addCredit"
+
+
+
+                android:text="@string/main_addCredit"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="51sp"
+                android:gravity="center_horizontal|top"
+                android:textColor="@color/myWhite"/>
+
+        </RelativeLayout>
+        <!-- Side navigation drawer UI -->
+        <ListView
+            android:id="@+id/main_navList"
+
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#ffffff"
+            android:choiceMode="singleChoice"
+            android:elevation="18dp"
+
+            android:divider="@color/myWhite"
+            android:dividerHeight="8dp"/>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
