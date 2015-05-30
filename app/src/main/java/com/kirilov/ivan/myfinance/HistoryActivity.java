@@ -83,11 +83,16 @@ public class HistoryActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 2:
-                        Intent i = new Intent(context, PrefActivity.class);
-                        startActivity(i);
+                        Intent analyseIntent = new Intent(context, AnalyseActivity.class);
+                        startActivity(analyseIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 3:
+                        Intent prefIntent = new Intent(context, PrefActivity.class);
+                        startActivity(prefIntent);
+                        mDrawerLayout.closeDrawer(mDrawerList);
+                        break;
+                    case 4:
                         MainActivity.aboutDialog(context, mDrawerList, 1);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
@@ -189,6 +194,7 @@ public class HistoryActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+    // method to fetch all months from 1st transaction
     public List<Long> getMonths(){
         Calendar calendar = Calendar.getInstance();
         financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
@@ -275,7 +281,7 @@ public class HistoryActivity extends AppCompatActivity {
         return firstDaysOfMonth;
     }
 
-    // method to select only month which have transactions
+    // method to select only months which have transactions
     public void getMonthsWithTransaction(List<Long> allMonths){
         financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
         int transCount;

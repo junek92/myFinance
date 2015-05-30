@@ -28,6 +28,15 @@
         </activity>
 
         <activity
+            android:name=".AnalyseActivity"
+            android:label="@string/analyse_title"
+            android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.MainActivity"/>
+        </activity>
+
+        <activity
             android:name=".PieMonthlyActivity"
             android:label="@string/pie_monthly_title"
             android:parentActivityName="com.kirilov.ivan.myfinance.HistoryActivity">

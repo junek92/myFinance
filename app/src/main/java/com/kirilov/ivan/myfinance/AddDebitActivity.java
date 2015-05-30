@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.SimpleCursorAdapter;
@@ -119,6 +120,20 @@ public class AddDebitActivity extends AppCompatActivity {
     protected void onResume() {
         // called when activity is returned on top of stack
         super.onResume();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            Log.d("TEST TIME", "Entered HOME");
+        }
+        return true;
     }
 
     // add new Debit transaction - check input data and do the query

@@ -1,0 +1,127 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/analyse_app_bar"
+        layout="@layout/app_bar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/analyse_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+
+                android:textColor="#000000"
+                android:gravity="center"
+                android:alpha="0.54"
+                android:fontFamily="sans-serif-black"
+                android:textSize="24sp"
+                />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/analyse_bar_chart"
+
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_below="@id/analyse_date"
+                />
+<!--
+            <TextView
+                android:id="@+id/analyse_year_text"
+
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/analyse_bar_chart"
+
+                android:text="@string/analyse_year"
+                android:textColor="#000000"
+                android:alpha="0.87"
+                android:fontFamily="sans-serif-black"
+                android:textSize="16sp"/>
+-->
+            <Spinner
+                android:id="@+id/analyse_year_spinner"
+
+
+                android:popupBackground="@color/myWhite"
+                android:popupElevation="6dp"
+
+                android:layout_width="114dp"
+                android:layout_height="72dp"
+                android:gravity="center_vertical"
+                android:layout_below="@id/analyse_bar_chart"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+
+                android:prompt="@string/analyse_year_prompt"/>
+<!--
+            <TextView
+                android:id="@+id/analyse_category_text"
+
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/analyse_year_text"
+
+                android:text="@string/analyse_category"
+                android:textColor="#000000"
+                android:alpha="0.87"
+                android:fontFamily="sans-serif-black"
+                android:textSize="16sp"/>
+-->
+            <Spinner
+                android:id="@+id/analyse_category_spinner"
+
+
+                android:popupBackground="@color/myWhite"
+                android:popupElevation="6dp"
+
+                android:layout_width="114dp"
+                android:layout_height="72dp"
+                android:gravity="center_vertical"
+                android:layout_below="@id/analyse_bar_chart"
+                android:layout_marginStart="146dp"
+                android:layout_marginTop="8dp"
+
+                android:prompt="@string/analyse_category_prompt"/>
+
+            <Button
+                android:id="@+id/analyse_button"
+                android:elevation="2dp"
+
+                android:layout_width="92dp"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+
+                android:text="@string/analyse_button"
+                android:textAllCaps="true"
+                android:textColor="@color/myBlack"
+                android:alpha="1"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp"
+
+                android:background="@color/myWhite"
+                android:onClick="fetchData"
+                />
+
+        </RelativeLayout>
+</LinearLayout>

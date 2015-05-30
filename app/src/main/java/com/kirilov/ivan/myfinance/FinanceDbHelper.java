@@ -103,6 +103,18 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public String getYearInString(long timeInMs){
+        SimpleDateFormat simpleDateFormat;
+        String yearFormat = "yyyy";
+
+        simpleDateFormat = new SimpleDateFormat(yearFormat);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMs);
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
     /* public long getTimeInMs(String timeInString){
         return 0;
     } */
@@ -159,7 +171,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
     // read all CATEGORIES and return them in list array
     public List<Category> getAllCategories () {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<Category> categories = new ArrayList<Category>();
+        List<Category> categories = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + FinanceContract.CategoriesEntry.TABLE_NAME;
             Log.d("FINANCE DB: ", selectQuery);
@@ -185,7 +197,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
     // read all CATEGORIES of selected TYPE and return them in list array
     public List<Category> getAllCategoriesByType( int type){
         SQLiteDatabase db = this.getReadableDatabase();
-        List<Category> categories = new ArrayList<Category>();
+        List<Category> categories = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + FinanceContract.CategoriesEntry.TABLE_NAME
                 + " WHERE " + FinanceContract.CategoriesEntry.CAT_TYPE + "=" + type;
@@ -374,7 +386,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
     // find all TRANSs in time interval
     public List<Transaction> getTransByTime(long startTime, long finalTime){
         SQLiteDatabase db = this.getReadableDatabase();
-        List<Transaction> transactions = new ArrayList<Transaction>();
+        List<Transaction> transactions = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + FinanceContract.TransactionEntry.TABLE_NAME + " ttra WHERE ttra."
                 +FinanceContract.TransactionEntry.TR_DATE + " BETWEEN " + startTime + " AND " + finalTime;
@@ -402,7 +414,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
     // find all TRANSs in category and time interval
     public List<Transaction> getTransByCategoryAndTime(long catID, long startTime, long finalTime){
         SQLiteDatabase db = this.getReadableDatabase();
-        List<Transaction> transactions = new ArrayList<Transaction>();
+        List<Transaction> transactions = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + FinanceContract.TransactionEntry.TABLE_NAME + " ttra WHERE ttra."
                 +FinanceContract.TransactionEntry.TR_CATEGORY + "=" + catID + " AND ttra."

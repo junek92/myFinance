@@ -132,16 +132,21 @@ public class MainActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 1:
-                        Intent intent = new Intent(context, HistoryActivity.class);
-                        startActivity(intent);
+                        Intent historyIntent = new Intent(context, HistoryActivity.class);
+                        startActivity(historyIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 2:
-                        Intent i = new Intent(context, PrefActivity.class);
-                        startActivity(i);
+                        Intent analyseIntent = new Intent(context, AnalyseActivity.class);
+                        startActivity(analyseIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 3:
+                        Intent prefIntent = new Intent(context, PrefActivity.class);
+                        startActivity(prefIntent);
+                        mDrawerLayout.closeDrawer(mDrawerList);
+                        break;
+                    case 4:
                         aboutDialog(context, mDrawerList, 0);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
@@ -267,8 +272,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("FINANCE DB:","... in milliseconds:      " + calendar.getTimeInMillis());
 
         // fetch all DEBIT categories
-        List<Category> debitCategories = new ArrayList<>();
-        debitCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT);
+        List<Category> debitCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT);
             Log.d("FINANCE DB:", " category number: "+debitCategories.size());
         float[] pieData = new float[debitCategories.size()];
             //Log.d("FINANCE DB:", " post FOR: \n" + pieData.toString());
@@ -301,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
         mPieChart.setDrawSliceText(false);
         mPieChart.setHoleRadius(40);
         mPieChart.setTransparentCircleRadius(43);
+        mPieChart.animateY(2500);
 
         // fetch all names of the categories for X
         financeDbHelper = FinanceDbHelper.getInstance(this);
@@ -481,7 +486,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listView.setItemChecked(checked,true);
+                listView.setItemChecked(checked, true);
                 dialog.dismiss();
             }
         });

@@ -22,14 +22,16 @@ public class NavigationAdapter extends BaseAdapter{
     String[] mMenuText = {
             "This month",
             "History",
+            "Analyse",
             "Settings",
             "About"};
 
     int[] mMenuImg = {
-            R.drawable.ic_event_white,
-            R.drawable.ic_history_white,
-            R.drawable.ic_settings_black,
-            R.drawable.ic_info_black};
+            R.drawable.ic_event_white_48dp,
+            R.drawable.ic_history_white_48dp,
+            R.drawable.ic_trending_up_white_48dp,
+            R.drawable.ic_settings_black_48dp,
+            R.drawable.ic_info_outline_black_48dp};
 
     public NavigationAdapter(Context context, LayoutInflater layoutInflater){
         mContext = context;

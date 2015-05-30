@@ -47,7 +47,7 @@ public class PieMonthlyActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_monthly);
-        context = getApplicationContext();
+        context = this;
 
         //fetch the custom toolbar - set it as default, change the title
         toolbar = (Toolbar) findViewById(R.id.pie_monthly_app_bar);
@@ -160,6 +160,7 @@ public class PieMonthlyActivity extends AppCompatActivity {
         mPieChart.setDrawSliceText(false);
         mPieChart.setHoleRadius(40);
         mPieChart.setTransparentCircleRadius(43);
+        mPieChart.animateY(2500);
 
         // fetch all names of the categories for X
         financeDbHelper = FinanceDbHelper.getInstance(context);
@@ -191,7 +192,7 @@ public class PieMonthlyActivity extends AppCompatActivity {
             }
         }
 
-        // create  PieDataSet - to
+        // create  PieDataSet
         pieDataSet = new PieDataSet(yVals, null);
         pieDataSet.setSliceSpace(0.1f);
 

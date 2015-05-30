@@ -41,14 +41,10 @@ public class TransDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("CATEXP", " start else " + chosenCat);
         super.onCreate(savedInstanceState);
-        Log.d("CATEXP", " start 2 else " + chosenCat);
         setContentView(R.layout.activity_trans_details);
-        Log.d("CATEXP", " strat 3 else " + chosenCat);
-        context = getApplicationContext();
+        context = this;
 
-        Log.d("CATEXP", " before else " + chosenCat);
         // extract INTENT to get chosen DATE
         if (savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -178,7 +174,7 @@ public class TransDetailsActivity extends AppCompatActivity {
             catID.add(allTrans.get(i).getCatUsed());
         }
 
-        List<Integer> catIdList = new ArrayList<Integer>(catID);
+        List<Integer> catIdList = new ArrayList<>(catID);
         for (int i = 0; i < catID.size(); i++){
             categories.add(financeDbHelper.getCategory(catIdList.get(i)));
         }

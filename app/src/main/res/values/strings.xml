@@ -13,6 +13,17 @@
     <string name="history_def_balance">0.00</string>
     <string name="history_def_month">MMM-YYYY</string>
 
+    <string name="analyse_title">Analyse</string>
+    <string name="analyse_year">Year</string>
+    <string name="analyse_year_prompt">Years:</string>
+    <string name="analyse_category">Category</string>
+    <string name="analyse_category_prompt">Categories:</string>
+    <string name="analyse_no_data">Select YEAR, CATEGORY and press DRAW</string>
+    <string name="analyse_button">Draw</string>
+
+
+
+
     <string name="add_main">Ooops ...</string>
     <string name="add_account">Account: </string>
     <string name="add_category">Category: </string>

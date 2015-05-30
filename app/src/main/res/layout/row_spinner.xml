@@ -11,6 +11,4 @@
     android:textColor="@color/myBlack"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-
-
     />
