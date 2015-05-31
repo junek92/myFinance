@@ -8,15 +8,30 @@
     <TextView
         android:id="@+id/child_date"
 
-        android:layout_width="144dp"
+        android:layout_width="108dp"
         android:layout_height="match_parent"
-        android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:layout_marginStart="16dp"
-
+        android:paddingStart="24dp"
 
         android:alpha="0.87"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/myBlack"
+        />
+
+    <TextView
+        android:id="@+id/child_desc"
+
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        android:paddingStart="8dp"
+        android:layout_marginStart="8dp"
+
+        android:singleLine="true"
+
+        android:alpha="0.54"
         android:fontFamily="sans-serif-regular"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:gravity="center_vertical"
         android:textColor="@color/myBlack"
         />
@@ -24,16 +39,14 @@
     <TextView
         android:id="@+id/child_amount"
 
-        android:layout_width="wrap_content"
+        android:layout_width="128dp"
         android:layout_height="match_parent"
-        android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:layout_marginStart="32dp"
-
+        android:layout_marginStart="8dp"
 
         android:alpha="0.54"
         android:fontFamily="sans-serif-black"
         android:textSize="16sp"
-        android:gravity="center_vertical"
+        android:gravity="center_vertical|end"
         android:textColor="@color/myBlack"
         />
 

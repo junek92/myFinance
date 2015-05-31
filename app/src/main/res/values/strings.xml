@@ -45,11 +45,11 @@
     <string name="trans_update_title">Update</string>
     <string name="trans_update_cancel">CANCEL</string>
     <string name="trans_update_save">SAVE</string>
-    <string name="trans_update_save_dialog_title">Continue with UPDATING the transaction?</string>
+    <string name="trans_update_save_dialog_title">Do you want to save changes?</string>
     <string name="trans_update_save_dialog_positive">SAVE</string>
     <string name="trans_update_save_dialog_negative">CANCEL</string>
     <string name="trans_update_delete">DELETE</string>
-    <string name="trans_update_delete_dialog_title">Continue with DELETING the transaction?</string>
+    <string name="trans_update_delete_dialog_title">Do you want to delete the transaction?</string>
     <string name="trans_update_delete_dialog_positive">DELETE</string>
     <string name="trans_update_delete_dialog_negative">CANCEL</string>
 

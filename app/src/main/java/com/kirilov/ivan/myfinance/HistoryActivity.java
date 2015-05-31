@@ -288,7 +288,9 @@ public class HistoryActivity extends AppCompatActivity {
                 calendar.add(Calendar.MONTH, 1);            // add 1 month
                 currentMonth = calendar.getTimeInMillis();  // set current date - 1st of +1 month
             } while (currentMonth <= maxMonth);
-            firstDaysOfMonth.add(currentMonth);             // add 1st day of next month - to use it for BETWEEN clause
+
+            // add 1st day of next month - if you want to have current month in history activity
+            //firstDaysOfMonth.add(currentMonth);
         }
 
         return firstDaysOfMonth;
@@ -305,7 +307,7 @@ public class HistoryActivity extends AppCompatActivity {
         // fetch all CREDIT categories
         List<Category> creditCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT);
 
-        // exclude last DATE, because its artificially added to get proper time intervals
+        // exclude last DATE, because its artificially added to get proper time intervals (only when we need current month to be displayed in history)
         for (int i = 0; i < allMonths.size() - 1; i++){
             transCount = financeDbHelper.getTransCountByMonth(allMonths.get(i), allMonths.get(i+1));
             if (transCount > 0){

@@ -54,6 +54,7 @@
             android:gravity="center"
             android:alpha="0.87"
 
+            android:clickable="true"
             android:onClick="DetailActivity"/>
 
         <Button

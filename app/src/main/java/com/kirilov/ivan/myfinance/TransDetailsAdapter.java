@@ -37,6 +37,7 @@ public class TransDetailsAdapter extends BaseExpandableListAdapter {
     public static class ViewHolderChild{
         public TextView mTextViewDate;
         public TextView mTextViewAmount;
+        public TextView mTextViewDesc;
     }
     @Override
     public int getGroupCount() {
@@ -118,6 +119,7 @@ public class TransDetailsAdapter extends BaseExpandableListAdapter {
             convertView = mLayoutInflater.inflate(R.layout.detail_child, parent, false);
             viewHolderChild = new ViewHolderChild();
             viewHolderChild.mTextViewDate = (TextView) convertView.findViewById(R.id.child_date);
+            viewHolderChild.mTextViewDesc = (TextView) convertView.findViewById(R.id.child_desc);
             viewHolderChild.mTextViewAmount = (TextView) convertView.findViewById(R.id.child_amount);
             convertView.setTag(viewHolderChild);
         } else {
@@ -125,7 +127,9 @@ public class TransDetailsAdapter extends BaseExpandableListAdapter {
         }
 
         viewHolderChild.mTextViewDate.setText(FinanceDbHelper.getInstance(context).getTimeInString(transaction.getAtDate(), false));
+        viewHolderChild.mTextViewDesc.setText(transaction.getDescAdded());
         viewHolderChild.mTextViewAmount.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")).getFormattedValue((float) transaction.getAmountSpent()));
+
         if (transaction.getAmountSpent() > 0){
             viewHolderChild.mTextViewAmount.setTextColor(context.getResources().getColor(R.color.primaryColorDark));
         } else {
