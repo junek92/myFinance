@@ -289,8 +289,8 @@ public class HistoryActivity extends AppCompatActivity {
                 currentMonth = calendar.getTimeInMillis();  // set current date - 1st of +1 month
             } while (currentMonth <= maxMonth);
 
-            // add 1st day of next month - if you want to have current month in history activity
-            //firstDaysOfMonth.add(currentMonth);
+            // add 1st day of next month - use it in BETWEEN clause
+            firstDaysOfMonth.add(currentMonth);
         }
 
         return firstDaysOfMonth;
@@ -300,6 +300,21 @@ public class HistoryActivity extends AppCompatActivity {
     public void getMonthsWithTransaction(List<Long> allMonths){
         financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
         int transCount;
+        // used to properly iterate all months, 2 means that you will skip CURRENT month + artificially added month
+        int monthOffset = 2;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.MILLISECOND);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        // check if your artificially added month is CURRENT - it could happen if you still don't have transactions
+        if (calendar.getTimeInMillis() == allMonths.get(allMonths.size() - 1)){
+            // to properly fill history activity change offset to 1
+            monthOffset = 1;
+        }
 
         // fetch all DEBIT categories
         List<Category> debitCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT);
@@ -308,7 +323,7 @@ public class HistoryActivity extends AppCompatActivity {
         List<Category> creditCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT);
 
         // exclude last DATE, because its artificially added to get proper time intervals (only when we need current month to be displayed in history)
-        for (int i = 0; i < allMonths.size() - 1; i++){
+        for (int i = 0; i < allMonths.size() - monthOffset; i++){
             transCount = financeDbHelper.getTransCountByMonth(allMonths.get(i), allMonths.get(i+1));
             if (transCount > 0){
                 double debitSum = 0;
