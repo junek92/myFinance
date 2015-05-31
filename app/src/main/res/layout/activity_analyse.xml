@@ -35,15 +35,16 @@
                 android:layout_height="320dp"
                 android:layout_below="@id/analyse_date"
                 />
-<!--
+
             <TextView
                 android:id="@+id/analyse_year_text"
 
                 android:layout_width="wrap_content"
-                android:layout_height="72dp"
+                android:layout_height="56dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_below="@id/analyse_bar_chart"
 
                 android:text="@string/analyse_year"
@@ -51,31 +52,16 @@
                 android:alpha="0.87"
                 android:fontFamily="sans-serif-black"
                 android:textSize="16sp"/>
--->
-            <Spinner
-                android:id="@+id/analyse_year_spinner"
 
-
-                android:popupBackground="@color/myWhite"
-                android:popupElevation="6dp"
-
-                android:layout_width="114dp"
-                android:layout_height="72dp"
-                android:gravity="center_vertical"
-                android:layout_below="@id/analyse_bar_chart"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-
-                android:prompt="@string/analyse_year_prompt"/>
-<!--
             <TextView
                 android:id="@+id/analyse_category_text"
 
                 android:layout_width="wrap_content"
-                android:layout_height="72dp"
+                android:layout_height="54dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_below="@id/analyse_year_text"
 
                 android:text="@string/analyse_category"
@@ -83,20 +69,38 @@
                 android:alpha="0.87"
                 android:fontFamily="sans-serif-black"
                 android:textSize="16sp"/>
--->
-            <Spinner
-                android:id="@+id/analyse_category_spinner"
 
+            <Spinner
+                android:id="@+id/analyse_year_spinner"
 
                 android:popupBackground="@color/myWhite"
                 android:popupElevation="6dp"
 
-                android:layout_width="114dp"
-                android:layout_height="72dp"
+                android:layout_width="112dp"
+                android:layout_height="56dp"
                 android:gravity="center_vertical"
-                android:layout_below="@id/analyse_bar_chart"
-                android:layout_marginStart="146dp"
+
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="108dp"
+                android:layout_below="@id/analyse_bar_chart"
+
+                android:prompt="@string/analyse_year_prompt"/>
+
+
+
+            <Spinner
+                android:id="@+id/analyse_category_spinner"
+
+                android:popupBackground="@color/myWhite"
+                android:popupElevation="6dp"
+
+                android:layout_width="112dp"
+                android:layout_height="56dp"
+                android:gravity="center_vertical"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="108dp"
+                android:layout_below="@id/analyse_year_spinner"
 
                 android:prompt="@string/analyse_category_prompt"/>
 
@@ -114,12 +118,12 @@
 
                 android:text="@string/analyse_button"
                 android:textAllCaps="true"
-                android:textColor="@color/myBlack"
+                android:textColor="@color/myWhite"
                 android:alpha="1"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="14sp"
 
-                android:background="@color/myWhite"
+                android:background="@color/primaryColorDark"
                 android:onClick="fetchData"
                 />
 

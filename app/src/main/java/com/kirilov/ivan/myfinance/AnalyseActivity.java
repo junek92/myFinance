@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -137,70 +139,76 @@ public class AnalyseActivity extends AppCompatActivity{
             }while (cursor.moveToNext());
         }
         cursor.close();
+        if (transList.isEmpty()){
+            Toast toast = Toast.makeText(context, "No data! Please enter some transactions first!", Toast.LENGTH_SHORT);
+            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
+            if (toastView != null) toastView.setGravity(Gravity.CENTER);
+            toast.show();
+            finish();
+        } else {
+            // fetching FIRST and LAST month
+            long minTime = transList.get(0).getAtDate();
+            long maxTime = transList.get(0).getAtDate();
+            for (int i = 0; i < transList.size(); i++) {
 
-        // fetching FIRST and LAST month
-        long minTime = transList.get(0).getAtDate();
-        long maxTime = transList.get(0).getAtDate();
-        for (int i = 0; i < transList.size(); i++){
+                if (minTime >= transList.get(i).getAtDate()) {
+                    minTime = transList.get(i).getAtDate();
+                }
 
-            if (minTime >= transList.get(i).getAtDate()){
-                minTime = transList.get(i).getAtDate();
+                if (maxTime <= transList.get(i).getAtDate()) {
+                    maxTime = transList.get(i).getAtDate();
+                }
             }
-
-            if (maxTime <= transList.get(i).getAtDate()){
-                maxTime = transList.get(i).getAtDate();
-            }
-        }
             Log.d("ANALYSE: ", "FirstMonth: " + minTime + "\n Last month: " + maxTime);
 
-        calendar.setTimeInMillis(minTime);
-        // get today and clear time of day - 0h : 00m : 00s
-        calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        calendar.clear(Calendar.MINUTE);
-        calendar.clear(Calendar.SECOND);
-        calendar.clear(Calendar.MILLISECOND);
-        // get start of the month
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        // get start of the year
-        calendar.set(Calendar.MONTH, 0);
-        // set minTime to be 01.01.minYear
-        minTime = calendar.getTimeInMillis();
+            calendar.setTimeInMillis(minTime);
+            // get today and clear time of day - 0h : 00m : 00s
+            calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            calendar.clear(Calendar.MINUTE);
+            calendar.clear(Calendar.SECOND);
+            calendar.clear(Calendar.MILLISECOND);
+            // get start of the month
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            // get start of the year
+            calendar.set(Calendar.MONTH, 0);
+            // set minTime to be 01.01.minYear
+            minTime = calendar.getTimeInMillis();
 
-        calendar.setTimeInMillis(maxTime);
-        // get today and clear time of day - 0h : 00m : 00s
-        calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        calendar.clear(Calendar.MINUTE);
-        calendar.clear(Calendar.SECOND);
-        calendar.clear(Calendar.MILLISECOND);
-        // get start of the month
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        // get start of the year
-        calendar.set(Calendar.MONTH, 0);
-        // set minTime to be 01.01.maxYear
-        maxTime = calendar.getTimeInMillis();
+            calendar.setTimeInMillis(maxTime);
+            // get today and clear time of day - 0h : 00m : 00s
+            calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            calendar.clear(Calendar.MINUTE);
+            calendar.clear(Calendar.SECOND);
+            calendar.clear(Calendar.MILLISECOND);
+            // get start of the month
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            // get start of the year
+            calendar.set(Calendar.MONTH, 0);
+            // set minTime to be 01.01.maxYear
+            maxTime = calendar.getTimeInMillis();
 
-        // get all first days in years between minTime and maxTime
-        allYearsInMs = new ArrayList<>();
-        allYearsInStrings = new ArrayList<>();
+            // get all first days in years between minTime and maxTime
+            allYearsInMs = new ArrayList<>();
+            allYearsInStrings = new ArrayList<>();
 
-        long currentYear = minTime;
-        do {
-            allYearsInMs.add(currentYear);                                          // add current year in the array
-            allYearsInStrings.add(financeDbHelper.getYearInString(currentYear));    // add current year string
+            long currentYear = minTime;
+            do {
+                allYearsInMs.add(currentYear);                                          // add current year in the array
+                allYearsInStrings.add(financeDbHelper.getYearInString(currentYear));    // add current year string
 
-            calendar.setTimeInMillis(currentYear);                                  // set 1st of current month in calendar
+                calendar.setTimeInMillis(currentYear);                                  // set 1st of current month in calendar
                 Log.d("ANALYSE: ", "Added year 1st day: " + calendar.getTime());
-            calendar.add(Calendar.YEAR, 1);                                         // add 1 year
-            currentYear = calendar.getTimeInMillis();                               // set current date - 1st of +1 month
-        }while (currentYear <= maxTime);
+                calendar.add(Calendar.YEAR, 1);                                         // add 1 year
+                currentYear = calendar.getTimeInMillis();                               // set current date - 1st of +1 month
+            } while (currentYear <= maxTime);
 
             Log.d("ANALYSE: ", "YEARS MS: " + allYearsInMs.toString() + "\n");
             Log.d("ANALYSE: ", "YEARS STRING: " + allYearsInStrings.toString() + "\n");
 
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(context, R.layout.row_spinner, allYearsInStrings);
-        //yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerYear.setAdapter(yearAdapter);
-
+            ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(context, R.layout.row_spinner, allYearsInStrings);
+            //yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerYear.setAdapter(yearAdapter);
+        }
     }
 
     public void fetchData(View view){

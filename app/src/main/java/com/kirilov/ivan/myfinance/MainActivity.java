@@ -115,12 +115,17 @@ public class MainActivity extends AppCompatActivity {
 
         // set the ListView and DrawerLayout for NavigationDrawer
         mDrawerList = (ListView)findViewById(R.id.main_navList);
+        View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
+        mDrawerList.addHeaderView(header, null, false);
+
         mDrawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
         mNavigationAdapter = new NavigationAdapter(this, getLayoutInflater());
         mDrawerList.setAdapter(mNavigationAdapter);
 
         setupDrawer();
-        mDrawerList.setItemChecked(0, true);
+        mDrawerList.setItemChecked(1, true);
+
+
 
 
         // listen for selections in our NavigationDrawer
@@ -128,25 +133,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 1:
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 1:
+                    case 2:
                         Intent historyIntent = new Intent(context, HistoryActivity.class);
                         startActivity(historyIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 2:
+                    case 3:
                         Intent analyseIntent = new Intent(context, AnalyseActivity.class);
                         startActivity(analyseIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 3:
+                    case 4:
                         Intent prefIntent = new Intent(context, PrefActivity.class);
                         startActivity(prefIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 4:
+                    case 5:
                         aboutDialog(context, mDrawerList, 0);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mDrawerList.setItemChecked(0, true);
+        mDrawerList.setItemChecked(1, true);
 
         // calculate balance
         calcBalance(textViewBalance, Calendar.getInstance().getTimeInMillis());

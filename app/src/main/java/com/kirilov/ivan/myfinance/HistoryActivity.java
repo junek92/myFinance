@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,36 +64,39 @@ public class HistoryActivity extends AppCompatActivity {
 
         // set the ListView and DrawerLayout for NavigationDrawer
         mDrawerList = (ListView) findViewById(R.id.history_navList);
+        View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
+        mDrawerList.addHeaderView(header, null, false);
+
         mDrawerLayout = (DrawerLayout)findViewById(R.id.history_drawer_layout);
         mNavigationAdapter = new NavigationAdapter(this, getLayoutInflater());
         mDrawerList.setAdapter(mNavigationAdapter);
 
         setupDrawer();
-        mDrawerList.setItemChecked(1, true);
+        mDrawerList.setItemChecked(2, true);
 
         // listen for selections in our NavigationDrawer
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 1:
                         onBackPressed();
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 1:
+                    case 2:
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 2:
+                    case 3:
                         Intent analyseIntent = new Intent(context, AnalyseActivity.class);
                         startActivity(analyseIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 3:
+                    case 4:
                         Intent prefIntent = new Intent(context, PrefActivity.class);
                         startActivity(prefIntent);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
-                    case 4:
+                    case 5:
                         MainActivity.aboutDialog(context, mDrawerList, 1);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
@@ -138,7 +142,7 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onResume() {
         // called when activity is returned on top of stack
         super.onResume();
-        mDrawerList.setItemChecked(1,true);
+        mDrawerList.setItemChecked(2,true);
 
     }
 
@@ -204,6 +208,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         List<Transaction> transList = new ArrayList<>();
+        List<Long> firstDaysOfMonth = new ArrayList<>();
 
         if (cursor.moveToFirst()){
             do {
@@ -220,63 +225,71 @@ public class HistoryActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        // fetching FIRST and LAST month
-        long minMonth = transList.get(0).getAtDate();
-        long maxMonth = transList.get(0).getAtDate();
-        for (int i = 0; i < transList.size(); i++){
+        if (transList.isEmpty()){
+            Toast toast = Toast.makeText(context, "No history! Please enter some transactions first!", Toast.LENGTH_SHORT);
+            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
+            if (toastView != null) toastView.setGravity(Gravity.CENTER);
+            toast.show();
+            finish();
+        } else {
+            // fetching FIRST and LAST month
+            long minMonth = transList.get(0).getAtDate();
+            long maxMonth = transList.get(0).getAtDate();
+            for (int i = 0; i < transList.size(); i++) {
 
-            if (minMonth >= transList.get(i).getAtDate()){
-                minMonth = transList.get(i).getAtDate();
-            }
+                if (minMonth >= transList.get(i).getAtDate()) {
+                    minMonth = transList.get(i).getAtDate();
+                }
 
-            if (maxMonth <= transList.get(i).getAtDate()){
-                maxMonth = transList.get(i).getAtDate();
+                if (maxMonth <= transList.get(i).getAtDate()) {
+                    maxMonth = transList.get(i).getAtDate();
+                }
             }
-        }
             Log.d("HISTORY: ", "FirstMonth: " + minMonth + "\n Last month: " + maxMonth);
 
-        // set time to be day in FIRST month
-        calendar.setTimeInMillis(minMonth);
+            // set time to be day in FIRST month
+            calendar.setTimeInMillis(minMonth);
 
-        // get today and clear time of day - 0h : 00m : 00s
-        calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        calendar.clear(Calendar.MINUTE);
-        calendar.clear(Calendar.SECOND);
-        calendar.clear(Calendar.MILLISECOND);
+            // get today and clear time of day - 0h : 00m : 00s
+            calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            calendar.clear(Calendar.MINUTE);
+            calendar.clear(Calendar.SECOND);
+            calendar.clear(Calendar.MILLISECOND);
 
-        // get start of the month
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        // set time to be 1st day of FIRST month
-        minMonth = calendar.getTimeInMillis();
+            // get start of the month
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            // set time to be 1st day of FIRST month
+            minMonth = calendar.getTimeInMillis();
             Log.d("HISTORY: ", "FirstMonth 1st day: " + calendar.getTime());
 
-        // set time to be day in LAST month
-        calendar.setTimeInMillis(maxMonth);
+            // set time to be day in LAST month
+            calendar.setTimeInMillis(maxMonth);
 
-        // get today and clear time of day - 0h : 00m : 00s
-        calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        calendar.clear(Calendar.MINUTE);
-        calendar.clear(Calendar.SECOND);
-        calendar.clear(Calendar.MILLISECOND);
+            // get today and clear time of day - 0h : 00m : 00s
+            calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            calendar.clear(Calendar.MINUTE);
+            calendar.clear(Calendar.SECOND);
+            calendar.clear(Calendar.MILLISECOND);
 
-        // get start of the month
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        // set time to be 1st day of FIRST month
-        maxMonth = calendar.getTimeInMillis();
+            // get start of the month
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            // set time to be 1st day of FIRST month
+            maxMonth = calendar.getTimeInMillis();
             Log.d("HISTORY: ", "LastMonth 1st day: " + calendar.getTime());
             Log.d("HISTORY: ", "FirstMonth 1st day: " + minMonth + " Last month 1st day: " + maxMonth);
 
-        // get all 1st days in each month between FIRST month and LAST month and put them in array list
-        List<Long> firstDaysOfMonth = new ArrayList<>();
-        long currentMonth = minMonth;
-        do {
-            firstDaysOfMonth.add(currentMonth);         // add current month in the array
-            calendar.setTimeInMillis(currentMonth);     // set 1st of current month in calendar
+            // get all 1st days in each month between FIRST month and LAST month and put them in array list
+
+            long currentMonth = minMonth;
+            do {
+                firstDaysOfMonth.add(currentMonth);         // add current month in the array
+                calendar.setTimeInMillis(currentMonth);     // set 1st of current month in calendar
                 Log.d("HISTORY: ", "Added month 1st day: " + calendar.getTime());
-            calendar.add(Calendar.MONTH, 1);            // add 1 month
-            currentMonth = calendar.getTimeInMillis();  // set current date - 1st of +1 month
-        }while (currentMonth <= maxMonth);
-        firstDaysOfMonth.add(currentMonth);             // add 1st day of next month - to use it for BETWEEN clause
+                calendar.add(Calendar.MONTH, 1);            // add 1 month
+                currentMonth = calendar.getTimeInMillis();  // set current date - 1st of +1 month
+            } while (currentMonth <= maxMonth);
+            firstDaysOfMonth.add(currentMonth);             // add 1st day of next month - to use it for BETWEEN clause
+        }
 
         return firstDaysOfMonth;
     }
