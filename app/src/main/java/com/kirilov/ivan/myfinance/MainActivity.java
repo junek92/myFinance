@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         // create, configure the PieChart
         pieChart = (PieChart) findViewById(R.id.main_pieChart);
         dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
-        setupPieChart(dataForPie,pieChart);
+        setupPieChart(dataForPie, pieChart, true);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
         // clear the highlights in PieChart and fill it with data
         dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
-        setupPieChart(dataForPie, pieChart);
+        setupPieChart(dataForPie, pieChart, false);
         pieChart.highlightValues(null);
         pieChart.invalidate();
     }
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // method to create, customize and inflate with data the PieChart, in parameters is array of floats wich contains Y values ( DATA )
-    public void setupPieChart(float[] dataValues, PieChart mPieChart){
+    public void setupPieChart(float[] dataValues, PieChart mPieChart, boolean firstDraw){
         ArrayList<Entry> yVals = new ArrayList<>();
         ArrayList<String> allCategories = new ArrayList<>();
         ArrayList<String> notZeroCategories = new ArrayList<>();
@@ -310,7 +310,8 @@ public class MainActivity extends AppCompatActivity {
         mPieChart.setDrawSliceText(false);
         mPieChart.setHoleRadius(40);
         mPieChart.setTransparentCircleRadius(43);
-        mPieChart.animateY(2500);
+
+        if (firstDraw == true) mPieChart.animateY(2500);
 
         // fetch all names of the categories for X
         financeDbHelper = FinanceDbHelper.getInstance(this);

@@ -115,6 +115,18 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public String getDayMonthString(long timeInMs){
+        SimpleDateFormat simpleDateFormat;
+        String yearFormat = "dd-MMM";
+
+        simpleDateFormat = new SimpleDateFormat(yearFormat);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMs);
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
     /* public long getTimeInMs(String timeInString){
         return 0;
     } */

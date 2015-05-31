@@ -11,6 +11,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,7 @@
         <activity
             android:name=".HistoryActivity"
             android:label="@string/history_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -30,6 +32,7 @@
         <activity
             android:name=".AnalyseActivity"
             android:label="@string/analyse_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -39,6 +42,7 @@
         <activity
             android:name=".PieMonthlyActivity"
             android:label="@string/pie_monthly_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.HistoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -48,6 +52,7 @@
         <activity
             android:name=".TransDetailsActivity"
             android:label="@string/trans_details_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -57,6 +62,7 @@
         <activity
             android:name=".TransUpdateActivity"
             android:label="@string/trans_update_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.TransDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,6 +72,7 @@
         <activity
             android:name=".AddDebitActivity"
             android:label="@string/addDebit_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -75,6 +82,7 @@
         <activity
             android:name=".AddCreditActivity"
             android:label="@string/addCredit_title"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -83,10 +91,9 @@
 
         <activity
             android:name=".PrefActivity"
-            android:label="@string/addCredit_title">
-
+            android:label="@string/addCredit_title"
+            android:screenOrientation="portrait">
         </activity>
-
     </application>
 
 </manifest>

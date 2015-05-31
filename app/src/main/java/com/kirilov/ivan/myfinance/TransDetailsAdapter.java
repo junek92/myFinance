@@ -126,7 +126,7 @@ public class TransDetailsAdapter extends BaseExpandableListAdapter {
             viewHolderChild = (ViewHolderChild) convertView.getTag();
         }
 
-        viewHolderChild.mTextViewDate.setText(FinanceDbHelper.getInstance(context).getTimeInString(transaction.getAtDate(), false));
+        viewHolderChild.mTextViewDate.setText(FinanceDbHelper.getInstance(context).getDayMonthString(transaction.getAtDate()));
         viewHolderChild.mTextViewDesc.setText(transaction.getDescAdded());
         viewHolderChild.mTextViewAmount.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")).getFormattedValue((float) transaction.getAmountSpent()));
 
