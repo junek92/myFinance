@@ -88,7 +88,7 @@ public class NavigationAdapter extends BaseAdapter{
                             new int[]{}                                  //default state
                     },
                     new int[] {
-                            mContext.getResources().getColor(R.color.myWhite),       //active color
+                            mContext.getResources().getColor(R.color.primaryColorDark),       //active color
                             mContext.getResources().getColor(R.color.myBlack)         //default color
                     }
             );

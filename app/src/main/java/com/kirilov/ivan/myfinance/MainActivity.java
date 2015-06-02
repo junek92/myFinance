@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 5:
-                        aboutDialog(context, mDrawerList, 0);
+                        aboutDialog(context, mDrawerList, 1);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     default:

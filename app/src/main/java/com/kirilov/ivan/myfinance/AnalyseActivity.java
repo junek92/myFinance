@@ -140,7 +140,7 @@ public class AnalyseActivity extends AppCompatActivity{
         }
         cursor.close();
         if (transList.isEmpty()){
-            Toast toast = Toast.makeText(context, "No data! Please enter some transactions first!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(context, "No data to analyse! Please enter some transactions first!", Toast.LENGTH_SHORT);
             TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
             if (toastView != null) toastView.setGravity(Gravity.CENTER);
             toast.show();

@@ -97,7 +97,7 @@ public class HistoryActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     case 5:
-                        MainActivity.aboutDialog(context, mDrawerList, 1);
+                        MainActivity.aboutDialog(context, mDrawerList, 2);
                         mDrawerLayout.closeDrawer(mDrawerList);
                         break;
                     default:
@@ -226,7 +226,7 @@ public class HistoryActivity extends AppCompatActivity {
         cursor.close();
 
         if (transList.isEmpty()){
-            Toast toast = Toast.makeText(context, "No history! Please enter some transactions first!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(context, "No history to display!", Toast.LENGTH_SHORT);
             TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
             if (toastView != null) toastView.setGravity(Gravity.CENTER);
             toast.show();
@@ -310,43 +310,49 @@ public class HistoryActivity extends AppCompatActivity {
         calendar.clear(Calendar.MILLISECOND);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-        // check if your artificially added month is CURRENT - it could happen if you still don't have transactions
-        if (calendar.getTimeInMillis() == allMonths.get(allMonths.size() - 1)){
-            // to properly fill history activity change offset to 1
-            monthOffset = 1;
+        if (allMonths.size() != 0) {
+            // check if your artificially added month is CURRENT - it could happen if you still don't have transactions
+            if (calendar.getTimeInMillis() == allMonths.get(allMonths.size() - 1)) {
+                // to properly fill history activity change offset to 1
+                monthOffset = 1;
+            }
         }
-
         // fetch all DEBIT categories
         List<Category> debitCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT);
 
         // fetch all CREDIT categories
         List<Category> creditCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT);
 
-        // exclude last DATE, because its artificially added to get proper time intervals (only when we need current month to be displayed in history)
-        for (int i = 0; i < allMonths.size() - monthOffset; i++){
-            transCount = financeDbHelper.getTransCountByMonth(allMonths.get(i), allMonths.get(i+1));
-            if (transCount > 0){
-                double debitSum = 0;
-                double creditSum = 0;
+        if (allMonths.size() == 2){
+            Toast toast = Toast.makeText(context, "No history to display!", Toast.LENGTH_SHORT);
+            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
+            if (toastView != null) toastView.setGravity(Gravity.CENTER);
+            toast.show();
+            finish();
+        } else {
+            // exclude last DATE, because its artificially added to get proper time intervals (only when we need current month to be displayed in history)
+            for (int i = 0; i < allMonths.size() - monthOffset; i++) {
+                transCount = financeDbHelper.getTransCountByMonth(allMonths.get(i), allMonths.get(i + 1));
+                if (transCount > 0) {
+                    double debitSum = 0;
+                    double creditSum = 0;
 
-                usefulMonths.add(allMonths.get(i));
-                monthName.add(financeDbHelper.getTimeInString(allMonths.get(i), true));
+                    usefulMonths.add(allMonths.get(i));
+                    monthName.add(financeDbHelper.getTimeInString(allMonths.get(i), true));
 
-                //fetch sum for each DEBIT category
-                for (int j = 0; j < debitCategories.size(); j++){
-                    debitSum = debitSum + financeDbHelper.sumTransByCategoryAndTime(debitCategories.get(j).getCatId(), allMonths.get(i), allMonths.get(i+1));
-                }
+                    //fetch sum for each DEBIT category
+                    for (int j = 0; j < debitCategories.size(); j++) {
+                        debitSum = debitSum + financeDbHelper.sumTransByCategoryAndTime(debitCategories.get(j).getCatId(), allMonths.get(i), allMonths.get(i + 1));
+                    }
 
-                //fetch sum for each CREDIT category
-                for (int k = 0; k < creditCategories.size(); k++){
-                    creditSum = creditSum + financeDbHelper.sumTransByCategoryAndTime(creditCategories.get(k).getCatId(), allMonths.get(i), allMonths.get(i+1));
-                }
+                    //fetch sum for each CREDIT category
+                    for (int k = 0; k < creditCategories.size(); k++) {
+                        creditSum = creditSum + financeDbHelper.sumTransByCategoryAndTime(creditCategories.get(k).getCatId(), allMonths.get(i), allMonths.get(i + 1));
+                    }
                     Log.d("HISTORY Balance: ", "debit: " + debitSum + " credit: " + creditSum);
-                monthBalance.add(creditSum + debitSum);
+                    monthBalance.add(creditSum + debitSum);
+                }
             }
         }
-
-
-
     }
 }

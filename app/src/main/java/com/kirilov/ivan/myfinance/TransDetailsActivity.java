@@ -100,7 +100,7 @@ public class TransDetailsActivity extends AppCompatActivity {
     }
 
     public void inflateWithData(long chosenDateInMs){
-            Log.d("TEST TIME", "CALLED INFLATEWITHDATA");
+            Log.d("TEST TIME", "CALLED INFLATE WITH DATA");
         // extract 1 ST and LAST day of month
         getMonthDates(chosenDateInMs);
 
@@ -136,7 +136,12 @@ public class TransDetailsActivity extends AppCompatActivity {
                     break;
                 }
             }
-            expandableListView.expandGroup(groupToExpand);
+            try {
+                expandableListView.expandGroup(groupToExpand);
+            } catch (IndexOutOfBoundsException e){
+                Log.d("EXCEPTION:", "IndexOutOfBounts at TransDetailsActivity");
+            }
+
         }
     }
     public void getMonthDates(long dateInMs){
