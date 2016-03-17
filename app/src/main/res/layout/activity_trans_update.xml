@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/trans_update_app_bar"
-        layout="@layout/app_bar" />
+    <!--<include-->
+        <!--android:id="@+id/trans_update_app_bar"-->
+        <!--layout="@layout/activity_main_toolbar" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"

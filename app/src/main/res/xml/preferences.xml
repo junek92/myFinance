@@ -6,23 +6,26 @@
 
     <PreferenceCategory
         android:title="Settings">
-
         <ListPreference
-            android:title="Chose currency"
-            android:summary="Select the currency that you would like to use"
+            android:title="Currency"
+            android:summary="Select currency to display"
             android:key="used_currency"
             android:defaultValue="USD"
             android:entries="@array/curNames"
             android:entryValues="@array/curValues" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Info">
+        android:title="More">
+
+        <Preference
+             android:key="application_version"
+             android:title="Application version"
+             android:summary=""/>
 
         <PreferenceScreen
             android:title="Android Dev"
-            android:summary="Some tests to launch new tab in browser">
+            android:summary="Android developers website">
 
             <intent
                 android:action="android.intent.action.VIEW"

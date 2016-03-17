@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -18,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,28 +39,28 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String KEY_PREFS_FIRST_LAUNCH = "first_launch";
-    public static String KEY_PREF_CURRENCY = "used_currency";
-    public static String KEY_PREF_DATE = "chosenDate";
-    public static String KEY_PREF_TRANS_ID = "transId";
-    public static String KEY_PREF_CAT_ID = "catId";
+    public static final String  KEY_PREFS_FIRST_LAUNCH = "first_launch";
+    public static String        KEY_PREF_CURRENCY = "used_currency";
+    public static String        KEY_PREF_DATE = "chosenDate";
+    public static String        KEY_PREF_TRANS_ID = "transId";
+    public static String        KEY_PREF_CAT_ID = "catId";
 
     // used for navigation drawer
-    private ListView mDrawerList;
-    private NavigationAdapter mNavigationAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
+    private ListView                mDrawerList;
+    private NavigationAdapter       mNavigationAdapter;
+    private ActionBarDrawerToggle   mDrawerToggle;
+    private DrawerLayout            mDrawerLayout;
 
     // used for PieChart drawing
-    private PieChart pieChart;
-    private float[] dataForPie;          // y - represents % values
+    private PieChart    pieChart;
+    private float[]     dataForPie;          // y - represents % values
 
     // used to display current balance
     private TextView textViewBalance;
 
     FinanceDbHelper financeDbHelper;
-    Context context;
-    Toolbar toolbar;
+    Context         context;
+//    Toolbar         toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,100 +68,57 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = this;
 
-        SharedPreferences prefs = getSharedPreferences(KEY_PREFS_FIRST_LAUNCH, Context.MODE_PRIVATE);
-        if(prefs.getBoolean(KEY_PREFS_FIRST_LAUNCH, true))
-        {
-            //first launch
-            long id;
-            Toast.makeText(getApplicationContext(),"Your first launch", Toast.LENGTH_SHORT).show();
-
-            financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
-            id = financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "House"));
-                Log.d("FINANCE DB: ", "House : "+id);
-            id = financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Bills"));
-                Log.d("FINANCE DB: ", " Bills : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Food"));
-                Log.d("FINANCE DB: ", " Food : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Car"));
-                Log.d("FINANCE DB: ", " Car : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Gifts"));
-                Log.d("FINANCE DB: ", " Gifts : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Clothes"));
-                Log.d("FINANCE DB: ", " Clothes : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Salary"));
-                Log.d("FINANCE DB: ", " Salary : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Deposits"));
-                Log.d("FINANCE DB: ", " Deposits : " + id);
-            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Savings"));
-                Log.d("FINANCE DB: ", " Savings : " + id);
-
-            id = financeDbHelper.createAcc(new Account("Cash"));
-                Log.d("FINANCE DB: ", " Cash : " + id);
-            id = financeDbHelper.createAcc(new Account("Debit card"));
-                Log.d("FINANCE DB: ", " Debit Card : " + id);
-
-
-            prefs.edit().putBoolean(KEY_PREFS_FIRST_LAUNCH, false).apply();
-        }
+        //on app first launch - do certain stuff
+        firstLaunch();
 
         //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.main_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.main_title);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+//        toolbar.setTitle("");
+
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        // set the ListView and DrawerLayout for NavigationDrawer
-        mDrawerList = (ListView)findViewById(R.id.main_navList);
-        View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
-        mDrawerList.addHeaderView(header, null, false);
-
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
-        mNavigationAdapter = new NavigationAdapter(this, getLayoutInflater());
-        mDrawerList.setAdapter(mNavigationAdapter);
-
-        setupDrawer();
-        mDrawerList.setItemChecked(1, true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
 
+        //---       NEW NAVIGATION TEST
+        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
 
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
-        // listen for selections in our NavigationDrawer
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
+        navigationView.setCheckedItem(R.id.nav_this_month);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 1:
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 2:
-                        Intent historyIntent = new Intent(context, HistoryActivity.class);
-                        startActivity(historyIntent);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 3:
-                        Intent analyseIntent = new Intent(context, AnalyseActivity.class);
-                        startActivity(analyseIntent);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 4:
-                        Intent prefIntent = new Intent(context, PrefActivity.class);
-                        startActivity(prefIntent);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 5:
-                        aboutDialog(context, mDrawerList, 1);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    default:
-                        Toast.makeText(MainActivity.this, "TODO MENUS - " + id + " ; " + position, Toast.LENGTH_SHORT).show();
-                        break;
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+//                if (id == R.id.nav_this_month) {
+//
+//                } else
+                if (id == R.id.nav_history) {
+                    Intent historyActivity = new Intent(context, HistoryActivity.class);
+                    startActivity(historyActivity);
+                } else if (id == R.id.nav_analyze) {
+                    Intent analyseIntent = new Intent(context, AnalyseActivity.class);
+                    startActivity(analyseIntent);
+                } else if (id == R.id.nav_settings) {
+                    Intent prefIntent = new Intent(context, SettingsActivity.class);
+                    startActivity(prefIntent);
+                } else if (id == R.id.nav_about) {
+                    aboutDialog(context);
                 }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
+
+
 
         // set current date in TextView
         TextView textViewDate = (TextView) findViewById(R.id.main_date);
@@ -172,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
         // create, configure the PieChart
         pieChart = (PieChart) findViewById(R.id.main_pieChart);
-        dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
-        setupPieChart(dataForPie, pieChart, true);
+//        dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
+//        setupPieChart(dataForPie, pieChart, true);
     }
 
     @Override
@@ -188,12 +146,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mDrawerList.setItemChecked(1, true);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
+        navigationView.setCheckedItem(R.id.nav_this_month);
 
         // calculate balance
         calcBalance(textViewBalance, Calendar.getInstance().getTimeInMillis());
 
         // clear the highlights in PieChart and fill it with data
+
         dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
         setupPieChart(dataForPie, pieChart, false);
         pieChart.highlightValues(null);
@@ -201,55 +161,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-        // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    // method to create, customize and inflate NAVIGATION DRAWER
-    public void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();    // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu();    // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     // returns array of SUMS for each DEBIT category, in parameter is time in ms to fetch the MONTH
@@ -292,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         return pieData;
     }
 
-    // method to create, customize and inflate with data the PieChart, in parameters is array of floats wich contains Y values ( DATA )
+    // method to create, customize and inflate with data the PieChart, in parameters is array of floats which contains Y values ( DATA )
     public void setupPieChart(float[] dataValues, PieChart mPieChart, boolean firstDraw){
         ArrayList<Entry> yVals = new ArrayList<>();
         ArrayList<String> allCategories = new ArrayList<>();
@@ -486,18 +404,56 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static void aboutDialog (Context context, final ListView listView, final int checked){
+    public static void aboutDialog (Context context){
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setMessage(R.string.about_dialog);
+        alertDialogBuilder.setTitle(R.string.about_dialog_title);
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listView.setItemChecked(checked, true);
                 dialog.dismiss();
             }
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void firstLaunch(){
+        SharedPreferences prefs = getSharedPreferences(KEY_PREFS_FIRST_LAUNCH, Context.MODE_PRIVATE);
+        if(prefs.getBoolean(KEY_PREFS_FIRST_LAUNCH, true))
+        {
+            //first launch
+            long id;
+            Toast.makeText(getApplicationContext(),"Your first launch", Toast.LENGTH_SHORT).show();
+
+            financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
+            id = financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "House"));
+            Log.d("FINANCE DB: ", "House : "+id);
+            id = financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Bills"));
+            Log.d("FINANCE DB: ", " Bills : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Food"));
+            Log.d("FINANCE DB: ", " Food : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Car"));
+            Log.d("FINANCE DB: ", " Car : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Gifts"));
+            Log.d("FINANCE DB: ", " Gifts : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT, "Clothes"));
+            Log.d("FINANCE DB: ", " Clothes : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Salary"));
+            Log.d("FINANCE DB: ", " Salary : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Deposits"));
+            Log.d("FINANCE DB: ", " Deposits : " + id);
+            id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Savings"));
+            Log.d("FINANCE DB: ", " Savings : " + id);
+
+            id = financeDbHelper.createAcc(new Account("Cash"));
+            Log.d("FINANCE DB: ", " Cash : " + id);
+            id = financeDbHelper.createAcc(new Account("Debit card"));
+            Log.d("FINANCE DB: ", " Debit Card : " + id);
+
+
+            prefs.edit().putBoolean(KEY_PREFS_FIRST_LAUNCH, false).apply();
+        }
     }
 }

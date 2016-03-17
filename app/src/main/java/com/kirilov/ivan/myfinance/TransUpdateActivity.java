@@ -66,19 +66,19 @@ public class TransUpdateActivity extends AppCompatActivity {
             chosenTransId = savedInstanceState.getLong(MainActivity.KEY_PREF_TRANS_ID);
         }
 
-        //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.trans_update_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.trans_update_title);
-        setSupportActionBar(toolbar);
-
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException e){
-            Log.d("EXCEPTION", " " + e.getMessage());
-        }
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        //fetch the custom toolbar - set it as default, change the title
+//        toolbar = (Toolbar) findViewById(R.id.trans_update_app_bar);
+//        toolbar.setTitle("");
+//        //TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
+//       // toolbarText.setText(R.string.trans_update_title);
+//        setSupportActionBar(toolbar);
+//
+//        try {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }catch (NullPointerException e){
+//            Log.d("EXCEPTION", " " + e.getMessage());
+//        }
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         timeText = (TextView) findViewById(R.id.trans_update_date);
         amountText = (TextView) findViewById(R.id.trans_update_editAmount);

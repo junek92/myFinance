@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_this_month"
+            android:icon="@drawable/ic_event_white_48dp"
+            android:title="This Month" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_white_48dp"
+            android:title="History" />
+        <item
+            android:id="@+id/nav_analyze"
+            android:icon="@drawable/ic_trending_up_white_48dp"
+            android:title="Analyze" />
+    </group>
+
+    <item android:title="More">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_black_48dp"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_info_outline_black_48dp"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>

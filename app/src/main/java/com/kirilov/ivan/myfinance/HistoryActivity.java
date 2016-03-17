@@ -2,10 +2,11 @@ package com.kirilov.ivan.myfinance;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,17 +30,13 @@ import java.util.List;
  */
 public class HistoryActivity extends AppCompatActivity {
 
-    // used for navigation drawer
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
-    NavigationAdapter mNavigationAdapter;
+    private ListView mHistoryList;
 
     List<Long> usefulMonths;        // store 1st day of each month with transactions
     List<String> monthName;         // store strings in format MMM-yyyy
     List<Double> monthBalance;      // store each month balance in double
     HistoryMonthsAdapter mHistoryMonthsAdapter;
-    private ListView mHistoryList;
+
 
     FinanceDbHelper financeDbHelper;
     Toolbar toolbar;
@@ -52,64 +49,52 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         context = this;
 
-        //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.history_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.history_title);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        // set the ListView and DrawerLayout for NavigationDrawer
-        mDrawerList = (ListView) findViewById(R.id.history_navList);
-        View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
-        mDrawerList.addHeaderView(header, null, false);
-
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.history_drawer_layout);
-        mNavigationAdapter = new NavigationAdapter(this, getLayoutInflater());
-        mDrawerList.setAdapter(mNavigationAdapter);
-
-        setupDrawer();
-        mDrawerList.setItemChecked(2, true);
-
-        // listen for selections in our NavigationDrawer
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 1:
-                        onBackPressed();
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 2:
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 3:
-                        Intent analyseIntent = new Intent(context, AnalyseActivity.class);
-                        startActivity(analyseIntent);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 4:
-                        Intent prefIntent = new Intent(context, PrefActivity.class);
-                        startActivity(prefIntent);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    case 5:
-                        MainActivity.aboutDialog(context, mDrawerList, 2);
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        break;
-                    default:
-                        Toast.makeText(HistoryActivity.this, "TODO MENU - " + id + " ; " + position, Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
-
         usefulMonths = new ArrayList<>();
         monthName = new ArrayList<>();
         monthBalance = new ArrayList<>();
+
+        //fetch the custom toolbar - set it as default, change the title
+        Toolbar toolbar = (Toolbar) findViewById(R.id.history_toolbar);
+//        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        //---       NEW NAVIGATION TEST
+        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.history_drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
+        navigationView.setCheckedItem(R.id.nav_history);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_this_month) {
+                    HistoryActivity.this.finish();
+                } else if (id == R.id.nav_history) {
+
+                } else if (id == R.id.nav_analyze) {
+                    Intent analyseIntent = new Intent(context, AnalyseActivity.class);
+                    startActivity(analyseIntent);
+                } else if (id == R.id.nav_settings) {
+                    Intent prefIntent = new Intent(context, SettingsActivity.class);
+                    startActivity(prefIntent);
+                } else if (id == R.id.nav_about) {
+                    MainActivity.aboutDialog(context);
+                }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+
         // find all months and pass them -- fetch and select only months with transactions
         getMonthsWithTransaction(getMonths());
             Log.d("HISTORY LISTS:", "usefulMonths: \n" + usefulMonths.toString());
@@ -142,60 +127,19 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onResume() {
         // called when activity is returned on top of stack
         super.onResume();
-        mDrawerList.setItemChecked(2,true);
 
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
+        navigationView.setCheckedItem(R.id.nav_history);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-        // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    public void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();    // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu();    // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     // method to fetch all months from 1st transaction

@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class FinanceDbHelper extends SQLiteOpenHelper {
 
-    // make sure you have only one instance of DBHelper
+    //only one instance of DBHelper
     public static FinanceDbHelper sInstance;
 
     public static final int DATABASE_VERSION = 1;               // database version - increment if change anything
@@ -125,18 +125,6 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
         calendar.setTimeInMillis(timeInMs);
 
         return simpleDateFormat.format(calendar.getTime());
-    }
-
-    /* public long getTimeInMs(String timeInString){
-        return 0;
-    } */
-
-    //close the DB
-    public void closeDB(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        if (db != null && db.isOpen()){
-            db.close();
-        }
     }
 
     //  --- CRUD(create, read, update, delete) Operations for each table ---

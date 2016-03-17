@@ -21,9 +21,6 @@
     <string name="analyse_no_data">Select YEAR, CATEGORY and press DRAW</string>
     <string name="analyse_button">Draw</string>
 
-
-
-
     <string name="add_main">Ooops ...</string>
     <string name="add_account">Account: </string>
     <string name="add_category">Category: </string>
@@ -44,26 +41,26 @@
 
     <string name="trans_update_title">Update</string>
     <string name="trans_update_cancel">CANCEL</string>
+
     <string name="trans_update_save">SAVE</string>
-    <string name="trans_update_save_dialog_title">Do you want to save changes?</string>
+    <string name="trans_update_save_dialog_title">Do you want to save the changes?</string>
     <string name="trans_update_save_dialog_positive">SAVE</string>
     <string name="trans_update_save_dialog_negative">CANCEL</string>
+
     <string name="trans_update_delete">DELETE</string>
     <string name="trans_update_delete_dialog_title">Do you want to delete the transaction?</string>
     <string name="trans_update_delete_dialog_positive">DELETE</string>
     <string name="trans_update_delete_dialog_negative">CANCEL</string>
-
-
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="nav_atMain">You are already in This Month section.</string>
     <string name="nav_atHistory">You are already in History section.</string>
 
-    <string name="about_dialog">Those are some random words of wisdom to fill this dialog with.
-                        Maybe I will replace them with some real information about the creator.
-                        Or even create custom layout for this dialog :-)</string>
+    <string name="about_dialog">\tVersion: 0.1 \n\tAuthor: Ivan Kirilov \n\n
+                                Manage and track your personal funds - whenever and wherever you want.</string>
+    <string name="about_dialog_title">About</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="settings_title">Settings</string>
     <string name="action_example">Example action</string>
 </resources>

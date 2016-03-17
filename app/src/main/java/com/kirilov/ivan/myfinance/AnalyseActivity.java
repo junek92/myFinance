@@ -58,14 +58,14 @@ public class AnalyseActivity extends AppCompatActivity{
         setContentView(R.layout.activity_analyse);
         context = this;
 
-        //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.analyse_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.analyse_title);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        //fetch the custom toolbar - set it as default, change the title
+//        toolbar = (Toolbar) findViewById(R.id.analyse_app_bar);
+//        toolbar.setTitle("");
+//        //TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
+//        //toolbarText.setText(R.string.analyse_title);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         inflateCategorySpinner();
         inflateYearSpinner();

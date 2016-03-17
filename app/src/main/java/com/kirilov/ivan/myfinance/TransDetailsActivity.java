@@ -64,19 +64,19 @@ public class TransDetailsActivity extends AppCompatActivity {
         }
             Log.d("TEST TIME", " " + chosenDateInMs);
 
-        //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.details_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.trans_details_title);
-        setSupportActionBar(toolbar);
-
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException e){
-            Log.d("EXCEPTION", " " + e.getMessage());
-        }
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        //fetch the custom toolbar - set it as default, change the title
+//        toolbar = (Toolbar) findViewById(R.id.details_app_bar);
+//        toolbar.setTitle("");
+////        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
+////        toolbarText.setText(R.string.trans_details_title);
+//        setSupportActionBar(toolbar);
+//
+//        try {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }catch (NullPointerException e){
+//            Log.d("EXCEPTION", " " + e.getMessage());
+//        }
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         inflateWithData(chosenDateInMs);
     }

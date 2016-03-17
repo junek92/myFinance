@@ -49,15 +49,15 @@ public class PieMonthlyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pie_monthly);
         context = this;
 
-        //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.pie_monthly_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.pie_monthly_title);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        //fetch the custom toolbar - set it as default, change the title
+//        toolbar = (Toolbar) findViewById(R.id.pie_monthly_app_bar);
+//        toolbar.setTitle("");
+////        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
+////        toolbarText.setText(R.string.pie_monthly_title);
+//        setSupportActionBar(toolbar);
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         // extract INTENT to get chosen DATE
         if (savedInstanceState == null){
@@ -82,8 +82,8 @@ public class PieMonthlyActivity extends AppCompatActivity {
 
         // create, configure the PieChart
         pieChart = (PieChart) findViewById(R.id.pie_monthly_pieChart);
-        dataForPie = extractDataForPie(chosenDateInMs);
-        setupPieChart(dataForPie, pieChart, true);
+//        dataForPie = extractDataForPie(chosenDateInMs);
+//        setupPieChart(dataForPie, pieChart, true);
 
     }
 

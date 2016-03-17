@@ -56,20 +56,20 @@ public class AddCreditActivity extends AppCompatActivity {
         }
             Log.d("TEST TIME"," " + chosenDateInMs);
 
-        //fetch the custom toolbar - set it as default, change the title
-        toolbar = (Toolbar) findViewById(R.id.addCredit_app_bar);
-        toolbar.setTitle("");
-        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-        toolbarText.setText(R.string.addCredit_title);
-        setSupportActionBar(toolbar);
-
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException e){
-            Log.d("EXCEPTION", " " + e.getMessage());
-        }
-
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        //fetch the custom toolbar - set it as default, change the title
+//        toolbar = (Toolbar) findViewById(R.id.addCredit_app_bar);
+//        toolbar.setTitle("");
+//        //TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
+//        //toolbarText.setText(R.string.addCredit_title);
+//        setSupportActionBar(toolbar);
+//
+//        try {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }catch (NullPointerException e){
+//            Log.d("EXCEPTION", " " + e.getMessage());
+//        }
+//
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         timeText = (TextView) findViewById(R.id.addCredit_date);
         amountText = (TextView) findViewById(R.id.addCredit_editAmount);
