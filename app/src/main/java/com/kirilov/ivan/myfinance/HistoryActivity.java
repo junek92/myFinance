@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import java.util.List;
 public class HistoryActivity extends AppCompatActivity {
 
     private ListView mHistoryList;
+    private ProgressBar progressBar;
 
     List<Long> usefulMonths;        // store 1st day of each month with transactions
     List<String> monthName;         // store strings in format MMM-yyyy
@@ -94,39 +97,19 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
-
-        // find all months and pass them -- fetch and select only months with transactions
-        getMonthsWithTransaction(getMonths());
-            Log.d("HISTORY LISTS:", "usefulMonths: \n" + usefulMonths.toString());
-            Log.d("HISTORY LISTS:", "monthName: \n" + monthName.toString());
-            Log.d("HISTORY LISTS:", "monthBalance: \n" + monthBalance.toString());
-
-        // reverse moths to order them in NOW->PAST
-        Collections.reverse(usefulMonths);
-        Collections.reverse(monthName);
-        Collections.reverse(monthBalance);
-
-        // create and populate list view
+        progressBar = (ProgressBar) findViewById(R.id.history_progress_bar);
         mHistoryList = (ListView) findViewById(R.id.history_month_list);
         mHistoryMonthsAdapter = new HistoryMonthsAdapter(getApplicationContext(), getLayoutInflater());
-        mHistoryList.setAdapter(mHistoryMonthsAdapter);
-        mHistoryMonthsAdapter.updateData(usefulMonths, monthName, monthBalance);
 
-        mHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // ID = 1st day of month in ms
-                Intent intent = new Intent(context, PieMonthlyActivity.class);
-                intent.putExtra(MainActivity.KEY_PREF_DATE, id);
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
     protected void onResume() {
         // called when activity is returned on top of stack
         super.onResume();
+
+        new HistoryActivityBackgroundTask().execute();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
         navigationView.setCheckedItem(R.id.nav_history);
@@ -139,6 +122,65 @@ public class HistoryActivity extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    // subclass to implement some background work - AsyncTask< PARAMS, PROGRESS, RESULT>
+    private class HistoryActivityBackgroundTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            usefulMonths.clear();
+            monthName.clear();
+            monthBalance.clear();
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            getMonthsWithTransaction(getMonths());
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressBar.setVisibility(View.GONE);
+
+            // find all months and pass them -- fetch and select only months with transactions
+            //getMonthsWithTransaction(getMonths());
+            Log.d("HISTORY LISTS:", "usefulMonths: \n" + usefulMonths.toString());
+            Log.d("HISTORY LISTS:", "monthName: \n" + monthName.toString());
+            Log.d("HISTORY LISTS:", "monthBalance: \n" + monthBalance.toString());
+
+            // reverse moths to order them in NOW->PAST
+            Collections.reverse(usefulMonths);
+            Collections.reverse(monthName);
+            Collections.reverse(monthBalance);
+
+            // create and populate list view
+
+
+            mHistoryMonthsAdapter.updateData(usefulMonths, monthName, monthBalance);
+            mHistoryList.setAdapter(mHistoryMonthsAdapter);
+
+            mHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // ID = 1st day of month in ms
+                    Intent intent = new Intent(context, PieMonthlyActivity.class);
+                    intent.putExtra(MainActivity.KEY_PREF_DATE, id);
+                    startActivity(intent);
+                }
+            });
+
+            super.onPostExecute(aVoid);
         }
     }
 

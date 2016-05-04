@@ -462,7 +462,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
     }
 
     // getting TRANSs count by month
-    public  int getTransCountByMonth(long startTime, long finalTime){
+    public int getTransCountByMonth(long startTime, long finalTime){
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + FinanceContract.TransactionEntry.TABLE_NAME + " ttra WHERE ttra."
                 +FinanceContract.TransactionEntry.TR_DATE + " BETWEEN " + startTime + " AND " + finalTime;
@@ -476,7 +476,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
     }
 
     // getting TRANSs count
-    public  int getTransCount(){
+    public int getTransCount(){
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + FinanceContract.TransactionEntry.TABLE_NAME;
             Log.d("FINANCE DB: ", selectQuery);

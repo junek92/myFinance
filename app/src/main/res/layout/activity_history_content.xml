@@ -12,6 +12,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".HistoryActivity"
     >
+    
+    <ProgressBar
+        android:id="@+id/history_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        style="@android:style/Widget.ProgressBar.Inverse"/>
+    
 
     <TextView
         android:id="@+id/history_text"
