@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -25,8 +25,8 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.Highlight;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,19 +38,20 @@ import java.util.List;
 public class AnalyseActivity extends AppCompatActivity{
 
     // used for time recognition and selection
-    private long chosenDateInMs;
-    private long chosenCatId;
+    private long chosenDateInMs, chosenCatId;
+    private int spinnerCatLastSelected, spinnerYearLastSelected;
 
     private List<Long> allYearsInMs;
     private List<String> allYearsInStrings;
     private float[] dataToDisplay;
+    private Cursor cursorCat;
 
-    Context context;
-    Toolbar toolbar;
+
     FinanceDbHelper financeDbHelper;
     Spinner spinnerCategory, spinnerYear;
     BarChart barChart;
     TextView mTextView;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +59,29 @@ public class AnalyseActivity extends AppCompatActivity{
         setContentView(R.layout.activity_analyse);
         context = this;
 
-//        //fetch the custom toolbar - set it as default, change the title
-//        toolbar = (Toolbar) findViewById(R.id.analyse_app_bar);
-//        toolbar.setTitle("");
-//        //TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbar_text);
-//        //toolbarText.setText(R.string.analyse_title);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-
-        inflateCategorySpinner();
-        inflateYearSpinner();
-
+        spinnerCategory = (Spinner) findViewById(R.id.analyse_category_spinner);
+        spinnerYear = (Spinner) findViewById(R.id.analyse_year_spinner);
         mTextView = (TextView) findViewById(R.id.analyse_date);
 
         dataToDisplay = new float[12];
+        spinnerCatLastSelected = 0;
+        spinnerYearLastSelected = 0;
+
+    }
+
+    @Override
+    protected void onResume() {
+        new AnalyseActivityAsyncTask().execute();
         setupBarChart(dataToDisplay, true);
+
+        barChart.highlightValues(null);
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        cursorCat.close();
+        super.onDestroy();
     }
 
     @Override
@@ -89,9 +97,42 @@ public class AnalyseActivity extends AppCompatActivity{
         return true;
     }
 
+    private class AnalyseActivityAsyncTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            getCategoriesForSpinner();
+            getYearsForSpinner();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+        //--- CATEGORY SPINNER
+            // A list of column names representing the data to bind to the UI
+            String[] columnsToDisplay = new String[]{FinanceContract.CategoriesEntry.CAT_NAME};
+
+            // The views that should display column in the "columnsToDisplay" parameter
+            int[] listOfViews = new int[]{R.id.spinner_row};
+
+            SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
+                    R.layout.row_spinner, cursorCat, columnsToDisplay, listOfViews, 0);
+            spinnerCategory.setAdapter(simpleCursorAdapter);
+            if (spinnerCatLastSelected >= spinnerCategory.getCount()) spinnerCatLastSelected = 0;
+            spinnerCategory.setSelection(spinnerCatLastSelected);
+
+
+        //--- YEAR SPINNER
+            ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(context, R.layout.row_spinner, allYearsInStrings);
+            spinnerYear.setAdapter(yearAdapter);
+            if (spinnerYearLastSelected >= spinnerYear.getCount()) spinnerYearLastSelected = 0;
+            spinnerYear.setSelection(spinnerYearLastSelected);
+        }
+    }
+
     // inflating spinner for categories and managing onSelect
-    public void inflateCategorySpinner() {
-        spinnerCategory = (Spinner) findViewById(R.id.analyse_category_spinner);
+    public Cursor getCategoriesForSpinner() {
         financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
         SQLiteDatabase sqLiteDatabase = financeDbHelper.getReadableDatabase();
 
@@ -100,25 +141,13 @@ public class AnalyseActivity extends AppCompatActivity{
                 + FinanceContract.CategoriesEntry.CAT_TYPE + " FROM "
                 + FinanceContract.CategoriesEntry.TABLE_NAME;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
-
-        // A list of column names representing the data to bind to the UI
-        String[] columnsToDisplay = new String[]{FinanceContract.CategoriesEntry.CAT_NAME};
-        // The views that should display column in the "columnsToDisplay" parameter
-        int[] listOfViews = new int[]{R.id.spinner_row};
-
-        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
-                R.layout.row_spinner, cursor, columnsToDisplay, listOfViews, 0);
-        //simpleCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerCategory.setAdapter(simpleCursorAdapter);
-        //cursor.close();
+        cursorCat = sqLiteDatabase.rawQuery(selectQuery, null);
+        return cursorCat;
     }
 
     // inflating spinner for years and managing onSelect
-    public void inflateYearSpinner(){
+    public List<String> getYearsForSpinner(){
         Calendar calendar = Calendar.getInstance();
-        spinnerYear = (Spinner) findViewById(R.id.analyse_year_spinner);
         financeDbHelper = FinanceDbHelper.getInstance(getApplicationContext());
         SQLiteDatabase sqLiteDatabase = financeDbHelper.getReadableDatabase();
 
@@ -139,11 +168,13 @@ public class AnalyseActivity extends AppCompatActivity{
             }while (cursor.moveToNext());
         }
         cursor.close();
+
         if (transList.isEmpty()){
-            Toast toast = Toast.makeText(context, "No data to analyse! Please enter some transactions first!", Toast.LENGTH_SHORT);
-            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
-            if (toastView != null) toastView.setGravity(Gravity.CENTER);
-            toast.show();
+            //TODO: create toast outside ot AsyncTask
+//            Toast toast = Toast.makeText(context, "No data to analyse! Please enter some transactions first!", Toast.LENGTH_SHORT);
+//            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
+//            if (toastView != null) toastView.setGravity(Gravity.CENTER);
+//            toast.show();
             finish();
         } else {
             // fetching FIRST and LAST month
@@ -204,11 +235,9 @@ public class AnalyseActivity extends AppCompatActivity{
 
             Log.d("ANALYSE: ", "YEARS MS: " + allYearsInMs.toString() + "\n");
             Log.d("ANALYSE: ", "YEARS STRING: " + allYearsInStrings.toString() + "\n");
-
-            ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(context, R.layout.row_spinner, allYearsInStrings);
-            //yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerYear.setAdapter(yearAdapter);
         }
+
+        return allYearsInStrings;
     }
 
     public void fetchData(View view){
@@ -217,12 +246,16 @@ public class AnalyseActivity extends AppCompatActivity{
         } else {
             Calendar calendar = Calendar.getInstance();
             financeDbHelper = FinanceDbHelper.getInstance(context);
-            long chosenYear = allYearsInMs.get(spinnerYear.getSelectedItemPosition());      // currently 01.01.XXXX
+
+            spinnerYearLastSelected = spinnerYear.getSelectedItemPosition();
+            long chosenYear = allYearsInMs.get(spinnerYearLastSelected);      // currently 01.01.XXXX
 
             long beginTime = chosenYear;
             calendar.setTimeInMillis(chosenYear);
             calendar.add(Calendar.MONTH, 1);
             long endTime = calendar.getTimeInMillis();
+
+            spinnerCatLastSelected = spinnerCategory.getSelectedItemPosition();
             dataToDisplay[0] = financeDbHelper.sumTransByCategoryAndTime(spinnerCategory.getSelectedItemId(), beginTime, endTime);
 
             for (int i = 0; i < 11; i++) {
@@ -267,30 +300,34 @@ public class AnalyseActivity extends AppCompatActivity{
         barChart = (BarChart) findViewById(R.id.analyse_bar_chart);
         barChart.setNoDataText(getResources().getString(R.string.analyse_no_data));
         barChart.setDescription("");
-        if (initialUse == false){
+
+        if (!initialUse){
             barChart.setDrawGridBackground(false);
             barChart.setBackgroundColor(context.getResources().getColor(R.color.myWhite));
-            barChart.setDrawValueAboveBar(true);
+            //barChart.setDrawValueAboveBar(true);
             barChart.setPinchZoom(false);
             barChart.setScaleEnabled(false);
             barChart.setScaleXEnabled(false);
             barChart.setPinchZoom(false);
             barChart.setDoubleTapToZoomEnabled(false);
-            barChart.animateY(2500);
+            barChart.animateY(1500);
+
 
             //  disable both Y axis + legend
             YAxis rightAxis = barChart.getAxisRight();
             rightAxis.setEnabled(false);
-            rightAxis.setDrawGridLines(false);
+
             YAxis leftAxis = barChart.getAxisLeft();
             leftAxis.setDrawGridLines(false);
+            leftAxis.setAxisMinValue(0f);
             leftAxis.setEnabled(false);
+
             Legend legend = barChart.getLegend();
             legend.setEnabled(false);
 
             //format X axle
             XAxis bottomAxis = barChart.getXAxis();
-            bottomAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            bottomAxis.setPosition(XAxis.XAxisPosition.TOP);
             bottomAxis.setLabelsToSkip(0);
 
             // create BarDataSet and fill it with data + colors
@@ -341,8 +378,11 @@ public class AnalyseActivity extends AppCompatActivity{
                 }
             });
             barChart.setData(barData);
+
+            barChart.notifyDataSetChanged();
             barChart.invalidate();
         }
+        barChart.notifyDataSetChanged();
         barChart.invalidate();
     }
 

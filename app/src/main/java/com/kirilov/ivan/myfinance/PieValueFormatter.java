@@ -1,6 +1,8 @@
 package com.kirilov.ivan.myfinance;
 
-import com.github.mikephil.charting.utils.ValueFormatter;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
 
@@ -25,8 +27,13 @@ public class PieValueFormatter implements ValueFormatter {
         this.currency = currency;
     }
 
+//    @Override
+//    public String getFormattedValue(float value) {
+//        return mFormat.format(value) +" "+currency;
+//    }
+
     @Override
-    public String getFormattedValue(float value) {
+    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
         return mFormat.format(value) +" "+currency;
     }
 }

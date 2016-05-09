@@ -13,14 +13,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,13 +35,12 @@ public class HistoryActivity extends AppCompatActivity {
     List<Long> usefulMonths;        // store 1st day of each month with transactions
     List<String> monthName;         // store strings in format MMM-yyyy
     List<Double> monthBalance;      // store each month balance in double
-    HistoryMonthsAdapter mHistoryMonthsAdapter;
 
+    HistoryMonthsAdapter mHistoryMonthsAdapter;
 
     FinanceDbHelper financeDbHelper;
     Toolbar toolbar;
     Context context;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,8 +53,7 @@ public class HistoryActivity extends AppCompatActivity {
         monthBalance = new ArrayList<>();
 
         //fetch the custom toolbar - set it as default, change the title
-        Toolbar toolbar = (Toolbar) findViewById(R.id.history_toolbar);
-//        toolbar.setTitle("");
+        toolbar = (Toolbar) findViewById(R.id.history_toolbar);
         setSupportActionBar(toolbar);
 
         //---       NEW NAVIGATION TEST
@@ -100,8 +95,6 @@ public class HistoryActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.history_progress_bar);
         mHistoryList = (ListView) findViewById(R.id.history_month_list);
         mHistoryMonthsAdapter = new HistoryMonthsAdapter(getApplicationContext(), getLayoutInflater());
-
-
     }
 
     @Override
@@ -109,7 +102,8 @@ public class HistoryActivity extends AppCompatActivity {
         // called when activity is returned on top of stack
         super.onResume();
 
-        new HistoryActivityBackgroundTask().execute();
+        // call AsyncTask to fetch all needed data from DB
+        new HistoryActivityAsyncTask().execute();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
         navigationView.setCheckedItem(R.id.nav_history);
@@ -126,7 +120,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     // subclass to implement some background work - AsyncTask< PARAMS, PROGRESS, RESULT>
-    private class HistoryActivityBackgroundTask extends AsyncTask<Void, Void, Void>{
+    private class HistoryActivityAsyncTask extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected void onPreExecute() {
@@ -212,10 +206,11 @@ public class HistoryActivity extends AppCompatActivity {
         cursor.close();
 
         if (transList.isEmpty()){
-            Toast toast = Toast.makeText(context, "No history to display!", Toast.LENGTH_SHORT);
-            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
-            if (toastView != null) toastView.setGravity(Gravity.CENTER);
-            toast.show();
+            //TODO: implement toast in AsyncTask-> onPostExecute
+//            Toast toast = Toast.makeText(context, "No history to display!", Toast.LENGTH_SHORT);
+//            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
+//            if (toastView != null) toastView.setGravity(Gravity.CENTER);
+//            toast.show();
             finish();
         } else {
             // fetching FIRST and LAST month
@@ -310,10 +305,11 @@ public class HistoryActivity extends AppCompatActivity {
         List<Category> creditCategories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT);
 
         if (allMonths.size() == 2){
-            Toast toast = Toast.makeText(context, "No history to display!", Toast.LENGTH_SHORT);
-            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
-            if (toastView != null) toastView.setGravity(Gravity.CENTER);
-            toast.show();
+            //TODO: implement toast in AsyncTask-> onPostExecute
+//            Toast toast = Toast.makeText(context, "No history to display!", Toast.LENGTH_SHORT);
+//            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
+//            if (toastView != null) toastView.setGravity(Gravity.CENTER);
+//            toast.show();
             finish();
         } else {
             // exclude last DATE, because its artificially added to get proper time intervals (only when we need current month to be displayed in history)

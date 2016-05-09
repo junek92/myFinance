@@ -65,12 +65,10 @@
         android:layout_height="72dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_circle_red"
         android:onClick="addDebit"
-
-
 
         android:text="@string/main_addDebit"
         android:fontFamily="sans-serif-medium"
@@ -88,12 +86,10 @@
         android:layout_height="72dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_circle_green"
         android:onClick="addCredit"
-
-
 
         android:text="@string/main_addCredit"
         android:fontFamily="sans-serif-medium"

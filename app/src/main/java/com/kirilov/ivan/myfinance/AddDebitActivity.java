@@ -32,6 +32,7 @@ public class AddDebitActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private long chosenDateInMs;
 
+    Cursor cursorCat, cursorAcc;
     Context context;
     Toolbar toolbar;
     FinanceDbHelper financeDbHelper;
@@ -188,7 +189,7 @@ public class AddDebitActivity extends AppCompatActivity {
                 + FinanceContract.CategoriesEntry.CAT_TYPE + " = "
                 + FinanceContract.CategoriesEntry.CT_TYPE_DEBIT;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        cursorCat = sqLiteDatabase.rawQuery(selectQuery, null);
 
         // A list of column names representing the data to bind to the UI
         String[] columnsToDisplay = new String[]{FinanceContract.CategoriesEntry.CAT_NAME};
@@ -196,11 +197,10 @@ public class AddDebitActivity extends AppCompatActivity {
         int[] listOfViews = new int[]{R.id.spinner_row};
 
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
-                R.layout.row_spinner, cursor, columnsToDisplay, listOfViews, 0);
+                R.layout.row_spinner, cursorCat, columnsToDisplay, listOfViews, 0);
         //simpleCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCategory.setAdapter(simpleCursorAdapter);
-        //cursor.close();
     }
 
     // inflating spinner for accounts and managing onSelect
@@ -213,7 +213,7 @@ public class AddDebitActivity extends AppCompatActivity {
                 + FinanceContract.AccountsEntry.ACC_NAME + " FROM "
                 + FinanceContract.AccountsEntry.TABLE_NAME;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
+        cursorAcc = sqLiteDatabase.rawQuery(selectQuery,null);
 
         // A list of column names representing the data to bind to the UI
         String[] columnsToDisplay = new String[]{FinanceContract.AccountsEntry.ACC_NAME};
@@ -221,11 +221,10 @@ public class AddDebitActivity extends AppCompatActivity {
         int[] listOfViews = new int[]{R.id.spinner_row};
 
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
-                R.layout.row_spinner, cursor, columnsToDisplay, listOfViews, 0);
+                R.layout.row_spinner, cursorAcc, columnsToDisplay, listOfViews, 0);
         //simpleCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerAcc.setAdapter(simpleCursorAdapter);
-        //cursor.close();
     }
 
 

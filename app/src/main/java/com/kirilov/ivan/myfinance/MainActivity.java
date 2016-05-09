@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -20,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +27,8 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.Highlight;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,22 +43,12 @@ public class MainActivity extends AppCompatActivity {
     public static String        KEY_PREF_TRANS_ID = "transId";
     public static String        KEY_PREF_CAT_ID = "catId";
 
-    // used for navigation drawer
-    private ListView                mDrawerList;
-    private NavigationAdapter       mNavigationAdapter;
-    private ActionBarDrawerToggle   mDrawerToggle;
-    private DrawerLayout            mDrawerLayout;
-
-    // used for PieChart drawing
     private PieChart    pieChart;
-    private float[]     dataForPie;          // y - represents % values
-
-    // used to display current balance
-    private TextView textViewBalance;
+    private TextView textViewBalance, textViewDate;
 
     FinanceDbHelper financeDbHelper;
     Context         context;
-//    Toolbar         toolbar;
+    Toolbar         toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +60,8 @@ public class MainActivity extends AppCompatActivity {
         firstLaunch();
 
         //fetch the custom toolbar - set it as default, change the title
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-//        toolbar.setTitle("");
-
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-
 
         //---       NEW NAVIGATION TEST
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
@@ -118,47 +100,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        // set current date in TextView
-        TextView textViewDate = (TextView) findViewById(R.id.main_date);
-        textViewDate.setText(FinanceDbHelper.getInstance(this).getTimeInString(Calendar.getInstance().getTimeInMillis(), true));
-
-        // set current balance in TextView
+        textViewDate = (TextView) findViewById(R.id.main_date);
         textViewBalance = (TextView) findViewById(R.id.main_textBalance);
-        calcBalance(textViewBalance, Calendar.getInstance().getTimeInMillis());
-
-        // create, configure the PieChart
         pieChart = (PieChart) findViewById(R.id.main_pieChart);
-//        dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
-//        setupPieChart(dataForPie, pieChart, true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
+        navigationView.setCheckedItem(R.id.nav_this_month);
+
+        // AsyncTask to - calculate balance, set current date
+        new MainActivityAsyncTask().execute();
+
+        setupPieChart(pieChart, false);
+
     }
 
     @Override
     protected void onDestroy() {
         // closes any open DB object
         financeDbHelper.close();
-        Log.d("FINANCE DB: ", "DB closed");
+            Log.d("FINANCE DB: ", "DB closed");
 
         super.onDestroy();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
-        navigationView.setCheckedItem(R.id.nav_this_month);
-
-        // calculate balance
-        calcBalance(textViewBalance, Calendar.getInstance().getTimeInMillis());
-
-        // clear the highlights in PieChart and fill it with data
-
-        dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());
-        setupPieChart(dataForPie, pieChart, false);
-        pieChart.highlightValues(null);
-        pieChart.invalidate();
-    }
 
     @Override
     public void onBackPressed() {
@@ -170,9 +139,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//---   Subclass to implement some background work - AsyncTask< PARAMS, PROGRESS, RESULT>
+    private class MainActivityAsyncTask extends AsyncTask<Void, String, Void> {
+        double endBalance;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            endBalance = calcBalance(Calendar.getInstance().getTimeInMillis(), context);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // set current date in TextView
+            textViewDate.setText(FinanceDbHelper.getInstance(context).getTimeInString(Calendar.getInstance().getTimeInMillis(), true));
+
+            // set calculated balance in Text View
+            if (endBalance > 0)
+                textViewBalance.setBackgroundColor(context.getResources().getColor(R.color.primaryColorDark));
+            else
+                textViewBalance.setBackgroundColor(context.getResources().getColor(R.color.accentColor));
+
+            textViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context)
+                                                                    .getString(MainActivity.KEY_PREF_CURRENCY,"BGN"))
+                                                                    .getFormattedValue((float) endBalance, null, 0, null));
+
+            super.onPostExecute(aVoid);
+        }
+    }
+//---   End of subclass
+
     // returns array of SUMS for each DEBIT category, in parameter is time in ms to fetch the MONTH
     public float[] extractDataForPie(long timeInMs){
-        financeDbHelper = FinanceDbHelper.getInstance(this);
+        financeDbHelper = FinanceDbHelper.getInstance(context);
         Calendar calendar = Calendar.getInstance();
 
         calendar.setTimeInMillis(timeInMs);
@@ -211,59 +210,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // method to create, customize and inflate with data the PieChart, in parameters is array of floats which contains Y values ( DATA )
-    public void setupPieChart(float[] dataValues, PieChart mPieChart, boolean firstDraw){
-        ArrayList<Entry> yVals = new ArrayList<>();
-        ArrayList<String> allCategories = new ArrayList<>();
+    public void setupPieChart(PieChart mPieChart, boolean animateChart){
+        financeDbHelper = FinanceDbHelper.getInstance(context);
+        ArrayList<String> allCatNames = new ArrayList<>();
+        ArrayList<Long> allCatIds = new ArrayList<>();
         ArrayList<String> notZeroCategories = new ArrayList<>();
-        ArrayList<Long> allCategoriesID = new ArrayList<>();
         final ArrayList<Long> notZeroCategoriesID = new ArrayList<>();
+        ArrayList<Entry> yVals = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
 
         PieDataSet pieDataSet;
         PieData pieData;
 
+        float[] dataForPie = extractDataForPie(Calendar.getInstance().getTimeInMillis());       // represent Y values
+        List<Category> categories = financeDbHelper.getAllCategoriesByType(FinanceContract.CategoriesEntry.CT_TYPE_DEBIT);
+
+        for (int i = 0; i < categories.size(); i++){
+            allCatNames.add(categories.get(i).getCatName());
+            allCatIds.add(categories.get(i).getCatId());
+        }
+
         mPieChart.setDescription(null);
         mPieChart.setDrawHoleEnabled(true);         // create the hole inside the PieChart
-        mPieChart.setHoleColorTransparent(true);
         mPieChart.setDrawSliceText(false);
         mPieChart.setHoleRadius(40);
-        mPieChart.setTransparentCircleRadius(43);
+        mPieChart.setTransparentCircleRadius(44);
 
-        if (firstDraw == true) mPieChart.animateY(2500);
-
-        // fetch all names of the categories for X
-        financeDbHelper = FinanceDbHelper.getInstance(this);
-        SQLiteDatabase sqLiteDatabase = financeDbHelper.getReadableDatabase();
-
-        String selectQuery = "SELECT " + FinanceContract.CategoriesEntry.CAT_ID + " AS _id, "
-                + FinanceContract.CategoriesEntry.CAT_NAME + ", "
-                + FinanceContract.CategoriesEntry.CAT_TYPE + " FROM "
-                + FinanceContract.CategoriesEntry.TABLE_NAME + " WHERE "
-                + FinanceContract.CategoriesEntry.CAT_TYPE + " = "
-                + FinanceContract.CategoriesEntry.CT_TYPE_DEBIT;
-
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()){
-            do{
-                allCategories.add(cursor.getString(cursor.getColumnIndex(FinanceContract.CategoriesEntry.CAT_NAME)));
-                allCategoriesID.add(cursor.getLong(cursor.getColumnIndex("_id")));
-            }while (cursor.moveToNext());
-        }
+        if (animateChart == true) mPieChart.animateY(1500);
 
         int notZeroCategoryCounter = 0;
         // add data to PieChart - Y - % values : X - name of pie slices
-        for (int i = 0; i < dataValues.length; i++){
-            if (dataValues[i] != 0) {
-                yVals.add(new Entry(dataValues[i], notZeroCategoryCounter));
-                notZeroCategories.add(allCategories.get(i));
-                notZeroCategoriesID.add(allCategoriesID.get(i));
+        for (int i = 0; i < dataForPie.length; i++){
+            if (dataForPie[i] != 0) {
+                yVals.add(new Entry(dataForPie[i], notZeroCategoryCounter));
+                notZeroCategories.add(allCatNames.get(i));
+                notZeroCategoriesID.add(allCatIds.get(i));
                 notZeroCategoryCounter++;
             }
         }
 
         // create  PieDataSet - to
         pieDataSet = new PieDataSet(yVals, null);
-        pieDataSet.setSliceSpace(0.1f);
+        pieDataSet.setSliceSpace(0.5f);
 
         // add colors for PieChart
         colors.add(context.getResources().getColor(R.color.myPieColor1));
@@ -321,28 +309,27 @@ public class MainActivity extends AppCompatActivity {
 
         // customize legend for PieChart
         Legend legend = mPieChart.getLegend();
-        legend.setPosition(Legend.LegendPosition.PIECHART_CENTER);
-        legend.setTextSize(14);
-        legend.setXEntrySpace(7);
-        legend.setYEntrySpace(5);
-        legend.setTypeface(Typeface.DEFAULT);
         legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setPosition(Legend.LegendPosition.PIECHART_CENTER);
+        legend.setYOffset(-30f);
+        legend.setTypeface(Typeface.DEFAULT);
+        legend.setTextSize(14);
         legend.setTextColor(context.getResources().getColor(R.color.myBlack));
 
-        Log.d("FINANCE DB: ", "ENTRYs: \n" + pieData.getDataSet().toString());
-        //mPieChart.notifyDataSetChanged();
+        mPieChart.notifyDataSetChanged();
         mPieChart.invalidate();
     }
 
     // method to calculate current BALANCE and inflate text view with it
-    public void calcBalance(TextView textView, long timeInMs){
-        financeDbHelper = FinanceDbHelper.getInstance(this);
+    public double calcBalance(long timeInMs, Context context){
+        financeDbHelper = FinanceDbHelper.getInstance(context);
         double debitSum = 0;
         double creditSum = 0;
         double endBalance;
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeInMs);
+
         // get today and clear time of day - 0h : 00m : 00s
         calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
         calendar.clear(Calendar.MINUTE);
@@ -375,14 +362,11 @@ public class MainActivity extends AppCompatActivity {
             creditSum = creditSum + financeDbHelper.sumTransByCategoryAndTime(creditCategories.get(i).getCatId(), startOfMonth, endOfMonth);
         }
 
-            Log.d("FINANCE DB:", "DEBIT: " + debitSum + " : " + "CREDIT: " + creditSum);
-        String rawText = new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")).getFormattedValue((float) (endBalance = creditSum + debitSum));
-        if (endBalance > 0)
-            textView.setBackgroundColor(context.getResources().getColor(R.color.primaryColorDark));
-        else
-            textView.setBackgroundColor(context.getResources().getColor(R.color.accentColor));
+        endBalance = creditSum + debitSum;
 
-        textView.setText(rawText);
+            Log.d("FINANCE DB:", "DEBIT: " + debitSum + " : " + "CREDIT: " + creditSum);
+
+        return endBalance;
     }
 
     public void addDebit(View view){

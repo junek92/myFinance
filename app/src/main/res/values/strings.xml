@@ -2,7 +2,7 @@
     <string name="app_name">My Finance</string>
 
     <string name="main_title">This Month</string>
-    <string name="main_date">Ooops ...</string>
+    <string name="main_date"> </string>
     <string name="main_btnTestDb">Test DB</string>
     <string name="main_addDebit">-</string>
     <string name="main_addCredit">+</string>

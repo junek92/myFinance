@@ -37,6 +37,7 @@ public class TransUpdateActivity extends AppCompatActivity {
     Spinner spinnerCategory, spinnerAcc;
     TextView timeText, amountText, descText, currencyText;
 
+    Cursor cursorCat, cursorAcc;
     Context context;
     Toolbar toolbar;
 
@@ -147,6 +148,13 @@ public class TransUpdateActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        cursorCat.close();
+        cursorAcc.close();
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         // Handle action bar item clicks here. The action bar will
@@ -174,7 +182,7 @@ public class TransUpdateActivity extends AppCompatActivity {
                 + FinanceContract.CategoriesEntry.CAT_TYPE + " = "
                 + transType;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        cursorCat = sqLiteDatabase.rawQuery(selectQuery, null);
 
         // A list of column names representing the data to bind to the UI
         String[] columnsToDisplay = new String[]{FinanceContract.CategoriesEntry.CAT_NAME};
@@ -182,7 +190,7 @@ public class TransUpdateActivity extends AppCompatActivity {
         int[] listOfViews = new int[]{R.id.spinner_row};
 
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
-                R.layout.row_spinner, cursor, columnsToDisplay, listOfViews, 0);
+                R.layout.row_spinner, cursorCat, columnsToDisplay, listOfViews, 0);
         //simpleCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCategory.setAdapter(simpleCursorAdapter);
@@ -208,7 +216,7 @@ public class TransUpdateActivity extends AppCompatActivity {
                 + FinanceContract.AccountsEntry.ACC_NAME + " FROM "
                 + FinanceContract.AccountsEntry.TABLE_NAME;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
+        cursorAcc = sqLiteDatabase.rawQuery(selectQuery,null);
 
         // A list of column names representing the data to bind to the UI
         String[] columnsToDisplay = new String[]{FinanceContract.AccountsEntry.ACC_NAME};
@@ -216,7 +224,7 @@ public class TransUpdateActivity extends AppCompatActivity {
         int[] listOfViews = new int[]{R.id.spinner_row};
 
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
-                R.layout.row_spinner, cursor, columnsToDisplay, listOfViews, 0);
+                R.layout.row_spinner, cursorAcc, columnsToDisplay, listOfViews, 0);
         //simpleCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerAcc.setAdapter(simpleCursorAdapter);

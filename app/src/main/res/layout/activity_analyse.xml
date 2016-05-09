@@ -1,136 +1,126 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+    
+    <TextView
+        android:id="@+id/analyse_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    <!--<include-->
-        <!--android:id="@+id/analyse_app_bar"-->
-        <!--layout="@layout/activity_main_toolbar" />-->
+        android:layout_marginTop="8dp"
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:id="@+id/analyse_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:alpha="0.54"
+        android:fontFamily="sans-serif-black"
+        android:textSize="24sp"
+        />
 
-                android:layout_marginTop="8dp"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/analyse_bar_chart"
 
-                android:textColor="#000000"
-                android:gravity="center"
-                android:alpha="0.54"
-                android:fontFamily="sans-serif-black"
-                android:textSize="24sp"
-                />
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_below="@id/analyse_date"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/analyse_bar_chart"
+        android:elevation="2dp"
+        />
 
-                android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:layout_below="@id/analyse_date"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+    <TextView
+        android:id="@+id/analyse_year_text"
 
-                android:elevation="2dp"
-                />
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
 
-            <TextView
-                android:id="@+id/analyse_year_text"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@id/analyse_bar_chart"
 
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+        android:text="@string/analyse_year"
+        android:textColor="#000000"
+        android:alpha="0.87"
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp"/>
 
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_below="@id/analyse_bar_chart"
+    <TextView
+        android:id="@+id/analyse_category_text"
 
-                android:text="@string/analyse_year"
-                android:textColor="#000000"
-                android:alpha="0.87"
-                android:fontFamily="sans-serif-black"
-                android:textSize="16sp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
 
-            <TextView
-                android:id="@+id/analyse_category_text"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@id/analyse_year_text"
 
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+        android:text="@string/analyse_category"
+        android:textColor="#000000"
+        android:alpha="0.87"
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp"/>
 
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_below="@id/analyse_year_text"
+    <Spinner
+        android:id="@+id/analyse_year_spinner"
 
-                android:text="@string/analyse_category"
-                android:textColor="#000000"
-                android:alpha="0.87"
-                android:fontFamily="sans-serif-black"
-                android:textSize="16sp"/>
+        android:popupBackground="@color/myWhite"
+        android:popupElevation="6dp"
 
-            <Spinner
-                android:id="@+id/analyse_year_spinner"
+        android:layout_width="112dp"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
 
-                android:popupBackground="@color/myWhite"
-                android:popupElevation="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="108dp"
+        android:layout_below="@id/analyse_bar_chart"
 
-                android:layout_width="112dp"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
-
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="108dp"
-                android:layout_below="@id/analyse_bar_chart"
-
-                android:prompt="@string/analyse_year_prompt"/>
+        android:prompt="@string/analyse_year_prompt"/>
 
 
 
-            <Spinner
-                android:id="@+id/analyse_category_spinner"
+    <Spinner
+        android:id="@+id/analyse_category_spinner"
 
-                android:popupBackground="@color/myWhite"
-                android:popupElevation="6dp"
+        android:popupBackground="@color/myWhite"
+        android:popupElevation="6dp"
 
-                android:layout_width="112dp"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+        android:layout_width="112dp"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
 
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="108dp"
-                android:layout_below="@id/analyse_year_spinner"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="108dp"
+        android:layout_below="@id/analyse_year_spinner"
 
-                android:prompt="@string/analyse_category_prompt"/>
+        android:prompt="@string/analyse_category_prompt"/>
 
-            <Button
-                android:id="@+id/analyse_button"
-                android:elevation="2dp"
+    <Button
+        android:id="@+id/analyse_button"
+        android:elevation="2dp"
 
-                android:layout_width="92dp"
-                android:layout_height="36dp"
-                android:gravity="center"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
+        android:layout_width="92dp"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
 
-                android:text="@string/analyse_button"
-                android:textAllCaps="true"
-                android:textColor="@color/myWhite"
-                android:alpha="1"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="14sp"
+        android:text="@string/analyse_button"
+        android:textAllCaps="true"
+        android:textColor="@color/myWhite"
+        android:alpha="1"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp"
 
-                android:background="@color/primaryColorDark"
-                android:onClick="fetchData"
-                />
+        android:background="@color/primaryColorDark"
+        android:onClick="fetchData"
+        />
 
-        </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>
+

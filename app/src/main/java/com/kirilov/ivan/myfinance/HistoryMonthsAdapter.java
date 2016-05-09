@@ -72,7 +72,7 @@ public class HistoryMonthsAdapter extends BaseAdapter {
         float mF = (float) mD;
 
         viewHolder.mTextViewName.setText(monthName.get(position));
-        viewHolder.mTextViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(mContext).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")).getFormattedValue(mF));
+        viewHolder.mTextViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(mContext).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")).getFormattedValue(mF, null, 0, null));
 
         if (mF > 0){
             viewHolder.mTextViewBalance.setTextColor(mContext.getResources().getColor(R.color.primaryColorDark));
