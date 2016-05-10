@@ -66,15 +66,19 @@ public class AnalyseActivity extends AppCompatActivity{
         dataToDisplay = new float[12];
         spinnerCatLastSelected = 0;
         spinnerYearLastSelected = 0;
-
     }
 
     @Override
     protected void onResume() {
+        allYearsInMs = new ArrayList<>();
+        allYearsInStrings = new ArrayList<>();
+
         new AnalyseActivityAsyncTask().execute();
         setupBarChart(dataToDisplay, true);
 
+
         barChart.highlightValues(null);
+        //TODO: when onResume is called new data fetch must be done in order to evaluate eventual changes in data !
         super.onResume();
     }
 
@@ -116,18 +120,28 @@ public class AnalyseActivity extends AppCompatActivity{
             // The views that should display column in the "columnsToDisplay" parameter
             int[] listOfViews = new int[]{R.id.spinner_row};
 
-            SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
-                    R.layout.row_spinner, cursorCat, columnsToDisplay, listOfViews, 0);
-            spinnerCategory.setAdapter(simpleCursorAdapter);
-            if (spinnerCatLastSelected >= spinnerCategory.getCount()) spinnerCatLastSelected = 0;
-            spinnerCategory.setSelection(spinnerCatLastSelected);
-
+            if (cursorCat.moveToNext()){
+                SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
+                        R.layout.row_spinner, cursorCat, columnsToDisplay, listOfViews, 0);
+                spinnerCategory.setAdapter(simpleCursorAdapter);
+                if (spinnerCatLastSelected >= spinnerCategory.getCount()) spinnerCatLastSelected = 0;
+                spinnerCategory.setSelection(spinnerCatLastSelected);
+            } else {
+                Toast.makeText(context, "No categories to analyze!", Toast.LENGTH_LONG).show();
+            }
 
         //--- YEAR SPINNER
-            ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(context, R.layout.row_spinner, allYearsInStrings);
-            spinnerYear.setAdapter(yearAdapter);
-            if (spinnerYearLastSelected >= spinnerYear.getCount()) spinnerYearLastSelected = 0;
-            spinnerYear.setSelection(spinnerYearLastSelected);
+            if (allYearsInStrings.isEmpty()) {
+                Toast.makeText(context, "No transactions to analyze!", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                Log.d("TEST ONE ", " are we moving over here ?");
+                ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(context, R.layout.row_spinner, allYearsInStrings);
+                spinnerYear.setAdapter(yearAdapter);
+                if (spinnerYearLastSelected >= spinnerYear.getCount()) spinnerYearLastSelected = 0;
+                spinnerYear.setSelection(spinnerYearLastSelected);
+            }
+
         }
     }
 
@@ -169,14 +183,7 @@ public class AnalyseActivity extends AppCompatActivity{
         }
         cursor.close();
 
-        if (transList.isEmpty()){
-            //TODO: create toast outside ot AsyncTask
-//            Toast toast = Toast.makeText(context, "No data to analyse! Please enter some transactions first!", Toast.LENGTH_SHORT);
-//            TextView toastView = (TextView) toast.getView().findViewById(android.R.id.message);
-//            if (toastView != null) toastView.setGravity(Gravity.CENTER);
-//            toast.show();
-            finish();
-        } else {
+        if (!transList.isEmpty()){
             // fetching FIRST and LAST month
             long minTime = transList.get(0).getAtDate();
             long maxTime = transList.get(0).getAtDate();
@@ -219,8 +226,8 @@ public class AnalyseActivity extends AppCompatActivity{
             maxTime = calendar.getTimeInMillis();
 
             // get all first days in years between minTime and maxTime
-            allYearsInMs = new ArrayList<>();
-            allYearsInStrings = new ArrayList<>();
+//            allYearsInMs = new ArrayList<>();
+//            allYearsInStrings = new ArrayList<>();
 
             long currentYear = minTime;
             do {
@@ -269,11 +276,15 @@ public class AnalyseActivity extends AppCompatActivity{
             chosenDateInMs = chosenYear;
             chosenCatId = spinnerCategory.getSelectedItemId();
             mTextView.setText(FinanceDbHelper.getInstance(context).getCategory(spinnerCategory.getSelectedItemId()).getCatName() + " - " + allYearsInStrings.get(spinnerYear.getSelectedItemPosition()));
+
+            // TODO: should reconsider how to properly use setupBarChart - on button click there should be animation,
+            // and no animation when it's called from onResume()
+            // BUT there should be animation when the activity is first created...
             setupBarChart(dataToDisplay, false);
         }
     }
 
-    public void setupBarChart(float[] inputData, boolean initialUse){
+    public void setupBarChart(float[] inputData, boolean toAnimate){
         ArrayList<BarEntry> yVals = new ArrayList<>();
         final ArrayList<String> xMonths = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
@@ -301,7 +312,7 @@ public class AnalyseActivity extends AppCompatActivity{
         barChart.setNoDataText(getResources().getString(R.string.analyse_no_data));
         barChart.setDescription("");
 
-        if (!initialUse){
+        if (!toAnimate){
             barChart.setDrawGridBackground(false);
             barChart.setBackgroundColor(context.getResources().getColor(R.color.myWhite));
             //barChart.setDrawValueAboveBar(true);

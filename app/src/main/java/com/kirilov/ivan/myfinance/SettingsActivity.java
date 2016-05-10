@@ -38,7 +38,7 @@ import android.widget.ListView;
 public class SettingsActivity extends PreferenceActivity {
 //
 //
-//    //TODO: update preferences, because now they are shitty!
+//    //TODO: update the look of preferences, because now they are shitty!
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
