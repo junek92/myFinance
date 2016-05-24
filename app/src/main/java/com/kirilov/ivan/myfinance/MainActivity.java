@@ -29,6 +29,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private PieChart    pieChart;
     private TextView textViewBalance, textViewDate;
 
+    private FirebaseDatabase database;
+
     FinanceDbHelper financeDbHelper;
     Context         context;
     Toolbar         toolbar;
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+
+        database = FirebaseDatabase.getInstance();
 
         //on app first launch - do certain stuff
         firstLaunch();
@@ -92,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(prefIntent);
                 } else if (id == R.id.nav_about) {
                     aboutDialog(context);
+                } else if (id == R.id.nav_test_firebase) {
+                    // Enter in firebase test activity
+                    Intent firebaseIntent = new Intent(context, FirebaseActivityTest.class);
+                    startActivity(firebaseIntent);
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);

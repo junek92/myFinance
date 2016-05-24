@@ -45,6 +45,9 @@ public class AddCreditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_credit);
         context = this;
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_credit_toolbar);
+        setSupportActionBar(toolbar);
+
         // extract INTENT to get chosen DATE
         if (savedInstanceState == null){
             Bundle extras = getIntent().getExtras();

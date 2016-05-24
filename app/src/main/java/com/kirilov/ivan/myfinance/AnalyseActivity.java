@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -58,6 +59,9 @@ public class AnalyseActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyse);
         context = this;
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.analyse_toolbar);
+        setSupportActionBar(toolbar);
 
         spinnerCategory = (Spinner) findViewById(R.id.analyse_category_spinner);
         spinnerYear = (Spinner) findViewById(R.id.analyse_year_spinner);

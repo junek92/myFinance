@@ -52,6 +52,9 @@ public class TransUpdateActivity extends AppCompatActivity {
 
         context = this;
 
+        toolbar = (Toolbar) findViewById(R.id.transaction_update_toolbar);
+        setSupportActionBar(toolbar);
+
         // extract INTENT to get chosen DATE, ID
         if (savedInstanceState == null){
             Bundle extras = getIntent().getExtras();

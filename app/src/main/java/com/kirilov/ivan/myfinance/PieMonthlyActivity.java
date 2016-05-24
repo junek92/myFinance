@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -43,6 +44,9 @@ public class PieMonthlyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_monthly);
         context = this;
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.pie_monthly_toolbar);
+        setSupportActionBar(toolbar);
 
         // extract INTENT to get CHOSEN DATE
         if (savedInstanceState == null){

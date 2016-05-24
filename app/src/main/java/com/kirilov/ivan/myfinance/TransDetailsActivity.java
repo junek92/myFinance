@@ -45,6 +45,9 @@ public class TransDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trans_details);
         context = this;
 
+        toolbar = (Toolbar) findViewById(R.id.transaction_details_toolbar);
+        setSupportActionBar(toolbar);
+
         // extract INTENT to get chosen DATE
         if (savedInstanceState == null){
             Bundle extras = getIntent().getExtras();

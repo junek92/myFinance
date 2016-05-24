@@ -11,8 +11,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +22,6 @@
             android:name=".HistoryActivity"
             android:label="@string/history_title"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -97,6 +95,15 @@
             android:theme="@style/AppTheme.SettingsTheme"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
-    </application>
 
+        <activity
+            android:name=".FirebaseActivityTest"
+            android:label="TEST FIREBASE"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.kirilov.ivan.myfinance.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kirilov.ivan.myfinance.MainActivity"/>
+        </activity>
+    </application>
 </manifest>
