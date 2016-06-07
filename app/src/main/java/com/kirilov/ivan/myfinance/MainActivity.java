@@ -14,7 +14,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,30 +28,33 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import com.kirilov.ivan.myfinance.firebase_model.Category;
+import com.kirilov.ivan.myfinance.firebase_model.Wallet;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceContract;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceDbHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    public static final String  KEY_PREFS_FIRST_LAUNCH = "first_launch";
-    public static String        KEY_PREF_CURRENCY = "used_currency";
-    public static String        KEY_PREF_DATE = "chosenDate";
-    public static String        KEY_PREF_TRANS_ID = "transId";
-    public static String        KEY_PREF_CAT_ID = "catId";
+    public static String        KEY_DATE = "chosenDate";
+    public static String        KEY_TRANS_ID = "transId";
+    public static String        KEY_CAT_ID = "catId";
 
     private PieChart    pieChart;
     private TextView textViewBalance, textViewDate;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
-    private FirebaseDatabase database;
+    private Toolbar toolbar;
 
-    FinanceDbHelper financeDbHelper;
-    Context         context;
-    Toolbar         toolbar;
+    private FinanceDbHelper financeDbHelper;
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,55 +62,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = this;
 
-        database = FirebaseDatabase.getInstance();
-
         //on app first launch - do certain stuff
-        firstLaunch();
+        setupPreferencesOnFirstUse();
 
         //fetch the custom toolbar - set it as default, change the title
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        //---       NEW NAVIGATION TEST
-        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
-        navigationView.setCheckedItem(R.id.nav_this_month);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                // Handle navigation view item clicks here.
-                int id = item.getItemId();
-
-//                if (id == R.id.nav_this_month) {
-//
-//                } else
-                if (id == R.id.nav_history) {
-                    Intent historyActivity = new Intent(context, HistoryActivity.class);
-                    startActivity(historyActivity);
-                } else if (id == R.id.nav_analyze) {
-                    Intent analyseIntent = new Intent(context, AnalyseActivity.class);
-                    startActivity(analyseIntent);
-                } else if (id == R.id.nav_settings) {
-                    Intent prefIntent = new Intent(context, SettingsActivity.class);
-                    startActivity(prefIntent);
-                } else if (id == R.id.nav_about) {
-                    aboutDialog(context);
-                } else if (id == R.id.nav_test_firebase) {
-                    // Enter in firebase test activity
-                    Intent firebaseIntent = new Intent(context, FirebaseActivityTest.class);
-                    startActivity(firebaseIntent);
-                }
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+        setupNavigationDrawer();
 
         textViewDate = (TextView) findViewById(R.id.main_date);
         textViewBalance = (TextView) findViewById(R.id.main_textBalance);
@@ -119,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
-        navigationView.setCheckedItem(R.id.nav_this_month);
+        navigationView.setCheckedItem(R.id.nav_main_current);
 
         // AsyncTask to - calculate balance, set current date
         new MainActivityAsyncTask().execute();
@@ -138,12 +98,10 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -171,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 textViewBalance.setBackgroundColor(context.getResources().getColor(R.color.accentColor));
 
             textViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context)
-                                                                    .getString(MainActivity.KEY_PREF_CURRENCY,"BGN"))
+                                                                    .getString(Constants.KEY_PREF_CURRENCY,"BGN"))
                                                                     .getFormattedValue((float) endBalance, null, 0, null));
 
             super.onPostExecute(aVoid);
@@ -288,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
             pieData = new PieData(notZeroCategories, pieDataSet);
         }
 
-        pieData.setValueFormatter(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")));    // format the data - ### ### ##0.0 CURRENCY
+        pieData.setValueFormatter(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(Constants.KEY_PREF_CURRENCY,"BGN")));    // format the data - ### ### ##0.0 CURRENCY
         pieData.setValueTextColor(context.getResources().getColor(R.color.myWhite));
         pieData.setValueTextSize(16);
 
@@ -305,9 +263,9 @@ public class MainActivity extends AppCompatActivity {
                 // e - is the entry selected, dataSetIndex - the ID of the selected entry from DataSet
                 // h - is the position highlighted
                 if (e == null) return;
-                Intent intent = new Intent(context.getApplicationContext(), TransDetailsActivity.class);
-                intent.putExtra(KEY_PREF_DATE, Calendar.getInstance().getTimeInMillis());
-                intent.putExtra(KEY_PREF_CAT_ID, notZeroCategoriesID.get(e.getXIndex()));
+                Intent intent = new Intent(context.getApplicationContext(), FirebaseDetailsActivity.class);
+                intent.putExtra(KEY_DATE, Calendar.getInstance().getTimeInMillis());
+                intent.putExtra(KEY_CAT_ID, notZeroCategoriesID.get(e.getXIndex()));
                 startActivity(intent);
             }
 
@@ -380,21 +338,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addDebit(View view){
-        Intent intent = new Intent(context, AddDebitActivity.class);
-        intent.putExtra(KEY_PREF_DATE, 0l);
+        Intent intent = new Intent(context, AddExpenseActivity.class);
+        intent.putExtra(KEY_DATE, 0L);
         startActivity(intent);
     }
 
     public void addCredit(View view){
-        Intent intent = new Intent(context, AddCreditActivity.class);
-        intent.putExtra(KEY_PREF_DATE, 0l);
+        Intent intent = new Intent(context, AddIncomeActivity.class);
+        intent.putExtra(KEY_DATE, 0L);
         startActivity(intent);
     }
 
     public void DetailsActivity(View view){
-        Intent intent = new Intent(context, TransDetailsActivity.class);
-        intent.putExtra(KEY_PREF_DATE, Calendar.getInstance().getTimeInMillis());
-        intent.putExtra(KEY_PREF_CAT_ID, -1l);
+        Intent intent = new Intent(context, FirebaseDetailsActivity.class);
+        intent.putExtra(KEY_DATE, Calendar.getInstance().getTimeInMillis());
+        intent.putExtra(KEY_CAT_ID, -1L);
         startActivity(intent);
     }
 
@@ -413,9 +371,9 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void firstLaunch(){
-        SharedPreferences prefs = getSharedPreferences(KEY_PREFS_FIRST_LAUNCH, Context.MODE_PRIVATE);
-        if(prefs.getBoolean(KEY_PREFS_FIRST_LAUNCH, true))
+    private void setupPreferencesOnFirstUse(){
+        SharedPreferences prefs = getSharedPreferences(Constants.KEY_PREF_FIRST_LAUNCH, Context.MODE_PRIVATE);
+        if(prefs.getBoolean(Constants.KEY_PREF_FIRST_LAUNCH, true))
         {
             //first launch
             long id;
@@ -441,13 +399,61 @@ public class MainActivity extends AppCompatActivity {
             id =financeDbHelper.createCategory(new Category(FinanceContract.CategoriesEntry.CT_TYPE_CREDIT, "Savings"));
             Log.d("FINANCE DB: ", " Savings : " + id);
 
-            id = financeDbHelper.createAcc(new Account("Cash"));
+            id = financeDbHelper.createAcc(new Wallet("Cash"));
             Log.d("FINANCE DB: ", " Cash : " + id);
-            id = financeDbHelper.createAcc(new Account("Debit card"));
+            id = financeDbHelper.createAcc(new Wallet("Debit card"));
             Log.d("FINANCE DB: ", " Debit Card : " + id);
 
 
-            prefs.edit().putBoolean(KEY_PREFS_FIRST_LAUNCH, false).apply();
+            prefs.edit().putBoolean(Constants.KEY_PREF_FIRST_LAUNCH, false).apply();
         }
+    }
+
+    private void setupNavigationDrawer(){
+        drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.main_nav_drawer);
+
+        //get the header of the navigation drawer
+        View view = navigationView.getHeaderView(0);
+        //find the text view in the header and set the text to current email in use
+        TextView usedEmail = (TextView) view.findViewById(R.id.nav_header_email);
+        usedEmail.setText(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(Constants.KEY_PREF_EMAIL_PARSED, "").replace(',','.'));
+        //set current menu item as checked
+        navigationView.setCheckedItem(R.id.nav_main_current);
+        //add item selected listener to handle navigation
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_main_current) {
+                    Log.d("NAV","nav_main_current");
+                } else if (id == R.id.nav_main_history) {
+                    Intent historyActivity = new Intent(context, HistoryActivity.class);
+                    startActivity(historyActivity);
+                } else if (id == R.id.nav_main_analyze) {
+                    Intent analyseIntent = new Intent(context, BarChartActivity.class);
+                    startActivity(analyseIntent);
+                } else if (id == R.id.nav_more_settings) {
+                    Intent prefIntent = new Intent(context, SettingsActivity.class);
+                    startActivity(prefIntent);
+                } else if (id == R.id.nav_more_about) {
+                    aboutDialog(context);
+                } else if (id == R.id.nav_main_firebase) {
+                    // Enter in firebase test activity
+                    Intent firebaseIntent = new Intent(context, FirebaseMainActivity.class);
+                    startActivity(firebaseIntent);
+                }
+
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 }

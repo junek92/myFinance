@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -21,6 +20,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kirilov.ivan.myfinance.firebase_model.Transaction;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceContract;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceDbHelper;
+
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Ivan on 19-May-15.
  */
-public class TransUpdateActivity extends AppCompatActivity {
+public class TransUpdateActivity extends BaseActivity {
 
     private DatePickerDialog datePickerDialog;
     private long chosenDateInMs;
@@ -62,12 +65,12 @@ public class TransUpdateActivity extends AppCompatActivity {
                 //chosenDateInMs = 0;
                 chosenTransId = 0;
             }else {
-               // chosenDateInMs = extras.getLong(MainActivity.KEY_PREF_DATE);
-                chosenTransId = extras.getLong(MainActivity.KEY_PREF_TRANS_ID);
+               // chosenDateInMs = extras.getLong(MainActivity.KEY_DATE);
+                chosenTransId = extras.getLong(MainActivity.KEY_TRANS_ID);
             }
         } else {
-            //chosenDateInMs = savedInstanceState.getLong(MainActivity.KEY_PREF_DATE);
-            chosenTransId = savedInstanceState.getLong(MainActivity.KEY_PREF_TRANS_ID);
+            //chosenDateInMs = savedInstanceState.getLong(MainActivity.KEY_DATE);
+            chosenTransId = savedInstanceState.getLong(MainActivity.KEY_TRANS_ID);
         }
 
 //        //fetch the custom toolbar - set it as default, change the title
@@ -93,12 +96,12 @@ public class TransUpdateActivity extends AppCompatActivity {
         amountText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(13,2)});
 
         // set used currency
-        currencyText.setText(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN"));
+        currencyText.setText(PreferenceManager.getDefaultSharedPreferences(context).getString(Constants.KEY_PREF_CURRENCY,"BGN"));
 
         // get selected transaction and inflate fields
         financeDbHelper = FinanceDbHelper.getInstance(context);
         myTrans = financeDbHelper.getTransaction(chosenTransId);
-        chosenDateInMs = myTrans.getAtDate();
+        chosenDateInMs = myTrans.getTrDate();
 
         // set time for the text view and create date picker dialog
         if (chosenDateInMs == 0){
@@ -130,15 +133,15 @@ public class TransUpdateActivity extends AppCompatActivity {
             }
         });
 
-        if (myTrans.getAmountSpent() < 0){
+        if (myTrans.getTrAmount() < 0){
             transType = FinanceContract.CategoriesEntry.CT_TYPE_DEBIT;      // =1 => -
-            amountText.setText(Double.toString(-1 * myTrans.getAmountSpent()));
+            amountText.setText(Double.toString(-1 * myTrans.getTrAmount()));
         } else {
             transType = FinanceContract.CategoriesEntry.CT_TYPE_CREDIT;     // =2 => +
-            amountText.setText(Double.toString(myTrans.getAmountSpent()));
+            amountText.setText(Double.toString(myTrans.getTrAmount()));
         }
 
-        descText.setText(myTrans.getDescAdded());
+        descText.setText(myTrans.getTrDesc());
 
         // initializing spinners
         inflateCategorySpinner(transType);
@@ -199,10 +202,10 @@ public class TransUpdateActivity extends AppCompatActivity {
         spinnerCategory.setAdapter(simpleCursorAdapter);
         for(int i = 0; i < simpleCursorAdapter.getCount(); i++)
         {
-            Log.d("SPINNER", "IID: "+simpleCursorAdapter.getItemId(i) + "  TID:" + myTrans.getCatUsed());
-            if (simpleCursorAdapter.getItemId(i) == myTrans.getCatUsed() )
+            Log.d("SPINNER", "IID: "+simpleCursorAdapter.getItemId(i) + "  TID:" + myTrans.getTrCat());
+            if (simpleCursorAdapter.getItemId(i) == myTrans.getTrCat() )
             {
-                    Log.d("SPINNER", "SCA-ItemID: "+simpleCursorAdapter.getItemId(i) + "  TRANS ID:" + myTrans.getCatUsed());
+                    Log.d("SPINNER", "SCA-ItemID: "+simpleCursorAdapter.getItemId(i) + "  TRANS ID:" + myTrans.getTrCat());
                 spinnerCategory.setSelection(i);
                 break;
             }
@@ -233,7 +236,7 @@ public class TransUpdateActivity extends AppCompatActivity {
         spinnerAcc.setAdapter(simpleCursorAdapter);
         for(int i = 0; i < simpleCursorAdapter.getCount(); i++)
         {
-            if (simpleCursorAdapter.getItemId(i) == myTrans.getAccUsed() )
+            if (simpleCursorAdapter.getItemId(i) == myTrans.getTrWallet() )
             {
                 spinnerAcc.setSelection(i);
                 break;
@@ -248,9 +251,9 @@ public class TransUpdateActivity extends AppCompatActivity {
         financeDbHelper = FinanceDbHelper.getInstance(context);
 
         updateTrans.setTrId(myTrans.getTrId());
-        updateTrans.setAtDate(chosenDateInMs);
-        updateTrans.setAccUsed((int) spinnerAcc.getSelectedItemId());
-        updateTrans.setCatUsed((int) spinnerCategory.getSelectedItemId());
+        updateTrans.setTrDate(chosenDateInMs);
+        updateTrans.setTrWallet((int) spinnerAcc.getSelectedItemId());
+        updateTrans.setTrCat((int) spinnerCategory.getSelectedItemId());
 
         try {
             amount = Double.parseDouble(amountText.getText().toString());
@@ -260,13 +263,13 @@ public class TransUpdateActivity extends AppCompatActivity {
         }
 
         if (transType == FinanceContract.CategoriesEntry.CT_TYPE_DEBIT){
-            updateTrans.setAmountSpent(-1 * amount);
+            updateTrans.setTrAmount(-1 * amount);
         } else {
-            updateTrans.setAmountSpent(amount);
+            updateTrans.setTrAmount(amount);
         }
 
-        updateTrans.setCurrUsed(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN"));
-        updateTrans.setDescAdded(descText.getText().toString());
+        updateTrans.setTrCurrency(PreferenceManager.getDefaultSharedPreferences(context).getString(Constants.KEY_PREF_CURRENCY,"BGN"));
+        updateTrans.setTrDesc(descText.getText().toString());
 
 
         if(checkTransaction(updateTrans, NO_AMOUNT)) {
@@ -283,8 +286,8 @@ public class TransUpdateActivity extends AppCompatActivity {
                         Toast.makeText(context, "Error with updating "+transID+" transaction!", Toast.LENGTH_SHORT).show();
                     }
                     // debugging
-                    Log.d("UPDATE DB:", " " + updateTrans.getAtDate() + " " + updateTrans.getAccUsed() + " " + updateTrans.getCatUsed() +
-                            " " + updateTrans.getAmountSpent() + " " + updateTrans.getCurrUsed() + " " + updateTrans.getDescAdded());
+                    Log.d("UPDATE DB:", " " + updateTrans.getTrDate() + " " + updateTrans.getTrWallet() + " " + updateTrans.getTrCat() +
+                            " " + updateTrans.getTrAmount() + " " + updateTrans.getTrCurrency() + " " + updateTrans.getTrDesc());
                     finish();
                 }
             });
@@ -333,8 +336,8 @@ public class TransUpdateActivity extends AppCompatActivity {
     }
 
     private boolean checkTransaction(Transaction transaction, boolean no_amount){
-        if (transaction.getAtDate()== 0) return false;
-        if (transaction.getAmountSpent() == 0.00 && !no_amount){
+        if (transaction.getTrDate()== 0) return false;
+        if (transaction.getTrAmount() == 0.00 && !no_amount){
             Toast.makeText(getApplicationContext(), "Please enter not 0.00 amount.",Toast.LENGTH_SHORT).show();
             return false;
         }

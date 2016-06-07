@@ -11,4 +11,70 @@
         <item> EUR</item>
         <item> BGN</item>
     </string-array>
+
+<!-- TODO: add more icons to the ARRAY -> drawable->RIGHT CLICK->NEW->VECTOR ASSET ->  -->
+    <integer-array name="walletsIcon">
+        <item>@drawable/icon_array_wallets_empty</item>
+        <item>@drawable/icon_array_wallets_wallet</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_bank</item>
+        <item>@drawable/icon_array_wallets_suitcase</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_wallet</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_bank</item>
+        <item>@drawable/icon_array_wallets_suitcase</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+    </integer-array>
+
+<!-- TODO: add more icons to the ARRAY -> drawable->RIGHT CLICK->NEW->VECTOR ASSET ->  -->
+    <integer-array name="categoryIncomeIcon">
+        <!-- TODO: first icon should be for the TRANSFERS  ->  -->
+        <item>@drawable/icon_array_cat_transfer</item>
+        <item>@drawable/icon_array_wallets_wallet</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_bank</item>
+        <item>@drawable/icon_array_wallets_suitcase</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_wallet</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_bank</item>
+        <item>@drawable/icon_array_wallets_suitcase</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+    </integer-array>
+
+<!-- TODO: add more icons to the ARRAY -> drawable->RIGHT CLICK->NEW->VECTOR ASSET ->  -->
+    <integer-array name="categoryExpenseIcon">
+        <!-- TODO: first icon should be for the TRANSFERS  ->  -->
+        <item>@drawable/icon_array_cat_transfer</item>
+        <item>@drawable/icon_array_wallets_wallet</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_bank</item>
+        <item>@drawable/icon_array_wallets_suitcase</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_wallet</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_bank</item>
+        <item>@drawable/icon_array_wallets_suitcase</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/icon_array_wallets_card</item>
+    </integer-array>
+
 </resources>

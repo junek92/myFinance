@@ -2,13 +2,10 @@ package com.kirilov.ivan.myfinance;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +18,9 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.kirilov.ivan.myfinance.firebase_model.Category;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceContract;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceDbHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Created by Ivan on 18-May-15.
  */
-public class PieMonthlyActivity extends AppCompatActivity {
+public class PieMonthlyActivity extends BaseActivity {
 
     private long chosenDateInMs;
 
@@ -54,10 +54,10 @@ public class PieMonthlyActivity extends AppCompatActivity {
             if (extras == null){
                 chosenDateInMs = 0;
             }else {
-                chosenDateInMs = extras.getLong(MainActivity.KEY_PREF_DATE);
+                chosenDateInMs = extras.getLong(MainActivity.KEY_DATE);
             }
         } else {
-            chosenDateInMs = savedInstanceState.getLong(MainActivity.KEY_PREF_DATE);
+            chosenDateInMs = savedInstanceState.getLong(MainActivity.KEY_DATE);
         }
 
         textViewDate = (TextView) findViewById(R.id.pie_monthly_date);
@@ -105,7 +105,7 @@ public class PieMonthlyActivity extends AppCompatActivity {
             textViewBalance.setBackgroundColor(context.getResources().getColor(R.color.accentColor));
 
         textViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(MainActivity.KEY_PREF_CURRENCY,"BGN"))
+                .getString(Constants.KEY_PREF_CURRENCY,"BGN"))
                 .getFormattedValue((float) endBalance, null, 0, null));
 
         super.onPostExecute(aVoid);
@@ -221,7 +221,7 @@ public class PieMonthlyActivity extends AppCompatActivity {
             pieData = new PieData(notZeroCategories, pieDataSet);
         }
 
-        pieData.setValueFormatter(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")));    // format the data - ### ### ##0.0 CURRENCY
+        pieData.setValueFormatter(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(context).getString(Constants.KEY_PREF_CURRENCY,"BGN")));    // format the data - ### ### ##0.0 CURRENCY
         pieData.setValueTextColor(context.getResources().getColor(R.color.myWhite));
         pieData.setValueTextSize(16);
 
@@ -238,9 +238,9 @@ public class PieMonthlyActivity extends AppCompatActivity {
                 // e - is the entry selected, dataSetIndex - the ID of the selected entry from DataSet
                 // h - is the position highlighted
                 if (e == null) return;
-                Intent intent = new Intent(context, TransDetailsActivity.class);
-                intent.putExtra(MainActivity.KEY_PREF_DATE, chosenDateInMs);
-                intent.putExtra(MainActivity.KEY_PREF_CAT_ID, notZeroCategoriesID.get(e.getXIndex()));
+                Intent intent = new Intent(context, FirebaseDetailsActivity.class);
+                intent.putExtra(MainActivity.KEY_DATE, chosenDateInMs);
+                intent.putExtra(MainActivity.KEY_CAT_ID, notZeroCategoriesID.get(e.getXIndex()));
                 startActivity(intent);
             }
 
@@ -264,21 +264,21 @@ public class PieMonthlyActivity extends AppCompatActivity {
     }
 
    public void addDebit(View view){
-        Intent intent = new Intent(context, AddDebitActivity.class);
-        intent.putExtra(MainActivity.KEY_PREF_DATE, chosenDateInMs+1000l);
+        Intent intent = new Intent(context, AddExpenseActivity.class);
+        intent.putExtra(MainActivity.KEY_DATE, chosenDateInMs+1000l);
         startActivity(intent);
     }
 
     public void addCredit(View view){
-        Intent intent = new Intent(context, AddCreditActivity.class);
-        intent.putExtra(MainActivity.KEY_PREF_DATE, chosenDateInMs+1000l);
+        Intent intent = new Intent(context, AddIncomeActivity.class);
+        intent.putExtra(MainActivity.KEY_DATE, chosenDateInMs+1000l);
         startActivity(intent);
     }
 
     public void DetailActivity (View view) {
-        Intent intent = new Intent(context, TransDetailsActivity.class);
-        intent.putExtra(MainActivity.KEY_PREF_DATE, chosenDateInMs);
-        intent.putExtra(MainActivity.KEY_PREF_CAT_ID, -1l);
+        Intent intent = new Intent(context, FirebaseDetailsActivity.class);
+        intent.putExtra(MainActivity.KEY_DATE, chosenDateInMs);
+        intent.putExtra(MainActivity.KEY_CAT_ID, -1l);
         startActivity(intent);
     }
 }

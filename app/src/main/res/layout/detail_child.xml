@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:orientation="horizontal"
+
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="45dp"
+    android:weightSum="100">
 
     <TextView
         android:id="@+id/child_date"
 
-        android:layout_width="72dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:paddingStart="24dp"
+        android:layout_weight="20"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="07-Jun"
 
         android:alpha="0.87"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="14sp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="@color/myBlack"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         />
 
     <TextView
         android:id="@+id/child_desc"
 
-        android:layout_width="96dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:paddingStart="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_weight="50"
 
-        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="Some really long description da go ea"
 
         android:alpha="0.54"
-        android:fontFamily="sans-serif-regular"
-        android:textSize="14sp"
         android:gravity="center_vertical"
+        android:textStyle="italic"
         android:textColor="@color/myBlack"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
 
     <TextView
         android:id="@+id/child_amount"
 
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
+        android:layout_weight="30"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+
+        android:text="1000.00 BGN"
 
         android:alpha="0.54"
-        android:fontFamily="sans-serif-black"
-        android:textSize="16sp"
         android:gravity="center_vertical|end"
+        android:textStyle="bold"
         android:textColor="@color/myBlack"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
         />
 
 

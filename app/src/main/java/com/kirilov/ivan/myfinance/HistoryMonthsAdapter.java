@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class HistoryMonthsAdapter extends BaseAdapter {
         float mF = (float) mD;
 
         viewHolder.mTextViewName.setText(monthName.get(position));
-        viewHolder.mTextViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(mContext).getString(MainActivity.KEY_PREF_CURRENCY,"BGN")).getFormattedValue(mF, null, 0, null));
+        viewHolder.mTextViewBalance.setText(new PieValueFormatter(PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.KEY_PREF_CURRENCY,"BGN")).getFormattedValue(mF, null, 0, null));
 
         if (mF > 0){
             viewHolder.mTextViewBalance.setTextColor(mContext.getResources().getColor(R.color.primaryColorDark));

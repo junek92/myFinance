@@ -1,5 +1,59 @@
 <resources>
-    <string name="app_name">My Finance</string>
+    <string name="app_name">Wallet Buddy</string>
+
+    <!-- Login and Create Account Screen  -->
+    <string name="text_dont_have_account">Don\'t have an account?</string>
+    <string name="text_forgot_password">Forgot your password?</string>
+    <string name="button_login_with_password">LOG IN</string>
+    <string name="button_log_out">LOG OUT</string>
+    <string name="button_create_account">CREATE</string>
+    <string name="button_sign_up">Sign Up!</string>
+    <string name="button_reset_password">Reset it!</string>
+
+    <string name="hint_enter_email">Enter your email</string>
+    <string name="hint_enter_password">Enter your password</string>
+    <string name="hint_enter_password_confirm">Confirm your password</string>
+
+    <string name="progress_dialog_authenticating_title"></string>
+    <string name="progress_dialog_please_wait_msg">Please wait …</string>
+
+    <!-- Main screen - all wallets -->
+    <string name="main_screen_title">Wallet Buddy</string>
+    <string name="main_screen_wallet_created">Created on\n%s</string>
+    <string name="main_screen_wallet_since">Since %s</string>
+
+
+    <!-- Edit wallets -->
+    <string name="edit_wallets_title">Wallets</string>
+    <string name="edit_wallets_hint_name">Wallet name</string>
+
+    <!-- Edit categories -->
+    <string name="edit_categories_title">Categories</string>
+    <string name="edit_categories_expense_tab">Expense</string>
+    <string name="edit_categories_income_tab">Income</string>
+    <string name="edit_categories_hint_name">Category name</string>
+
+    <!-- Add/Edit Income -->
+    <string name="income_title">Add income</string>
+    <string name="income_wallet">Wallet</string>
+    <string name="income_category">Category</string>
+    <string name="income_amount_hint">How much?</string>
+    <string name="income_desc_hint">From what?</string>
+    <string name="income_btn_add">ADD</string>
+    <string name="income_btn_save">SAVE</string>
+    <string name="income_btn_delete">DELETE</string>
+
+    <string name="expense_title">Add expense</string>
+    <string name="expense_desc_hint">For what?</string>
+
+    <string name="transfer_title">Add transfer</string>
+    <string name="transfer_from_wallet">From wallet</string>
+    <string name="transfer_to_wallet">To wallet</string>
+
+    <string name="details_wallet_created">Created on %s</string>
+
+
+
 
     <string name="main_title">This Month</string>
     <string name="main_date"> </string>
@@ -13,7 +67,7 @@
     <string name="history_def_balance">0.00</string>
     <string name="history_def_month">MMM-YYYY</string>
 
-    <string name="analyse_title">Analyse</string>
+    <string name="analyze_title">Analyze</string>
     <string name="analyse_year">Year</string>
     <string name="analyse_year_prompt">Years:</string>
     <string name="analyse_category">Category</string>
@@ -43,12 +97,12 @@
     <string name="trans_update_cancel">CANCEL</string>
 
     <string name="trans_update_save">SAVE</string>
-    <string name="trans_update_save_dialog_title">Do you want to save the changes?</string>
+    <string name="trans_update_save_dialog_title">Save changes?</string>
     <string name="trans_update_save_dialog_positive">SAVE</string>
     <string name="trans_update_save_dialog_negative">CANCEL</string>
 
     <string name="trans_update_delete">DELETE</string>
-    <string name="trans_update_delete_dialog_title">Do you want to delete the transaction?</string>
+    <string name="trans_update_delete_dialog_title">Delete transaction?</string>
     <string name="trans_update_delete_dialog_positive">DELETE</string>
     <string name="trans_update_delete_dialog_negative">CANCEL</string>
 
@@ -63,4 +117,28 @@
 
     <string name="settings_title">Settings</string>
     <string name="action_example">Example action</string>
+
+    <!-- Errors -->
+    <string name="error_enter_email">Enter your email.</string>
+    <string name="error_invalid_email_not_valid">%s is not a valid email</string>
+    <string name="error_enter_password">Enter your password.</string>
+    <string name="error_invalid_password_too_short">Password must be at least 6 characters long.</string>
+    <string name="error_confirm_password">Confirm your password.</string>
+    <string name="error_confirm_password_not_same">Wrong password verification.</string>
+
+
+    <string name="error_message_email_issue">There was an error with your email; please check that you entered it correctly.</string>
+    <string name="error_email_taken">The email is already taken.</string>
+
+
+    <!-- TEST PURPOSES -->
+    <string name="test_really_long_text">This is some reaaaaaaaly long text to be displayed. With some 2.5435 1231,12312  strange characters :D И малко български едва ли не.
+    This is some reaaaaaaaly long text to be displayed. With some 2.5435 1231,12312  strange characters :D И малко български едва ли не.
+    This is some reaaaaaaaly long text to be displayed. With some 2.5435 1231,12312  strange characters :D И малко български едва ли не.
+    This is some reaaaaaaaly long text to be displayed. With some 2.5435 1231,12312  strange characters :D И малко български едва ли не.
+    This is some reaaaaaaaly long text to be displayed. With some 2.5435 1231,12312  strange characters :D И малко български едва ли не.</string>
+    <string name="test_long_text">This is some long text to be displayed. With some 2.5435 1231,12312  strange characters :D И малко български едва ли не.</string>
+
+
+
 </resources>

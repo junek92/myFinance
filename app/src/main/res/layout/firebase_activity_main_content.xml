@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/firebase_main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/firebase_main_current_date"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+
+
+            android:text=""
+            android:textColor="@color/myBlack"
+            android:textSize="22sp"
+            android:alpha="0.54"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/firebase_main_progress_bar"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:indeterminate="true"
+            fab:mpb_progressStyle="circular"
+
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Large.NoPadding"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/firebase_main_recycler_view"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+
+            android:scrollbars="none"/>
+
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/firebase_main_actions"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+
+        fab:fab_addButtonColorNormal="@color/accentColor"
+        fab:fab_addButtonColorPressed="@color/accentColor"
+        fab:fab_addButtonPlusIconColor="@color/myWhite"
+
+        fab:fab_labelStyle="@style/menu_labels_style">
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/firebase_main_action_income"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            fab:fab_icon="@drawable/ic_keyboard_arrow_down_white_48dp"
+            fab:fab_title="Add income"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/primaryColorDark"
+            fab:fab_colorPressed="@color/primaryColorDark"
+            fab:fab_colorDisabled="@color/primary200"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/firebase_main_action_expence"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            fab:fab_icon="@drawable/ic_keyboard_arrow_up_white_48dp"
+            fab:fab_title="Add expense"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/accentColor"
+            fab:fab_colorPressed="@color/accentColor"
+            fab:fab_colorDisabled="@color/accent200"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/firebase_main_action_transfer"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            fab:fab_icon="@drawable/icon_array_cat_transfer"
+            fab:fab_title="Transfer funds"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/myWhite"
+            fab:fab_colorPressed="@color/background"
+            fab:fab_colorDisabled="@color/primary200"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+<!--
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/test_fl_action_btn"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+
+        android:src="@drawable/ic_event_white_48dp"
+        android:onClick="addNewWallet"
+        />
+-->
+
+</android.support.design.widget.CoordinatorLayout>

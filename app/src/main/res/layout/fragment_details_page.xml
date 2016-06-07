@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fragment_details_no_data"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:gravity="center"
+
+        android:text="NO DATA"
+        android:textColor="@color/myBlack"
+
+        android:alpha="0.32"
+        android:textStyle="bold|italic"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        />
+
+    <ExpandableListView
+        android:id="@+id/fragment_expandable_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+
+        android:scrollbars="none"
+        android:divider="@null"
+        android:childDivider="@null"
+        android:groupIndicator="@null"
+        />
+
+</RelativeLayout>

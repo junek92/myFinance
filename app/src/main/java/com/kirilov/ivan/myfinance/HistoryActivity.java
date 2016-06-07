@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,6 +22,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kirilov.ivan.myfinance.firebase_model.Category;
+import com.kirilov.ivan.myfinance.firebase_model.Transaction;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceContract;
+import com.kirilov.ivan.myfinance.sqlite_db.FinanceDbHelper;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -30,20 +35,21 @@ import java.util.List;
 /**
  * Created by Ivan on 28-Apr-15.
  */
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends BaseActivity {
 
     private ListView mHistoryList;
     private ProgressBar progressBar;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
 
-    List<Long> usefulMonths;        // store 1st day of each month with transactions
-    List<String> monthName;         // store strings in format MMM-yyyy
-    List<Double> monthBalance;      // store each month balance in double
+    private List<Long> usefulMonths;        // store 1st day of each month with transactions
+    private List<String> monthName;         // store strings in format MMM-yyyy
+    private List<Double> monthBalance;      // store each month balance in double
 
     boolean isHistoryEmpty;
     HistoryMonthsAdapter mHistoryMonthsAdapter;
-
     FinanceDbHelper financeDbHelper;
-    Toolbar toolbar;
     Context context;
 
     @Override
@@ -60,41 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.history_toolbar);
         setSupportActionBar(toolbar);
 
-        //---       NEW NAVIGATION TEST
-        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.history_drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
-        navigationView.setCheckedItem(R.id.nav_history);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                // Handle navigation view item clicks here.
-                int id = item.getItemId();
-
-                if (id == R.id.nav_this_month) {
-                    HistoryActivity.this.finish();
-                } else if (id == R.id.nav_history) {
-
-                } else if (id == R.id.nav_analyze) {
-                    Intent analyseIntent = new Intent(context, AnalyseActivity.class);
-                    startActivity(analyseIntent);
-                } else if (id == R.id.nav_settings) {
-                    Intent prefIntent = new Intent(context, SettingsActivity.class);
-                    startActivity(prefIntent);
-                } else if (id == R.id.nav_about) {
-                    MainActivity.aboutDialog(context);
-                }
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+        setupNavigationDrawer();
 
         progressBar = (ProgressBar) findViewById(R.id.history_progress_bar);
         mHistoryList = (ListView) findViewById(R.id.history_month_list);
@@ -110,15 +82,13 @@ public class HistoryActivity extends AppCompatActivity {
         // call AsyncTask to fetch all needed data from DB
         new HistoryActivityAsyncTask().execute();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
-        navigationView.setCheckedItem(R.id.nav_history);
+        navigationView.setCheckedItem(R.id.nav_main_history);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -172,7 +142,7 @@ public class HistoryActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // ID = 1st day of month in ms
                     Intent intent = new Intent(context, PieMonthlyActivity.class);
-                    intent.putExtra(MainActivity.KEY_PREF_DATE, id);
+                    intent.putExtra(MainActivity.KEY_DATE, id);
                     startActivity(intent);
                 }
             });
@@ -206,12 +176,12 @@ public class HistoryActivity extends AppCompatActivity {
             do {
                 Transaction transaction = new Transaction();
                 transaction.setTrId(cursor.getLong(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_ID)));
-                transaction.setAtDate(cursor.getLong(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_DATE)));
-                transaction.setAccUsed(cursor.getInt(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_ACCOUNT)));
-                transaction.setCatUsed(cursor.getInt(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_CATEGORY)));
-                transaction.setAmountSpent(cursor.getDouble(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_AMOUNT)));
-                transaction.setCurrUsed(cursor.getString(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_CURRENCY)));
-                transaction.setDescAdded(cursor.getString(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_DESCR)));
+                transaction.setTrDate(cursor.getLong(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_DATE)));
+                transaction.setTrWallet(cursor.getInt(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_ACCOUNT)));
+                transaction.setTrCat(cursor.getInt(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_CATEGORY)));
+                transaction.setTrAmount(cursor.getDouble(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_AMOUNT)));
+                transaction.setTrCurrency(cursor.getString(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_CURRENCY)));
+                transaction.setTrDesc(cursor.getString(cursor.getColumnIndex(FinanceContract.TransactionEntry.TR_DESCR)));
                 transList.add(transaction);
             }while (cursor.moveToNext());
         }
@@ -222,16 +192,16 @@ public class HistoryActivity extends AppCompatActivity {
             finish();
         } else {
             // fetching FIRST and LAST month
-            long minMonth = transList.get(0).getAtDate();
-            long maxMonth = transList.get(0).getAtDate();
+            long minMonth = transList.get(0).getTrDate();
+            long maxMonth = transList.get(0).getTrDate();
             for (int i = 0; i < transList.size(); i++) {
 
-                if (minMonth >= transList.get(i).getAtDate()) {
-                    minMonth = transList.get(i).getAtDate();
+                if (minMonth >= transList.get(i).getTrDate()) {
+                    minMonth = transList.get(i).getTrDate();
                 }
 
-                if (maxMonth <= transList.get(i).getAtDate()) {
-                    maxMonth = transList.get(i).getAtDate();
+                if (maxMonth <= transList.get(i).getTrDate()) {
+                    maxMonth = transList.get(i).getTrDate();
                 }
             }
             Log.d("HISTORY: ", "FirstMonth: " + minMonth + "\n Last month: " + maxMonth);
@@ -247,6 +217,7 @@ public class HistoryActivity extends AppCompatActivity {
 
             // get start of the month
             calendar.set(Calendar.DAY_OF_MONTH, 1);
+
             // set time to be 1st day of FIRST month
             minMonth = calendar.getTimeInMillis();
             Log.d("HISTORY: ", "FirstMonth 1st day: " + calendar.getTime());
@@ -340,5 +311,49 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void setupNavigationDrawer(){
+
+        //---       NEW NAVIGATION TEST
+        drawerLayout = (DrawerLayout) findViewById(R.id.history_drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.history_nav_drawer);
+        //get the header of the navigation drawer
+        View view = navigationView.getHeaderView(0);
+        //find the text view in the header and set the text to current email in use
+        TextView usedEmail = (TextView) view.findViewById(R.id.nav_header_email);
+        usedEmail.setText(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(Constants.KEY_PREF_EMAIL_PARSED, "").replace(',','.'));
+        navigationView.setCheckedItem(R.id.nav_main_history);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_main_current) {
+                    HistoryActivity.this.finish();
+                } else if (id == R.id.nav_main_history) {
+                    Log.d("NAV","nav_main_history");
+                } else if (id == R.id.nav_main_analyze) {
+                    Intent analyseIntent = new Intent(context, BarChartActivity.class);
+                    startActivity(analyseIntent);
+                } else if (id == R.id.nav_more_settings) {
+                    Intent prefIntent = new Intent(context, SettingsActivity.class);
+                    startActivity(prefIntent);
+                } else if (id == R.id.nav_more_about) {
+                    MainActivity.aboutDialog(context);
+                }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/grid_card"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:layout_margin="4dp"
+
+    card_view:cardBackgroundColor="@color/myWhite"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp">
+
+    <LinearLayout
+        android:id="@+id/grid_layout"
+
+        android:orientation="vertical"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+
+        android:background="@drawable/selector"
+
+        android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/grid_icon"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+
+
+            android:alpha="0.87"
+            android:src="@drawable/icon_array_wallets_card"
+           />
+
+        <TextView
+            android:id="@+id/grid_name"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="30"
+
+            android:maxLines="1"
+            android:ellipsize="end"
+
+            android:gravity="center"
+            android:textColor="@color/myBlack"
+
+            android:alpha="0.87"
+            android:text="DSK ISIC 4478"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

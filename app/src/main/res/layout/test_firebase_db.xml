@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button_1"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:text="BUTTON 1"
+        android:onClick="doSomething1"/>
+
+    <Button
+        android:id="@+id/button_2"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:text="BUTTON 2"
+        android:onClick="doSomething2"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_3"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+
+            android:text="BUTTON 3"
+            android:onClick="doSomething3"/>
+        <EditText
+            android:id="@+id/month"
+
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/balance"
+
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/button_4"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:text="BUTTON 4"
+        android:onClick="doSomething4"/>
+
+    <Button
+        android:id="@+id/button_5"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:text="BUTTON 5"
+        android:onClick="doSomething5"/>
+
+    <Button
+        android:id="@+id/button_6"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+
+        android:text="REMOVE"
+        android:onClick="removeListeners"/>
+</LinearLayout>

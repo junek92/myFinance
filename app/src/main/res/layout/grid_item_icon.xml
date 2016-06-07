@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/grid_layout"
+    android:orientation="vertical"
+    android:layout_width="96dp"
+    android:layout_height="96dp"
+    android:layout_margin="4dp"
+
+    android:background="@drawable/selector">
+
+    <ImageView
+        android:id="@+id/grid_icon"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="70"
+
+        android:alpha="0.87"
+        android:src="@drawable/icon_array_wallets_bank"
+        />
+
+</LinearLayout>

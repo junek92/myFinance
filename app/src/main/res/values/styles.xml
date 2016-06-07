@@ -9,7 +9,7 @@
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
         <item name="colorAccent">@color/accentColor</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/myWhite</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="android:textColorPrimary">@color/myBlack</item>
     </style>
 
@@ -37,5 +37,60 @@
         <item name="android:background">@color/accentColor</item>
         <item name="android:alpha">0.54</item>
     </style>
+
+    <style name="divider_vertical">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <!--    <item name="android:background">?android:attr/listDivider</item>    -->
+        <item name="android:background">@color/accentColor</item>
+        <item name="android:alpha">0.54</item>
+    </style>
+
+
+    <!-- Login and Create Account Screen  -->
+    <style name="LoginCreateText">
+        <item name="android:textSize">@dimen/login_buttons_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="HintText">
+        <item name="android:textSize">0dp</item>
+    </style>
+
+    <style name="LoginCreateTextButton">
+        <item name="android:textSize">@dimen/login_buttons_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="datePickerDialogIncome" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primaryColor</item>
+    </style>
+
+    <style name="datePickerDialogExpense" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/accentColor</item>
+    </style>
+
+
+        <style name="menu_labels_style">
+            <item name="android:gravity">center</item>
+            <item name="android:background">@drawable/fab_label_background</item>
+            <item name="android:textColor">@color/white</item>
+        </style>
 
 </resources>
