@@ -438,17 +438,17 @@ public class MainActivity extends BaseActivity {
                     Intent historyActivity = new Intent(context, HistoryActivity.class);
                     startActivity(historyActivity);
                 } else if (id == R.id.nav_main_analyze) {
-                    Intent analyseIntent = new Intent(context, BarChartActivity.class);
+                    Intent analyseIntent = new Intent(context, FirebaseAnalyzeActivity.class);
                     startActivity(analyseIntent);
                 } else if (id == R.id.nav_more_settings) {
                     Intent prefIntent = new Intent(context, SettingsActivity.class);
                     startActivity(prefIntent);
                 } else if (id == R.id.nav_more_about) {
                     aboutDialog(context);
-                } else if (id == R.id.nav_main_firebase) {
-                    // Enter in firebase test activity
-                    Intent firebaseIntent = new Intent(context, FirebaseMainActivity.class);
-                    startActivity(firebaseIntent);
+//                } else if (id == R.id.nav_main_firebase) {
+//                    // Enter in firebase test activity
+//                    Intent firebaseIntent = new Intent(context, FirebaseMainActivity.class);
+//                    startActivity(firebaseIntent);
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);

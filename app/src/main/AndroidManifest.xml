@@ -89,7 +89,7 @@
         </activity>
 
         <activity
-            android:name=".BarChartActivity"
+            android:name=".FirebaseAnalyzeActivity"
             android:label="@string/analyze_title"
             android:screenOrientation="portrait"
             android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">

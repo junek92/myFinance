@@ -28,7 +28,6 @@ import com.kirilov.ivan.myfinance.firebase_model.Wallet;
 import com.kirilov.ivan.myfinance.junk_yard.TestFirebaseDb;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -186,13 +185,13 @@ public class FirebaseHistoryActivity extends BaseActivity {
                     case R.id.nav_main_history:
                         break;
                     case R.id.nav_main_analyze:
-                        Intent analyseIntent = new Intent(context, BarChartActivity.class);
+                        Intent analyseIntent = new Intent(context, FirebaseAnalyzeActivity.class);
                         startActivity(analyseIntent);
                         break;
-                    case R.id.nav_main_firebase:
-                        Intent testIntent  = new Intent(context, TestFirebaseDb.class);
-                        startActivity(testIntent);
-                        break;
+//                    case R.id.nav_main_firebase:
+//                        Intent testIntent  = new Intent(context, TestFirebaseDb.class);
+//                        startActivity(testIntent);
+//                        break;
                     case R.id.nav_edit_wallets:
                         Intent walletsIntent = new Intent(context, FirebaseWalletsActivity.class);
                         startActivity(walletsIntent);

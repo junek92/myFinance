@@ -145,6 +145,18 @@ public class Utilities {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public static String getYearInString(long timeInMs){
+        SimpleDateFormat simpleDateFormat;
+        String yearFormat = "yyyy";
+
+        simpleDateFormat = new SimpleDateFormat(yearFormat);
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.setTimeInMillis(timeInMs);
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
     public static String getFormattedAmount(Double amount, boolean includeCurrency, Context context){
         DecimalFormat mFormat = new DecimalFormat("###,###,##0.00");
         if (!includeCurrency){

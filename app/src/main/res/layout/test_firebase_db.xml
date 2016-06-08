@@ -63,6 +63,10 @@
 
         android:text="BUTTON 4"
         android:onClick="doSomething4"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/button_5"
@@ -73,6 +77,16 @@
 
         android:text="BUTTON 5"
         android:onClick="doSomething5"/>
+
+        <EditText
+            android:id="@+id/test_category"
+
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"/>
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_6"

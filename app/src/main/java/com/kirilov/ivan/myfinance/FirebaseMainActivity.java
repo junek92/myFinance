@@ -276,13 +276,13 @@ public class FirebaseMainActivity extends BaseActivity {
                         }
                         break;
                     case R.id.nav_main_analyze:
-                        Intent analyseIntent = new Intent(context, BarChartActivity.class);
+                        Intent analyseIntent = new Intent(context, FirebaseAnalyzeActivity.class);
                         startActivity(analyseIntent);
                         break;
-                    case R.id.nav_main_firebase:
-                        Intent testIntent  = new Intent(context, TestFirebaseDb.class);
-                        startActivity(testIntent);
-                        break;
+//                    case R.id.nav_main_firebase:
+//                        Intent testIntent  = new Intent(context, TestFirebaseDb.class);
+//                        startActivity(testIntent);
+//                        break;
                     case R.id.nav_edit_wallets:
                         Intent walletsIntent = new Intent(context, FirebaseWalletsActivity.class);
                         startActivity(walletsIntent);

@@ -46,7 +46,7 @@
     <string name="expense_title">Add expense</string>
     <string name="expense_desc_hint">For what?</string>
 
-    <string name="transfer_title">Add transfer</string>
+    <string name="transfer_title">Transfer funds</string>
     <string name="transfer_from_wallet">From wallet</string>
     <string name="transfer_to_wallet">To wallet</string>
 

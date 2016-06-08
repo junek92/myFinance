@@ -14,11 +14,12 @@
             android:id="@+id/nav_main_analyze"
             android:icon="@drawable/icon_nav_analyze"
             android:title="Analyze" />
-
+<!--
         <item
             android:id="@+id/nav_main_firebase"
             android:icon="@drawable/common_full_open_on_phone"
             android:title="Firebase Test" />
+-->
     </group>
 
     <item android:title="\tEdit">

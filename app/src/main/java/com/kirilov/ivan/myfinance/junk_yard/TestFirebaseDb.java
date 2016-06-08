@@ -28,13 +28,16 @@ import com.kirilov.ivan.myfinance.firebase_model.Wallet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by Ivan on 02-Jun-16.
  */
 public class TestFirebaseDb extends BaseActivity {
     Button btn1, btn2, btn3, btn4, btn5, btnRemove;
-    EditText month, balance;
+    EditText month, balance, editTextCategory;
 
     private DatabaseReference userInfoEmailWallets, userTransEmail, userCatEmail;
     public static final String LOG = "TESTING FBDB: ";
@@ -57,6 +60,9 @@ public class TestFirebaseDb extends BaseActivity {
 
         month = (EditText) findViewById(R.id.month);
         balance = (EditText) findViewById(R.id.balance);
+        editTextCategory = (EditText) findViewById(R.id.test_category);
+
+
 
 
         userInfoEmailWallets = firebaseDatabase.getReference(Constants.FIREBASE_LOCATION_USER_INFORMATION + "/"
@@ -207,20 +213,74 @@ public class TestFirebaseDb extends BaseActivity {
     }
 
     public void doSomething5(View view){
-        Transaction transaction = new Transaction(
-                1462905975489L,
-                1462905975489L,
-                1L,
-                0L,
-                2L,
-                500d,
-                "BGN",
-                ""
-        );
+        final Map<Integer, Float> monthsValuesMap = new HashMap<>();
 
-        Intent intent = new Intent(context, FirebaseIncomeActivity.class);
-        intent.putExtra(Constants.EXTRA_TRANSACTION, transaction);
-        startActivity(intent);
+        // clear all old data!
+        monthsValuesMap.clear();
+        // put all months with ZERO values for sum
+        for (int i = 0; i < 12; i++ ){
+            monthsValuesMap.put(i, 0F);
+        }
+
+        final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        // get today and clear time of day - 0h : 00m : 00s
+        calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
+        calendar.set(Calendar.MILLISECOND, 250);
+        // get start of the month
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        // get start of the year
+        calendar.set(Calendar.MONTH, 0);
+
+        long startOfYearInMs = calendar.getTimeInMillis();
+
+        // get last month in the year
+        calendar.set(Calendar.MONTH, 11);
+
+        long endOfYearInMs = calendar.getTimeInMillis();
+
+        DatabaseReference reference = firebaseDatabase.getReference(Constants.FIREBASE_LOCATION_USER_TRANSACTIONS + "/"
+                + PreferenceManager.getDefaultSharedPreferences(context).getString(Constants.KEY_PREF_EMAIL_PARSED, null) + "/"
+                + "0" + "/"
+                + Constants.EXPENSE_TRANSACTION_TYPE + "/"
+                + editTextCategory.getText().toString() + "/");
+
+        Query query = reference.orderByKey().startAt(Long.toString(startOfYearInMs)).endAt(Long.toString(endOfYearInMs));
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(LOG, " dataSnapshot.getValue ->" + dataSnapshot.getValue());
+
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    Float sumOfChilds = 0f;
+                    Log.d(LOG, " child.getValue ->" + child.getValue());
+
+                    for (DataSnapshot childsChild : child.getChildren() ){
+                        Log.d(LOG, " childsChild.getValue ->" + childsChild.getValue());
+                        sumOfChilds = sumOfChilds + (float) childsChild.getValue(Transaction.class).getTrAmount();
+                    }
+
+                    calendar.setTimeInMillis(Long.valueOf(child.getKey()));
+                    monthsValuesMap.put( calendar.get(Calendar.MONTH), sumOfChilds);
+                }
+
+                Log.d(LOG, "\n\n MAP FOR \n");
+
+                for (Map.Entry<Integer,Float> entry : monthsValuesMap.entrySet()) {
+
+                    Log.d(LOG, " MAP KEY:    ->   " + entry.getKey());
+                    Log.d(LOG, " MAP VALUE:  ->   " + entry.getValue());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

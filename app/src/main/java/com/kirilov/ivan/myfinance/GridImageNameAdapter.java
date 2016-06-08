@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kirilov.ivan.myfinance.firebase_model.Category;
 import com.kirilov.ivan.myfinance.firebase_model.Wallet;
@@ -78,6 +77,7 @@ public class GridImageNameAdapter extends RecyclerView.Adapter<GridImageNameAdap
                     FirebaseExpenseActivity.walletId = walletsArrayList.get(pos).getWalletId();
                 } else {
                     //it's a category
+                    FirebaseAnalyzeActivity.categoryId = categoryArrayList.get(pos).getCatId();
                     FirebaseIncomeActivity.categoryId = categoryArrayList.get(pos).getCatId();
                     FirebaseExpenseActivity.categoryId = categoryArrayList.get(pos).getCatId();
                 }

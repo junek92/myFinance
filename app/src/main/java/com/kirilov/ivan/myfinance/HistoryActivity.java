@@ -341,7 +341,7 @@ public class HistoryActivity extends BaseActivity {
                 } else if (id == R.id.nav_main_history) {
                     Log.d("NAV","nav_main_history");
                 } else if (id == R.id.nav_main_analyze) {
-                    Intent analyseIntent = new Intent(context, BarChartActivity.class);
+                    Intent analyseIntent = new Intent(context, FirebaseAnalyzeActivity.class);
                     startActivity(analyseIntent);
                 } else if (id == R.id.nav_more_settings) {
                     Intent prefIntent = new Intent(context, SettingsActivity.class);

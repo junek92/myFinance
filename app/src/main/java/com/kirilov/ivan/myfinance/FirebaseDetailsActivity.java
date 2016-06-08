@@ -71,9 +71,11 @@ public class FirebaseDetailsActivity extends BaseActivity {
         // extract intent extras to get WALLET and DATE
         Intent intent = getIntent();
         if (!(intent.hasExtra(Constants.EXTRA_WALLET) && intent.hasExtra(Constants.EXTRA_DATE))){
-            Log.d(Constants.LOG_APP_ERROR, " DETAILS ACTIVITY: NO EXTRA WALLET/DATE");
+                Log.d(Constants.LOG_APP_ERROR, " DETAILS ACTIVITY: NO EXTRA WALLET/DATE");
             finish();
+            return;
         }
+
         beginOfMonthInMs = intent.getLongExtra(Constants.EXTRA_DATE, 0L);
         extraWallet = intent.getParcelableExtra(Constants.EXTRA_WALLET);
 
@@ -383,7 +385,7 @@ public class FirebaseDetailsActivity extends BaseActivity {
             dateOfTransaction = Calendar.getInstance(TimeZone.getTimeZone("GMT")).getTimeInMillis();
 //        }
 
-        Calendar.getInstance();
+//        Calendar.getInstance();
 
 
         switch (detailsTabLayout.getSelectedTabPosition()){

@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Ivan on 26-Apr-15.
@@ -113,7 +114,7 @@ public class FinanceDbHelper extends SQLiteOpenHelper {
 
         simpleDateFormat = new SimpleDateFormat(yearFormat);
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         calendar.setTimeInMillis(timeInMs);
 
         return simpleDateFormat.format(calendar.getTime());

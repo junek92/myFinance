@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fitsSystemWindows="false">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -31,11 +30,11 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:fitsSystemWindows="false">
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <TextView
                 android:id="@+id/analyse_date"
@@ -43,27 +42,26 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
 
                 android:textColor="#000000"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:alpha="0.54"
-                android:fontFamily="sans-serif-black"
-                android:textSize="24sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/analyse_bar_chart"
 
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:layout_below="@id/analyse_date"
-                android:layout_marginTop="8dp"
+                android:layout_height="280dp"
+
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
 
-                android:elevation="2dp"
                 />
-
+<!--
             <TextView
                 android:id="@+id/analyse_year_text"
 
@@ -81,22 +79,7 @@
                 android:fontFamily="sans-serif-black"
                 android:textSize="16sp"/>
 
-            <TextView
-                android:id="@+id/analyse_category_text"
 
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
-
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_below="@id/analyse_year_text"
-
-                android:text="@string/analyse_category"
-                android:textColor="#000000"
-                android:alpha="0.87"
-                android:fontFamily="sans-serif-black"
-                android:textSize="16sp"/>
 
             <Spinner
                 android:id="@+id/analyse_year_spinner"
@@ -132,32 +115,63 @@
 
                 android:prompt="@string/analyse_category_prompt"/>
 
-            <Button
-                android:id="@+id/analyse_button"
-                android:elevation="2dp"
 
-                android:layout_width="92dp"
-                android:layout_height="36dp"
-                android:gravity="center"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
+-->
 
-                android:text="@string/analyse_button"
-                android:textAllCaps="true"
-                android:textColor="@color/myWhite"
-                android:alpha="1"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="14sp"
+            <TextView
+                android:id="@+id/analyse_category_text"
 
-                android:background="@color/primaryColorDark"
-                android:onClick="fetchData"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
 
-        </RelativeLayout>
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
 
-    </LinearLayout>
+                android:text="@string/analyse_category"
+                android:textColor="@color/myBlack"
+                android:alpha="0.54"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/analyze_category_recycle_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+
+                android:scrollbars="none"/>
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/analyze_button"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:layout_gravity="bottom|end"
+
+            android:text="@string/analyse_button"
+            android:textColor="@color/myWhite"
+
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+
+            android:background="@color/primaryColorDark"
+            android:onClick="fetchData"
+            />
+
+    </android.support.design.widget.CoordinatorLayout>
 </android.support.design.widget.CoordinatorLayout>
 
 
