@@ -119,7 +119,7 @@
                         android:layout_marginStart="16dp"
 
                         android:alpha="0.87"
-                        android:src="@drawable/arrow_down_income"/>
+                        android:src="@drawable/arrow_down_income_green"/>
 
                     <TextView
                         android:id="@+id/card_view_wallet_income_amount"
@@ -150,7 +150,7 @@
 
 
                         android:alpha="0.87"
-                        android:src="@drawable/arrow_up_expense"/>
+                        android:src="@drawable/arrow_up_expense_red"/>
 
                     <TextView
                         android:id="@+id/card_view_wallet_expense_amount"

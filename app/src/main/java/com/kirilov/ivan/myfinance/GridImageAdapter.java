@@ -2,6 +2,7 @@ package com.kirilov.ivan.myfinance;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.Imag
     @Override
     public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        final LinearLayout view = (LinearLayout) LayoutInflater.from(parent.getContext())
+        final CardView view = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.grid_item_icon, parent, false);
 
         view.setOnClickListener(new View.OnClickListener() {

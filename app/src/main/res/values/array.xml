@@ -12,69 +12,123 @@
         <item> BGN</item>
     </string-array>
 
-<!-- TODO: add more icons to the ARRAY -> drawable->RIGHT CLICK->NEW->VECTOR ASSET ->  -->
     <integer-array name="walletsIcon">
         <item>@drawable/icon_array_wallets_empty</item>
-        <item>@drawable/icon_array_wallets_wallet</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_bank</item>
-        <item>@drawable/icon_array_wallets_suitcase</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_wallet</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_bank</item>
-        <item>@drawable/icon_array_wallets_suitcase</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/wal_icon_notes</item>
+        <item>@drawable/wal_icon_credit_card_1</item>
+
+        <item>@drawable/wal_icon_bank</item>
+        <item>@drawable/wal_icon_cash_machine</item>
+        <item>@drawable/wal_icon_check</item>
+        <item>@drawable/wal_icon_coin</item>
+        <item>@drawable/wal_icon_coins</item>
+        <item>@drawable/wal_icon_coupon</item>
+        <item>@drawable/wal_icon_credit_card</item>
+        <item>@drawable/wal_icon_investment</item>
+        <item>@drawable/wal_icon_mastercard</item>
+        <item>@drawable/wal_icon_notes_1</item>
+        <item>@drawable/wal_icon_paypal_logo</item>
+        <item>@drawable/wal_icon_purse</item>
+        <item>@drawable/wal_icon_safebox</item>
+        <item>@drawable/wal_icon_strongbox</item>
+        <item>@drawable/wal_icon_visapaylogo</item>
+        <item>@drawable/wal_icon_wallet</item>
     </integer-array>
 
-<!-- TODO: add more icons to the ARRAY -> drawable->RIGHT CLICK->NEW->VECTOR ASSET ->  -->
     <integer-array name="categoryIncomeIcon">
-        <!-- TODO: first icon should be for the TRANSFERS  ->  -->
         <item>@drawable/icon_array_cat_transfer</item>
-        <item>@drawable/icon_array_wallets_wallet</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_bank</item>
-        <item>@drawable/icon_array_wallets_suitcase</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_wallet</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_bank</item>
-        <item>@drawable/icon_array_wallets_suitcase</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
+        <item>@drawable/inc_icon_money_bag</item>
+        <item>@drawable/inc_icon_strongbox</item>
+        <item>@drawable/inc_icon_piggy_bank_1</item>
+
+        <item>@drawable/inc_icon_atm</item>
+        <item>@drawable/inc_icon_cashier</item>
+        <item>@drawable/inc_icon_cashier_1</item>
+        <item>@drawable/inc_icon_change</item>
+        <item>@drawable/inc_icon_check</item>
+        <item>@drawable/inc_icon_coin</item>
+        <item>@drawable/inc_icon_coins</item>
+        <item>@drawable/inc_icon_coupon</item>
+        <item>@drawable/inc_icon_credit_card</item>
+        <item>@drawable/inc_icon_exchange</item>
+        <item>@drawable/inc_icon_getmoney</item>
+        <item>@drawable/inc_icon_insert_coin</item>
+        <item>@drawable/inc_icon_investment</item>
+        <item>@drawable/inc_icon_money</item>
+        <item>@drawable/inc_icon_money_1</item>
+        <item>@drawable/inc_icon_notes</item>
+        <item>@drawable/inc_icon_piggy_bank</item>
+        <item>@drawable/inc_icon_rich</item>
+        <item>@drawable/inc_icon_startup</item>
+        <item>@drawable/inc_icon_timeismoney</item>
+        <item>@drawable/inc_icon_wallet</item>
     </integer-array>
 
-<!-- TODO: add more icons to the ARRAY -> drawable->RIGHT CLICK->NEW->VECTOR ASSET ->  -->
     <integer-array name="categoryExpenseIcon">
-        <!-- TODO: first icon should be for the TRANSFERS  ->  -->
         <item>@drawable/icon_array_cat_transfer</item>
-        <item>@drawable/icon_array_wallets_wallet</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_bank</item>
-        <item>@drawable/icon_array_wallets_suitcase</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_wallet</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_bank</item>
-        <item>@drawable/icon_array_wallets_suitcase</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
-        <item>@drawable/icon_array_wallets_card</item>
+
+        <item>@drawable/exp_icon_house</item>
+        <item>@drawable/exp_icon_groceries</item>
+        <item>@drawable/exp_icon_receipt</item>
+        <item>@drawable/exp_icon_shirt</item>
+        <item>@drawable/exp_icon_bus</item>
+        <item>@drawable/exp_icon_car</item>
+        <item>@drawable/exp_icon_technology</item>
+        <item>@drawable/exp_icon_archive</item>
+
+        <item>@drawable/exp_icon_agenda</item>
+        <item>@drawable/exp_icon_airplane</item>
+        <item>@drawable/exp_icon_ambulance</item>
+        <item>@drawable/exp_icon_apple</item>
+        <item>@drawable/exp_icon_bag</item>
+        <item>@drawable/exp_icon_bag_1</item>
+        <item>@drawable/exp_icon_banana</item>
+        <item>@drawable/exp_icon_box</item>
+        <item>@drawable/exp_icon_cake</item>
+        <item>@drawable/exp_icon_check</item>
+        <item>@drawable/exp_icon_circus</item>
+        <item>@drawable/exp_icon_cloudy</item>
+        <item>@drawable/exp_icon_coin</item>
+        <item>@drawable/exp_icon_coupe</item>
+        <item>@drawable/exp_icon_cruise</item>
+        <item>@drawable/exp_icon_cutlery</item>
+        <item>@drawable/exp_icon_diamond</item>
+        <item>@drawable/exp_icon_fish</item>
+        <item>@drawable/exp_icon_food</item>
+        <item>@drawable/exp_icon_food_1</item>
+        <item>@drawable/exp_icon_fruits</item>
+        <item>@drawable/exp_icon_glass</item>
+        <item>@drawable/exp_icon_hamburger</item>
+        <item>@drawable/exp_icon_hanger</item>
+        <item>@drawable/exp_icon_hospital</item>
+        <item>@drawable/exp_icon_house_1</item>
+        <item>@drawable/exp_icon_house_2</item>
+        <item>@drawable/exp_icon_internet</item>
+        <item>@drawable/exp_icon_key</item>
+        <item>@drawable/exp_icon_lemonade</item>
+        <item>@drawable/exp_icon_luggage</item>
+        <item>@drawable/exp_icon_luggage_1</item>
+        <item>@drawable/exp_icon_market</item>
+        <item>@drawable/exp_icon_metro</item>
+        <item>@drawable/exp_icon_milk</item>
+        <item>@drawable/exp_icon_minivan</item>
+        <item>@drawable/exp_icon_money</item>
+        <item>@drawable/exp_icon_notebook</item>
+        <item>@drawable/exp_icon_pickup</item>
+        <item>@drawable/exp_icon_pint</item>
+        <item>@drawable/exp_icon_pizza</item>
+        <item>@drawable/exp_icon_present</item>
+        <item>@drawable/exp_icon_salad</item>
+        <item>@drawable/exp_icon_security_camera</item>
+        <item>@drawable/exp_icon_shield</item>
+        <item>@drawable/exp_icon_shopping_basket</item>
+        <item>@drawable/exp_icon_siren</item>
+        <item>@drawable/exp_icon_sun_umbrella</item>
+        <item>@drawable/exp_icon_sunbed</item>
+        <item>@drawable/exp_icon_swimsuit</item>
+        <item>@drawable/exp_icon_tie</item>
+        <item>@drawable/exp_icon_tooth</item>
+        <item>@drawable/exp_icon_water</item>
     </integer-array>
 
 </resources>

@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_main_current"
-            android:icon="@drawable/icon_nav_current"
+            android:icon="@drawable/nav_icon_current"
             android:title="This Month" />
         <item
             android:id="@+id/nav_main_history"
-            android:icon="@drawable/icon_nav_history"
+            android:icon="@drawable/nav_icon_history"
             android:title="History" />
         <item
             android:id="@+id/nav_main_analyze"
-            android:icon="@drawable/icon_nav_analyze"
+            android:icon="@drawable/nav_icon_analyze"
             android:title="Analyze" />
 <!--
         <item
@@ -26,11 +26,11 @@
         <menu>
             <item
                 android:id="@+id/nav_edit_wallets"
-                android:icon="@drawable/icon_nav_wallet"
+                android:icon="@drawable/nav_icon_wallet"
                 android:title="Wallets" />
             <item
                 android:id="@+id/nav_edit_categories"
-                android:icon="@drawable/icon_nav_category"
+                android:icon="@drawable/nav_icon_category"
                 android:title="Categories" />
         </menu>
 
@@ -41,11 +41,11 @@
         <menu>
             <item
                 android:id="@+id/nav_more_settings"
-                android:icon="@drawable/icon_nav_settings"
+                android:icon="@drawable/nav_icon_settings_gear"
                 android:title="Settings" />
             <item
                 android:id="@+id/nav_more_about"
-                android:icon="@drawable/icon_nav_about"
+                android:icon="@drawable/nav_icon_about"
                 android:title="About" />
 
         </menu>

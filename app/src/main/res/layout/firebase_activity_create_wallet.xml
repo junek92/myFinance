@@ -77,9 +77,6 @@
 
            android:padding="8dp"
 
-            android:elevation="2dp"
-
-            android:background="@color/myWhite"
             android:scrollbars="none"/>
     </LinearLayout>
 

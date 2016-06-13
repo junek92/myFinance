@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            fab:fab_icon="@drawable/ic_keyboard_arrow_down_white_48dp"
+            fab:fab_icon="@drawable/arrow_down_income_white"
             fab:fab_title="Add income"
             fab:fab_size="mini"
             fab:fab_colorNormal="@color/primaryColorDark"
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            fab:fab_icon="@drawable/ic_keyboard_arrow_up_white_48dp"
+            fab:fab_icon="@drawable/arrow_up_expense_white"
             fab:fab_title="Add expense"
             fab:fab_size="mini"
             fab:fab_colorNormal="@color/accentColor"
