@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:id="@+id/nav_header_view"
+
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="@color/primaryColor"
+    android:orientation="vertical"
 
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    android:weightSum="100"
+    android:background="@color/primaryColor">
 
     <ImageView
         android:id="@+id/nav_header_image"
 
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="70"
+
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
@@ -26,40 +32,46 @@
         android:clickable="false"
         />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30"
 
-    <TextView
-        android:id="@+id/nav_header_email"
+        android:orientation="horizontal">
 
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:padding="4dp"
+        <TextView
+            android:id="@+id/nav_header_email"
 
-        android:text="your_email@mail.com"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="16sp"
-        android:textStyle=""
-        android:textColor="@color/myWhite"
-        android:alpha="0.87"
-        android:singleLine="true"/>
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:padding="4dp"
 
-    <TextView
-        android:id="@+id/nav_header_log_out"
+            android:text="your_email@mail.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/myWhite"
+            android:maxLines="1"
+            android:alpha="0.87"/>
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:padding="8dp"
+        <TextView
+            android:id="@+id/nav_header_log_out"
 
-        android:text="@string/button_log_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:padding="4dp"
 
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:textColor="@color/myWhite"
-        android:alpha="0.54"
+            android:text="@string/button_log_out"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textSize="12sp"
+            android:textColor="@color/myWhite"
+            android:alpha="0.54"
 
-        android:onClick="onLogOutPressed"/>
+            android:onClick="onLogOutPressed"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

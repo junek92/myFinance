@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class FirebaseMainActivity extends BaseActivity {
     private long userCurrentMonth;
 
     private boolean isThereHistory;
+
+    private RelativeLayout backgorundView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -315,15 +318,29 @@ public class FirebaseMainActivity extends BaseActivity {
         fabExpense = (FloatingActionButton) findViewById(R.id.firebase_main_action_expence);
         fabIncome = (FloatingActionButton) findViewById(R.id.firebase_main_action_income);
         fabTransfer = (FloatingActionButton) findViewById(R.id.firebase_main_action_transfer);
+        backgorundView = (RelativeLayout) findViewById(R.id.main_background_dimmer);
+
+        backgorundView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (floatingActionsMenu.isExpanded()){
+                    floatingActionsMenu.collapse();
+                } else {
+                    Log.d(Constants.LOG_NAVIGATION, "DIM VIEW ELSE...");
+                }
+            }
+        });
 
         floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
+                backgorundView.setVisibility(View.VISIBLE);
                 Log.d(Constants.LOG_NAVIGATION, "MAIN_ACTIVITY: floatingActionMenu -> EXPAND");
             }
 
             @Override
             public void onMenuCollapsed() {
+                backgorundView.setVisibility(View.GONE);
                 Log.d(Constants.LOG_NAVIGATION, "MAIN_ACTIVITY: floatingActionMenu -> COLLAPSE");
             }
         });

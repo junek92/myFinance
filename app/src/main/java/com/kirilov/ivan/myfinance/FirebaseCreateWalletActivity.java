@@ -2,6 +2,7 @@ package com.kirilov.ivan.myfinance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -87,6 +88,7 @@ public class FirebaseCreateWalletActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         textNewName = (TextInputEditText) findViewById(R.id.firebase_create_edit_wallet_name);
+        textNewName.getBackground().mutate().setColorFilter(getResources().getColor(R.color.myWhite), PorterDuff.Mode.SRC_ATOP);
         textNewName.setText(extraWallet.getWalletName());
 
         btnAdd = (Button) findViewById(R.id.firebase_create_edit_wallet_button);

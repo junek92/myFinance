@@ -7,95 +7,100 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/firebase_create_category_app_bar_layout"
-
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
 
-        <!-- Dummy item to prevent EditText from receiving focus at startup-->
-        <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/firebase_create_category_app_bar_layout"
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/firebase_create_category_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-
-            app:navigationContentDescription="@string/abc_action_bar_up_description"
-            app:navigationIcon="?homeAsUpIndicator"
-
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:padding="8dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            android:hint="@string/edit_categories_hint_name"
-            fab:hintTextAppearance="@style/TextAppearance.AppCompat.Subhead">
-<!-- TODO: When adding expense category, change the EDIT TEXT underline color to white, instead of accent color -->
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/firebase_create_category_name"
+            <!-- Dummy item to prevent EditText from receiving focus at startup-->
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/firebase_create_category_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+
+                app:navigationContentDescription="@string/abc_action_bar_up_description"
+                app:navigationIcon="?homeAsUpIndicator"
+
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:padding="8dp"
+
+                android:hint="@string/edit_categories_hint_name"
+                fab:hintTextAppearance="@style/TextAppearance.AppCompat.Subhead">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/firebase_create_category_name"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:padding="@dimen/edit_text_padding"
+                    android:textColor="@color/myWhite"
+
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="20"
+                    android:imeOptions="actionDone"
+
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textCursorDrawable="@null"
+                    />
+            </android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginTop="16dp"
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/firebase_create_category_recycle_view"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:padding="@dimen/edit_text_padding"
-                android:textColor="@color/myWhite"
+                android:padding="8dp"
 
-                android:inputType="text"
-                android:maxLines="1"
-                android:maxLength="20"
-                android:imeOptions="actionDone"
+                android:scrollbars="none"/>
+        </LinearLayout>
 
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                />
-        </android.support.design.widget.TextInputLayout>
-    </android.support.design.widget.AppBarLayout>
+        <Button
+            android:id="@+id/firebase_create_category_button"
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:layout_marginTop="16dp"
-
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/firebase_create_category_recycle_view"
-
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="bottom|end"
 
-            android:padding="8dp"
+            android:background="@color/primaryColor"
 
-            android:scrollbars="none"/>
-    </LinearLayout>
+            android:text="add"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/myWhite"
 
-
-    <Button
-        android:id="@+id/firebase_create_category_button"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|end"
-
-        android:background="@color/primaryColor"
-
-        android:text="add"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColor="@color/myWhite"
-
-        android:onClick="onBtnCreateCategory"/>
-
+            android:onClick="onBtnCreateCategory"/>
+    </android.support.design.widget.CoordinatorLayout>
 </android.support.design.widget.CoordinatorLayout>

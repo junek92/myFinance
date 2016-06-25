@@ -2,6 +2,7 @@ package com.kirilov.ivan.myfinance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -62,6 +63,7 @@ public class FirebaseCreateCategoryActivity extends BaseActivity {
         appBarLayout = (AppBarLayout) findViewById(R.id.firebase_create_category_app_bar_layout);
 
         catNameEditText = (TextInputEditText) findViewById(R.id.firebase_create_category_name);
+        catNameEditText.getBackground().mutate().setColorFilter(getResources().getColor(R.color.myWhite), PorterDuff.Mode.SRC_ATOP);
         catNameEditText.setText(extraCategory.getCatName());
 
         btnAdd = (Button) findViewById(R.id.firebase_create_category_button);

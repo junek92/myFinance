@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -53,6 +54,8 @@ public class FirebaseMonthActivity extends BaseActivity {
 
     private Context context;
     private Toolbar toolbar;
+
+    private RelativeLayout bcgDimLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -233,15 +236,29 @@ public class FirebaseMonthActivity extends BaseActivity {
         fabExpense = (FloatingActionButton) findViewById(R.id.firebase_month_action_expence);
         fabIncome = (FloatingActionButton) findViewById(R.id.firebase_month_action_income);
         fabTransfer = (FloatingActionButton) findViewById(R.id.firebase_month_action_transfer);
+        bcgDimLayout = (RelativeLayout) findViewById(R.id.month_background_dimmer);
+
+        bcgDimLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (floatingActionsMenu.isExpanded()){
+                    floatingActionsMenu.collapse();
+                } else {
+                    Log.d(Constants.LOG_NAVIGATION, "MONTH background dim ELSE...");
+                }
+            }
+        });
 
         floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
+                bcgDimLayout.setVisibility(View.VISIBLE);
                 Log.d(Constants.LOG_NAVIGATION, "MONTH ACTIVITY: floatingActionMenu -> EXPAND");
             }
 
             @Override
             public void onMenuCollapsed() {
+                bcgDimLayout.setVisibility(View.GONE);
                 Log.d(Constants.LOG_NAVIGATION, "MONTH ACTIVITY: floatingActionMenu -> COLLAPSE");
             }
         });

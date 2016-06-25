@@ -122,6 +122,7 @@
             android:name=".FirebaseCreateWalletActivity"
             android:label=""
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseWalletsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -142,6 +143,7 @@
             android:name=".FirebaseCreateCategoryActivity"
             android:label=""
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseCategoriesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

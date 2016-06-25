@@ -12,7 +12,9 @@
     android:fitsSystemWindows="true"
     >
 
+
     <include layout="@layout/firebase_activity_main_content"/>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/firebase_main_nav_view"

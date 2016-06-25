@@ -165,6 +165,7 @@ public class FirebaseExpenseActivity extends BaseActivity {
                 return false;
             }
         });
+
         // hide the soft keyboard
         descriptionText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

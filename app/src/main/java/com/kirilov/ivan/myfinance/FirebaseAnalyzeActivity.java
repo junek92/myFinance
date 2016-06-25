@@ -247,7 +247,6 @@ public class FirebaseAnalyzeActivity extends BaseActivity{
         xMonths.add("Nov");
         xMonths.add("Dec");
 
-        //TODO: make it to use HashMap!
         if (!inputData.isEmpty()){
             Log.d("ANALYZE ", " !inputData.isEmpty() ");
             for (int i = 0; i < 12; i++){

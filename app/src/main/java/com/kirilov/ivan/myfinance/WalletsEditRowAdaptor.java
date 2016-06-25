@@ -121,14 +121,14 @@ public class WalletsEditRowAdaptor extends RecyclerView.Adapter<WalletsEditRowAd
                 Intent intent = new Intent(mContext, FirebaseCreateWalletActivity.class);
                 intent.putExtra(Constants.EXTRA_WALLET, walletsArrayList.get(position));
                 mContext.startActivity(intent);
-                Toast.makeText(mContext, "EDIT pos: " + position + " ID: " + walletsArrayList.get(position).getWalletId(), Toast.LENGTH_LONG ).show();
+//                Toast.makeText(mContext, "EDIT pos: " + position + " ID: " + walletsArrayList.get(position).getWalletId(), Toast.LENGTH_LONG ).show();
             }
         });
 
         holder.textViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "DELETE pos: " + position + " ID: " + walletsArrayList.get(position).getWalletId(), Toast.LENGTH_LONG ).show();
+//                Toast.makeText(mContext, "DELETE pos: " + position + " ID: " + walletsArrayList.get(position).getWalletId(), Toast.LENGTH_LONG ).show();
             }
         });
     }

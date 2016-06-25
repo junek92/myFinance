@@ -99,14 +99,14 @@ public class CategoryEditRowAdapter extends RecyclerView.Adapter<CategoryEditRow
                 intent.putExtra(Constants.EXTRA_CATEGORY, categoryArrayList.get(position));
                 mContext.startActivity(intent);
 
-                Toast.makeText(mContext, "EDIT pos: " + position + " ID: " + categoryArrayList.get(position).getCatId(), Toast.LENGTH_LONG ).show();
+//                Toast.makeText(mContext, "EDIT pos: " + position + " ID: " + categoryArrayList.get(position).getCatId(), Toast.LENGTH_LONG ).show();
             }
         });
 
         holder.textViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "DELETE pos: " + position + " ID: " + categoryArrayList.get(position).getCatId(), Toast.LENGTH_LONG ).show();
+//                Toast.makeText(mContext, "DELETE pos: " + position + " ID: " + categoryArrayList.get(position).getCatId(), Toast.LENGTH_LONG ).show();
             }
         });
 
