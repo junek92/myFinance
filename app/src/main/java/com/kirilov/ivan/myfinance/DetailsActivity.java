@@ -342,7 +342,6 @@ public class DetailsActivity extends BaseActivity {
                 if (dataSnapshot.hasChildren()){
                     Wallet dummyWallet = dataSnapshot.getValue(Wallet.class);
                     if (dummyWallet.getWalletIncome() == 0d && dummyWallet.getWalletExpenses() == 0d){
-                        Toast.makeText(context, "There is nothing to show.", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
                         if (dummyWallet.getWalletCreated() == -1L){

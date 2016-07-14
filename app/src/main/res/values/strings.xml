@@ -115,8 +115,8 @@
 
     <string name="about_dialog">
         \t<i>Version:</i> <b>0.0.1b</b>
-        \n\t\t<b><i>BETA VERSION</i></b>
-        \n\nManage and track your personal funds - whenever and wherever you want.
+        \n\t<b><i>BETA VERSION</i></b>
+        \n\n\tManage and track your personal funds - whenever and wherever you want.
         \n\n\t<i>Credits:</i>
         \n\tIcons are made by <a href="http://www.freepik.com/"><b>Freepik</b></a>
         and <a href="http://www.flaticon.com/authors/madebyoliver"><b>Madebyoliver</b></a>

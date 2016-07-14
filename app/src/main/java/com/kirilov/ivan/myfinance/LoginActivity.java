@@ -33,7 +33,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.kirilov.ivan.myfinance.firebase_model.User;
 import com.kirilov.ivan.myfinance.myExtras.Constants;
+import com.kirilov.ivan.myfinance.myExtras.Utilities;
+
+import java.util.Calendar;
 
 
 /**
@@ -45,6 +53,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
     private static final int RC_SIGN_IN = 9001;     // Request code assigned to the ActivityForResult
     private GoogleApiClient mGoogleApiClient;
+    private boolean isUsingGoogleAcc = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,26 +92,87 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                // User IS signed in
                 if (user != null) {
                     if (!intentAlreadySent) {
                         // User IS signed in
-                            Log.d(Constants.LOG_PREFERENCES, "LOGIN: onAuthStateChanged:signed_in:" + user.getUid());
+                            Log.d(Constants.LOG_FIREBASE_LISTENERS, "LOGIN: onAuthStateChanged:signed_in:" + user.getUid());
                         //PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(Constants.FIREBASE_RETURN_DEFAULT_STATE, true).apply();
 
-                            Log.d(Constants.LOG_PREFERENCES, "Pref Wallet DEF - LOGIN: " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.FIREBASE_RETURN_DEFAULT_STATE, true));
+                            Log.d(Constants.LOG_FIREBASE_LISTENERS, "Pref Wallet DEF - LOGIN: " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.FIREBASE_RETURN_DEFAULT_STATE, true));
 
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(Constants.KEY_PREF_EMAIL_PARSED, user.getEmail().replace('.',',').toLowerCase()).apply();
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);   //Clear all activities and create new task
-                        startActivity(intent);
+                        // if Google Acc is currently in use
+                        if (isUsingGoogleAcc){
+                            Log.d(Constants.LOG_FIREBASE_LISTENERS, "LoginActivity:firebaseAuthListener -> isUsingGoogleAcc = TRUE");
+                            final DatabaseReference mReference = firebaseDatabase.getReference(Constants.FIREBASE_LOCATION_USER_INFORMATION + "/"
+                                            + user.getEmail().replace('.',',').toLowerCase() + "/");
 
-                        intentAlreadySent = true;
+                            // check if it's a new User of the APP - to do so -> check for information at userInfo/EMAIL node
+                            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.hasChildren()){
+                                        //if there is any information at userInfo/EMAIL -> it's old user -> just log him in
 
-                        Log.d(Constants.LOG_PREFERENCES, "Go to MAIN ACTIVITY");
-                        finish();
+                                        Log.d(Constants.LOG_FIREBASE_LISTENERS, "LoginActivity:firebaseAuthListener -> " +
+                                                "mReference.addListenerForSingleValueEvent:dataSnapshot.hasChildren -> TRUE");
+
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);   //Clear all activities and create new task
+                                        startActivity(intent);
+
+                                        intentAlreadySent = true;
+
+                                        Log.d(Constants.LOG_FIREBASE_LISTENERS, "Go to MAIN ACTIVITY -> isUsingGoogle : TRUE -> OLD USER");
+                                        finish();
+                                    } else {
+                                        //if the node is EMPTY -> it's new user -> create a new node for him
+
+                                        Log.d(Constants.LOG_FIREBASE_LISTENERS, "LoginActivity:firebaseAuthListener -> " +
+                                                "mReference.addListenerForSingleValueEvent:dataSnapshot.hasChildren -> FALSE");
+
+                                        User mUser = new User(user.getEmail(), Calendar.getInstance().getTimeInMillis(), "", Utilities.calculateBeggingOfCurrentMonth());
+                                        mReference.setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    Log.d(Constants.LOG_FIREBASE_LISTENERS, "LoginActivity:firebaseAuthListener -> " +
+                                                            "mReference.setValue(mUser).addOnCompleteListener isSuccessful -> TRUE: ");
+                                                    //when the node is create log him in
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);   //Clear all activities and create new task
+                                                    startActivity(intent);
+
+                                                    intentAlreadySent = true;
+
+                                                    Log.d(Constants.LOG_FIREBASE_LISTENERS, "Go to MAIN ACTIVITY -> isUsingGoogle : TRUE -> NEW USER");
+                                                    finish();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);   //Clear all activities and create new task
+                            startActivity(intent);
+
+                            intentAlreadySent = true;
+
+                            Log.d(Constants.LOG_FIREBASE_LISTENERS, "Go to MAIN ACTIVITY -> isUsingGoogle : FALSE");
+                            finish();
+                        }
                     }
                 } else {
                     // User IS NOT signed in
@@ -176,7 +246,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 Log.d(Constants.LOG_FIREBASE_LISTENERS, "signInWithEmail:onComplete:" + task.isSuccessful());
                 if (!task.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "Authentication failed. " + task.getException().getMessage(),
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -244,6 +314,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
+                isUsingGoogleAcc = true;
                 firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In failed, update UI appropriately
@@ -281,9 +352,10 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(Constants.LOG_FIREBASE_LISTENERS, "signInWithCredential", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
+
+
 
                         // [START_EXCLUDE]
                         progressDialogPleaseWait.dismiss();

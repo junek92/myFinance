@@ -27,7 +27,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/wallet_buddy_b" />
+            android:src="@drawable/wallet_buddy_nbgr_rg" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

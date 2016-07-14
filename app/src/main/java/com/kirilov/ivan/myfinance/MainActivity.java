@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity {
     private DatabaseReference refUserInfoUserWallets, refUserInfoUserCurrentMonth, refWalletsHistoryEmail;
     private Query queryUserInfoUserWallets;
     private ChildEventListener childEventListenerUserInfoUserWallets;
+    private ValueEventListener historyValueEventListener;
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -196,12 +197,13 @@ public class MainActivity extends BaseActivity {
 //                Toast.makeText(context, "Error." + databaseError.getMessage(), Toast.LENGTH_LONG).show();
 //            }
 //        };
+
+        availableHistoryCheck();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        isThereHistory = false;
         navigationView.setCheckedItem(R.id.nav_main_current);
 
         mAdapter.notifyDataSetChanged();
@@ -210,11 +212,6 @@ public class MainActivity extends BaseActivity {
         textViewDate.setText(Utilities.getTimeInString(beginningOfMonth, true));
 
         newMonthCheck();
-        availableHistoryCheck();
-
-
-
-
 
         getScreenDimension();
     }
@@ -228,6 +225,10 @@ public class MainActivity extends BaseActivity {
             queryUserInfoUserWallets.removeEventListener(childEventListenerUserInfoUserWallets);
         }
 
+        if (historyValueEventListener != null){
+            Log.d(Constants.LOG_FIREBASE_LISTENERS, "MAIN_ACTIVITY: historyValueEventListener -> REMOVED");
+            refWalletsHistoryEmail.child("0").removeEventListener(historyValueEventListener);
+        }
     }
 
     @Override
@@ -643,12 +644,15 @@ public class MainActivity extends BaseActivity {
     }
 
     public void availableHistoryCheck(){
-        refWalletsHistoryEmail.child("0").addListenerForSingleValueEvent(new ValueEventListener() {
+        historyValueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChildren()){
                     isThereHistory = true;
                         Log.d(Constants.LOG_FIREBASE_DATABASE_OPERATIONS, " There is available history: " + dataSnapshot.getChildrenCount());
+                } else {
+                    isThereHistory = false;
+                    Log.d(Constants.LOG_FIREBASE_DATABASE_OPERATIONS, " There is NO available history!");
                 }
             }
 
@@ -656,8 +660,10 @@ public class MainActivity extends BaseActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
 
+        refWalletsHistoryEmail.child("0").addValueEventListener(historyValueEventListener);
+        Log.d(Constants.LOG_FIREBASE_LISTENERS, "MAIN_ACTIVITY: historyValueEventListener -> ADDED");
     }
 
     private void getScreenDimension(){

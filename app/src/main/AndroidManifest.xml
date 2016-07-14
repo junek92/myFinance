@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon_wallet_buddy_red_no_glow"
+        android:icon="@mipmap/wallet_buddy_192_no_glow_rg"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
