@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Wallet Buddy</string>
+    
+    <string name="web_app_client_id">554905135050-k3it33cbstv6u7hrrdr2gbgeucceii6b.apps.googleusercontent.com</string>
 
     <!-- Login and Create Account Screen  -->
     <string name="text_dont_have_account">Don\'t have an account?</string>
@@ -111,8 +113,16 @@
     <string name="nav_atMain">You are already in This Month section.</string>
     <string name="nav_atHistory">You are already in History section.</string>
 
-    <string name="about_dialog">\tVersion: 0.1 \n\tAuthor: Ivan Kirilov \n\n
-                                Manage and track your personal funds - whenever and wherever you want.</string>
+    <string name="about_dialog">
+        \t<i>Version:</i> <b>0.0.1b</b>
+        \n\t\t<b><i>BETA VERSION</i></b>
+        \n\nManage and track your personal funds - whenever and wherever you want.
+        \n\n\t<i>Credits:</i>
+        \n\tIcons are made by <a href="http://www.freepik.com/"><b>Freepik</b></a>
+        and <a href="http://www.flaticon.com/authors/madebyoliver"><b>Madebyoliver</b></a>
+        from <a href="http://www.flaticon.com/">www.flaticon.com</a>
+        \n\n
+    </string>
     <string name="about_dialog_title">About</string>
 
     <string name="settings_title">Settings</string>

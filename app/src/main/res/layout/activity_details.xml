@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/details_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+
+                app:navigationContentDescription="@string/abc_action_bar_up_description"
+                app:navigationIcon="?homeAsUpIndicator"
+
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/details_wallet_created"
+
+                android:gravity="end"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:layout_margin="4dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:baselineAligned="false"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_weight="50"
+                    android:orientation="horizontal"
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    >
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/details_wallet_income"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="end|center_vertical"
+                        android:textColor="@color/myWhite"
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:alpha="0.87"/>
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="center"
+
+                        android:alpha="0.87"
+                        android:src="@drawable/arrow_down_income_white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="50"
+                    android:orientation="horizontal"
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/details_wallet_expense"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center"
+                        android:textColor="@color/accentColor"
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:alpha="0.87"/>
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:alpha="0.87"
+                        android:src="@drawable/arrow_up_expense_red"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+
+                android:background="@color/myWhite"
+                android:alpha="0.54"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/details_wallet_balance"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+
+                android:gravity="center"
+                android:textColor="@color/myWhite"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:alpha="0.87"/>
+<!--
+TODO: Progress bar for wallets budget ?
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:indeterminate="true"
+                app:mpb_progressStyle="horizontal"
+
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+-->
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/details_tab_layout"
+
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+
+                app:tabIndicatorColor="@color/myWhite"
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/details_viewpager"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@color/background" />
+
+
+<!--
+            <ExpandableListView
+                android:id="@+id/details_expand_income"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                />
+
+            <ExpandableListView
+                android:id="@+id/details_expand_expense"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                />
+-->
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <com.getbase.floatingactionbutton.AddFloatingActionButton
+        android:id="@+id/details_action_btn"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+
+        app:fab_size="normal"
+        app:fab_colorNormal="@color/primaryColor"
+        app:fab_colorPressed="@color/primaryColorDark"
+
+        android:onClick="btnAddNewTransaction"/>
+
+</android.support.design.widget.CoordinatorLayout>

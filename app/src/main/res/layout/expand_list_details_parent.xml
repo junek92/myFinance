@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/parent_icon"
+
+        android:src="@drawable/icon_array_wallets_wallet"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:padding="4dp"
+
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="200">
+        <TextView
+            android:id="@+id/parent_text"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="120"
+            android:gravity="center_vertical"
+
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+
+            android:maxLines="1"
+            android:ellipsize="end"
+
+            android:text="Savings"
+
+            android:textColor="@color/myBlack"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:alpha="0.87"
+            />
+        <TextView
+            android:id="@+id/parent_sum"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            android:gravity="end|center_vertical"
+
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+
+            android:maxLines="1"
+
+            android:text="99.0"
+
+            android:textColor="@color/myBlack"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:alpha="0.87"
+           />
+    </LinearLayout>
+</LinearLayout>

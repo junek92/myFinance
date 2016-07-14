@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/wallets_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+
+                app:navigationContentDescription="@string/abc_action_bar_up_description"
+                app:navigationIcon="?homeAsUpIndicator"
+
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        </android.support.design.widget.AppBarLayout>
+<!--
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/firebase_wallets_progress_bar"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:indeterminate="true"
+            fab:mpb_progressStyle="circular"
+
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Large.NoPadding"/>
+-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/wallets_recycle_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:paddingBottom="72dp"
+                android:clipToPadding="false"
+
+                android:scrollbars="none"/>
+        </RelativeLayout>
+
+        <com.getbase.floatingactionbutton.AddFloatingActionButton
+            android:id="@+id/wallets_action_btn"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+
+            fab:fab_size="normal"
+            fab:fab_colorNormal="@color/primaryColor"
+            fab:fab_colorPressed="@color/primaryColorDark"
+
+            android:visibility="invisible"
+            android:onClick="btnAddNewWallet"/>
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "554905135050-c4ujh7r28djif3jfbf8reuctdquhkvhn.apps.googleusercontent.com",
+          "client_id": "554905135050-nik08h4cb7f7f3ekk3i13v5m8rgo6tu5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kirilov.ivan.myfinance",
-            "certificate_hash": "5162496E510FC883FF996C7B3BCCE256FCA40AB5"
+            "certificate_hash": "B79F85CD2AEA174BD28F36C0658FEFCDE2548FE5"
           }
         },
         {

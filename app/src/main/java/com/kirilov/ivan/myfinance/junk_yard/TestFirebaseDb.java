@@ -1,11 +1,9 @@
 package com.kirilov.ivan.myfinance.junk_yard;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +15,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.kirilov.ivan.myfinance.BaseActivity;
-import com.kirilov.ivan.myfinance.Constants;
-import com.kirilov.ivan.myfinance.FirebaseIncomeActivity;
-import com.kirilov.ivan.myfinance.FirebaseMainActivity;
+import com.kirilov.ivan.myfinance.myExtras.Constants;
+import com.kirilov.ivan.myfinance.MainActivity;
 import com.kirilov.ivan.myfinance.R;
-import com.kirilov.ivan.myfinance.Utilities;
 import com.kirilov.ivan.myfinance.firebase_model.Transaction;
-import com.kirilov.ivan.myfinance.firebase_model.User;
 import com.kirilov.ivan.myfinance.firebase_model.Wallet;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -136,12 +130,12 @@ public class TestFirebaseDb extends BaseActivity {
         refUserInfoUserCurrentMonth.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue(Long.class) != FirebaseMainActivity.beginningOfMonth){
+                if (dataSnapshot.getValue(Long.class) != MainActivity.beginningOfMonth){
                     Log.d(LOG, " IT'S NEW MONTH - >>>>>>>");
-                    Log.d(LOG, " BUTTON 2: VALUE -> " + dataSnapshot.getValue() + " : " + FirebaseMainActivity.beginningOfMonth);
+                    Log.d(LOG, " BUTTON 2: VALUE -> " + dataSnapshot.getValue() + " : " + MainActivity.beginningOfMonth);
                 } else {
                     Log.d(LOG, " IT'S OLD MONTH :<<<<");
-                    Log.d(LOG, " BUTTON 2: VALUE -> " + dataSnapshot.getValue() + " : " + FirebaseMainActivity.beginningOfMonth);
+                    Log.d(LOG, " BUTTON 2: VALUE -> " + dataSnapshot.getValue() + " : " + MainActivity.beginningOfMonth);
                 }
 
             }

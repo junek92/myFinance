@@ -1,0 +1,177 @@
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/analyze_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+
+                app:navigationContentDescription="@string/abc_action_bar_up_description"
+                app:navigationIcon="?homeAsUpIndicator"
+
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:id="@+id/analyze_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:alpha="0.54"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/analyze_bar_chart"
+
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+
+                />
+<!--
+            <TextView
+                android:id="@+id/analyse_year_text"
+
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@id/analyze_bar_chart"
+
+                android:text="@string/analyse_year"
+                android:textColor="#000000"
+                android:alpha="0.87"
+                android:fontFamily="sans-serif-black"
+                android:textSize="16sp"/>
+
+
+
+            <Spinner
+                android:id="@+id/analyse_year_spinner"
+
+                android:popupBackground="@color/myWhite"
+                android:popupElevation="6dp"
+
+                android:layout_width="112dp"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="108dp"
+                android:layout_below="@id/analyze_bar_chart"
+
+                android:prompt="@string/analyse_year_prompt"/>
+
+
+
+            <Spinner
+                android:id="@+id/analyse_category_spinner"
+
+                android:popupBackground="@color/myWhite"
+                android:popupElevation="6dp"
+
+                android:layout_width="112dp"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="108dp"
+                android:layout_below="@id/analyse_year_spinner"
+
+                android:prompt="@string/analyse_category_prompt"/>
+
+
+-->
+
+            <TextView
+                android:id="@+id/analyze_category_text"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp"
+
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+
+                android:text="@string/analyse_category"
+                android:textColor="@color/myBlack"
+                android:alpha="0.54"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/analyze_category_recycle_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+
+                android:scrollbars="none"/>
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/analyze_button"
+
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:layout_gravity="bottom|end"
+
+            android:text="@string/analyse_button"
+            android:textColor="@color/myWhite"
+
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+
+            android:background="@color/primaryColorDark"
+            android:onClick="fetchData"
+            />
+
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>
+
+

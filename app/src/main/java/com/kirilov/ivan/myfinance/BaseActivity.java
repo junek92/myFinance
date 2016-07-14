@@ -9,12 +9,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kirilov.ivan.myfinance.myExtras.Constants;
 
 /**
  * Created by Ivan on 26-May-16.
@@ -27,12 +29,31 @@ public class BaseActivity  extends AppCompatActivity{
     protected ProgressDialog progressDialogPleaseWait;
 
     protected boolean intentAlreadySent = false;
+    protected int screenDpi;
+
+    static boolean isInitialized = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try{
+            if(!isInitialized){
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                isInitialized = true;
+            }else {
+                Log.d(Constants.LOG_FIREBASE_DATABASE_OPERATIONS,"Disk Persistence Already Initialized !!!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        screenDpi = dm.densityDpi;
 
          /* Setup the "Please wait" progress dialog for future use */
         progressDialogPleaseWait = new ProgressDialog(this);
@@ -47,14 +68,14 @@ public class BaseActivity  extends AppCompatActivity{
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         // User IS signed in
-                        Log.d("FIREBASE", "BASE: onAuthStateChanged:signed_in:" + user.getUid());
+                        Log.d(Constants.LOG_PREFERENCES, "BASE: onAuthStateChanged:signed_in:" + user.getUid());
 
                     } else {
                         // User IS NOT signed in
                         if (!intentAlreadySent){
                             //put flag to check - if there are no wallets -> add the default ones
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(Constants.FIREBASE_RETURN_DEFAULT_STATE, true).apply();
-                                Log.d("PREFERENCES", "Pref Wallet DEF - BASE LOG OUT: " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.FIREBASE_RETURN_DEFAULT_STATE, true));
+                                Log.d(Constants.LOG_PREFERENCES, "Pref Wallet DEF - BASE LOG OUT: " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.FIREBASE_RETURN_DEFAULT_STATE, true));
                             //delete stored acc in the shared preference
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(Constants.KEY_PREF_EMAIL_PARSED, "").apply();
 
@@ -63,10 +84,10 @@ public class BaseActivity  extends AppCompatActivity{
                             startActivity(intent);
                             intentAlreadySent = true;
 
-                            Log.d("FIREBASE", "Go to LOGIN ACTIVITY");
+                            Log.d(Constants.LOG_PREFERENCES, "Go to LOGIN ACTIVITY");
                             finish();
                         } else {
-                            Log.d("FIREBASE", "BASE: WAITING FOR INTENT");
+                            Log.d(Constants.LOG_PREFERENCES, "BASE: WAITING FOR INTENT");
                         }
                     }
                 }

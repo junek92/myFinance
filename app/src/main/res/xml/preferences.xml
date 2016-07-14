@@ -7,7 +7,7 @@
     <PreferenceCategory
         android:title="Settings">
         <ListPreference
-            android:title="Currency"
+            android:title="Choose currency"
             android:summary="Select currency to display"
             android:key="used_currency"
             android:defaultValue="USD"
@@ -26,7 +26,6 @@
         <PreferenceScreen
             android:title="Android Dev"
             android:summary="Android developers website">
-
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://developer.android.com" />

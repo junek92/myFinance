@@ -22,7 +22,7 @@
 -->
     </group>
 
-    <item android:title="\tEdit">
+    <item android:title="Edit">
         <menu>
             <item
                 android:id="@+id/nav_edit_wallets"
@@ -33,22 +33,20 @@
                 android:icon="@drawable/nav_icon_category"
                 android:title="Categories" />
         </menu>
-
-
     </item>
 
-    <item android:title="\tMore">
-        <menu>
-            <item
-                android:id="@+id/nav_more_settings"
-                android:icon="@drawable/nav_icon_settings_gear"
-                android:title="Settings" />
-            <item
-                android:id="@+id/nav_more_about"
-                android:icon="@drawable/nav_icon_about"
-                android:title="About" />
+   <group android:id="@+id/nav_more_group">
+       <!-- Divider will appear above this item, because [NavigationView]
+            will create a divider every time the group id is changed -->
+        <item
+            android:id="@+id/nav_more_settings"
+            android:icon="@drawable/nav_icon_settings_gear"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_more_about"
+            android:icon="@drawable/nav_icon_about"
+            android:title="About" />
 
-        </menu>
-    </item>
+   </group>
 
 </menu>

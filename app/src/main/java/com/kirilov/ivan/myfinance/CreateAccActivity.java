@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +20,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.kirilov.ivan.myfinance.firebase_model.User;
+import com.kirilov.ivan.myfinance.myExtras.Constants;
+import com.kirilov.ivan.myfinance.myExtras.Utilities;
 
 import java.util.Calendar;
 
 /**
- * Created by Ivan on 27-May-16.
+ * Created on 27-May-16.
+ * By Ivan
  */
+
 public class CreateAccActivity extends BaseActivity {
     private TextInputEditText userEmail, userPass, userPassConfirm;
-    private Button btnCreate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class CreateAccActivity extends BaseActivity {
                     User mUser = new User(firebaseAuth.getCurrentUser().getEmail(), Calendar.getInstance().getTimeInMillis(), "", Utilities.calculateBeggingOfCurrentMonth());
                     mReference.setValue(mUser);
 
-                    Intent intent = new Intent(CreateAccActivity.this, FirebaseMainActivity.class);
+                    Intent intent = new Intent(CreateAccActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);   //Clear all activities and create new task
                     startActivity(intent);
 

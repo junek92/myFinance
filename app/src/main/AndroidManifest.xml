@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.kirilov.ivan.myfinance" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kirilov.ivan.myfinance" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_icon_wallet"
+        android:icon="@mipmap/icon_wallet_buddy_red_no_glow"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity
@@ -30,124 +27,128 @@
         </activity>
 
         <activity
-            android:name=".FirebaseMainActivity"
+            android:name=".MainActivity"
             android:label="@string/main_screen_title"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
-            android:name=".FirebaseHistoryActivity"
+            android:name=".HistoryActivity"
             android:label="@string/history_title"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseMonthActivity"
+            android:name=".MonthActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseHistoryActivity">
+            android:parentActivityName=".HistoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseHistoryActivity"/>
+                android:value=".HistoryActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseIncomeActivity"
+            android:name=".IncomeActivity"
             android:label="@string/income_title"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseExpenseActivity"
+            android:name=".ExpenseActivity"
             android:label="@string/expense_title"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseTransferActivity"
+            android:name=".TransferActivity"
             android:label="@string/transfer_title"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseAnalyzeActivity"
+            android:name=".AnalyzeActivity"
             android:label="@string/analyze_title"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseDetailsActivity"
+            android:name=".DetailsActivity"
             android:label="@string/trans_details_title"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseWalletsActivity"
+            android:name=".WalletsActivity"
             android:label="@string/edit_wallets_title"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseCreateWalletActivity"
+            android:name=".CreateWalletActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseWalletsActivity">
+            android:parentActivityName=".WalletsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseWalletsActivity"/>
+                android:value=".WalletsActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseCategoriesActivity"
+            android:name=".CategoriesActivity"
             android:label="@string/edit_categories_title"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <activity
-            android:name=".FirebaseCreateCategoryActivity"
+            android:name=".CreateCategoryActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseCategoriesActivity">
+            android:parentActivityName=".CategoriesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseCategoriesActivity"/>
+                android:value=".CategoriesActivity"/>
         </activity>
 
         <activity
@@ -158,75 +159,15 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
 
-
-
-        <!-- OLD ACTIVITIES -->
+        <!-- TEST ACTIVITIES -->
         <activity
             android:name=".junk_yard.TestFirebaseDb"
             android:label=""
             android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
-
-
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
-            android:name=".HistoryActivity"
-            android:label="@string/history_title"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
-        </activity>
-
-        <activity
-            android:name=".PieMonthlyActivity"
-            android:label="@string/pie_monthly_title"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.HistoryActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.HistoryActivity"/>
-        </activity>
-
-        <activity
-            android:name=".AddIncomeActivity"
-            android:label="@string/addCredit_title"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
-        </activity>
-
-        <activity
-            android:name=".TransUpdateActivity"
-            android:label="@string/trans_update_title"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".FirebaseDetailsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".FirebaseDetailsActivity"/>
-        </activity>
-
-        <activity
-            android:name=".AddExpenseActivity"
-            android:label="@string/addDebit_title"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.kirilov.ivan.myfinance.FirebaseMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kirilov.ivan.myfinance.FirebaseMainActivity"/>
-        </activity>
-
     </application>
 </manifest>
