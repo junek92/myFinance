@@ -63,13 +63,13 @@
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
 
-                    android:layout_weight="85"
+                    android:layout_weight="75"
 
                     android:hint="@string/income_amount_hint"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
                     >
 
                     <android.support.design.widget.TextInputEditText
@@ -86,7 +86,7 @@
 
                         android:alpha="0.87"
                         android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textCursorDrawable="@null"
                         />
                 </android.support.design.widget.TextInputLayout>
@@ -94,9 +94,9 @@
                 <TextView
                     android:id="@+id/expense_currency"
 
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="15"
+                    android:layout_weight="25"
                     android:gravity="center"
 
                     android:text="@string/add_currency"
@@ -109,14 +109,14 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
 
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
 
                 android:alpha="0.87"
                 android:hint="@string/expense_desc_hint"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat.Subhead">
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/expense_description"
@@ -131,7 +131,7 @@
                     android:maxLength="50"
                     android:imeOptions="actionDone"
 
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textCursorDrawable="@null"
                     />
             </android.support.design.widget.TextInputLayout>
@@ -149,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
 
                 android:text="@string/income_wallet"
@@ -157,7 +157,7 @@
                 android:textStyle="bold"
                 android:alpha="0.54"
 
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/expense_wallet_recycle_view"
@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
 
                 android:layout_below="@id/expense_wallet_recycle_view"
@@ -190,7 +190,7 @@
                 android:textColor="@color/myBlack"
                 android:textStyle="bold"
                 android:alpha="0.54"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/expense_category_recycle_view"
@@ -213,16 +213,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_gravity="bottom|end"
-
-            android:layout_below="@id/expense_category_recycle_view">
+            android:layout_gravity="bottom|end">
             <Button
                 android:id="@+id/expense_btn_add"
 
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
+
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
                 android:gravity="center"
 
                 android:text="@string/income_btn_add"
@@ -240,8 +240,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_toStartOf="@id/expense_btn_add"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+
+                android:layout_marginEnd="16dp"
                 android:gravity="center"
 
                 android:text="@string/income_btn_delete"

@@ -247,8 +247,14 @@ public class IncomeActivity extends BaseActivity {
 
         categoriesRecyclerView.setHasFixedSize(true);
 
-        // Change the number of grid rows, according to the screen DPI
-        if (screenDpi <= 320){
+//        // Change the number of grid rows, according to the screen DPI
+//        if (screenDpi <= 320){
+//            gridRowNumber = 1;
+//        } else {
+//            gridRowNumber = 2;
+//        }
+
+        if (screenInches < 4d){
             gridRowNumber = 1;
         } else {
             gridRowNumber = 2;

@@ -29,7 +29,10 @@ public class BaseActivity  extends AppCompatActivity{
     protected ProgressDialog progressDialogPleaseWait;
 
     protected boolean intentAlreadySent = false;
+
     protected int screenDpi;
+    protected float screenLogicalDensity;
+    protected double screenInches;
 
     static boolean isInitialized = false;
 
@@ -51,9 +54,7 @@ public class BaseActivity  extends AppCompatActivity{
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        screenDpi = dm.densityDpi;
+        getDisplayMetrics();
 
          /* Setup the "Please wait" progress dialog for future use */
         progressDialogPleaseWait = new ProgressDialog(this);
@@ -108,7 +109,6 @@ public class BaseActivity  extends AppCompatActivity{
             }
         }
     }
-    //TODO: Add password reset option and implementation
 
     public void onLogOutPressed(View view){
         AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
@@ -132,5 +132,27 @@ public class BaseActivity  extends AppCompatActivity{
 
     public boolean isEmailValid(String email) {
         return (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches());
+    }
+
+    public void getDisplayMetrics(){
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        // screen DPI
+        screenDpi = dm.densityDpi;
+        // screen logical density - between 1.0 and 4.0 - dp*logical_density = screen_dp
+        screenLogicalDensity = dm.density;
+
+        // calculate screen inches
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        int dpi = dm.densityDpi;
+        // use the pythagorean theorem to calculate screen diagonal
+        double wi = (double)width / (double)dpi;
+        double hi = (double)height / (double)dpi;
+        double x = Math.pow(wi, 2);
+        double y = Math.pow(hi, 2);
+
+        screenInches = Math.sqrt(x+y);
+        Log.d("TESTING:", "BaseActivity:screenInches -> " + screenInches);
     }
 }
