@@ -189,10 +189,6 @@ public class HistoryActivity extends BaseActivity {
                         Intent analyseIntent = new Intent(context, AnalyzeActivity.class);
                         startActivity(analyseIntent);
                         break;
-//                    case R.id.nav_main_firebase:
-//                        Intent testIntent  = new Intent(context, TestFirebaseDb.class);
-//                        startActivity(testIntent);
-//                        break;
                     case R.id.nav_edit_wallets:
                         Intent walletsIntent = new Intent(context, WalletsActivity.class);
                         startActivity(walletsIntent);

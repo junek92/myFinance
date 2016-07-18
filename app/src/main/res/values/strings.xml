@@ -4,8 +4,8 @@
     <string name="web_app_client_id">554905135050-k3it33cbstv6u7hrrdr2gbgeucceii6b.apps.googleusercontent.com</string>
 
     <!-- Login and Create Account Screen  -->
-    <string name="text_dont_have_account">Don\'t have an account?</string>
-    <string name="text_forgot_password">Forgot your password?</string>
+    <string name="text_dont_have_account">Don\'t have an account?\t</string>
+    <string name="text_forgot_password">Forgot your password?\t</string>
     <string name="button_login_with_password">LOG IN</string>
     <string name="button_log_out">LOG OUT</string>
     <string name="button_create_account">CREATE</string>
@@ -116,12 +116,12 @@
     <string name="about_dialog">
         \t<i>Version:</i> <b>0.0.1b</b>
         \n\t<b><i>BETA VERSION</i></b>
-        \n\n\tManage and track your personal funds - whenever and wherever you want.
+        \n\n\t<i>Manage and track your personal funds - with the help of the cloud.</i>
         \n\n\t<i>Credits:</i>
-        \n\tIcons are made by <a href="http://www.freepik.com/"><b>Freepik</b></a>
+        \n\tIcons made by <a href="http://www.freepik.com/"><b>Freepik</b></a>
         and <a href="http://www.flaticon.com/authors/madebyoliver"><b>Madebyoliver</b></a>
         from <a href="http://www.flaticon.com/">www.flaticon.com</a>
-        \n\n
+        \n
     </string>
     <string name="about_dialog_title">About</string>
 

@@ -54,7 +54,7 @@ public class AnalyzeActivity extends BaseActivity{
     private GridImageNameAdapter categoriesGridAdapter;
     private GridLayoutManager categoriesGridLayoutManager;
 
-    private Button btnDraw;
+    private Query fetchDataQuery;
 
     public static long categoryId;
     private long lastSelectedCategoryId;
@@ -63,6 +63,7 @@ public class AnalyzeActivity extends BaseActivity{
 
     private BarChart barChart;
     private TextView mTextView;
+    private Button btnDraw;
 
     Context context;
 
@@ -108,6 +109,12 @@ public class AnalyzeActivity extends BaseActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fetchDataQuery.keepSynced(false);
     }
 
     public void setupCategoriesRecycleView(){
@@ -195,9 +202,10 @@ public class AnalyzeActivity extends BaseActivity{
                 + Constants.EXPENSE_TRANSACTION_TYPE + "/"
                 + categoryId + "/");
 
-        Query query = reference.orderByKey().startAt(Long.toString(startOfYearInMs)).endAt(Long.toString(endOfYearInMs));
+        fetchDataQuery = reference.orderByKey().startAt(Long.toString(startOfYearInMs)).endAt(Long.toString(endOfYearInMs));
+        fetchDataQuery.keepSynced(true);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        fetchDataQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -211,12 +219,17 @@ public class AnalyzeActivity extends BaseActivity{
                         sumOfChildes = sumOfChildes + (float) transaction.getValue(Transaction.class).getTrAmount();
                     }
 
+                    Log.d("ANALYZE", "onDataChange -> timestamp.getKey : " + timestamp.getKey() + "\t sumOfChildes : " + sumOfChildes + "\t calendar.getTimeInMillis : " + calendar.getTimeInMillis());
+
                     // set calendars time to be == TIMESTAMPs key (e.g. beginning of the month)
                     calendar.setTimeInMillis(Long.valueOf(timestamp.getKey()));
                     // put the sum of transactions amounts in the HashMap with KEY = MONTH of the year
                     monthsValuesMap.put( calendar.get(Calendar.MONTH), sumOfChildes);
                     monthBeginMap.put(calendar.get(Calendar.MONTH), calendar.getTimeInMillis());
+
+                    Log.d("ANALYZE", "onDataChange -> monthsValuesMap.size " + monthsValuesMap.size() + "\t monthBeginMap.size : " + monthBeginMap.size());
                 }
+
                 // pass all months data to setupBarChart()
                 setupBarChart(monthsValuesMap, false);
             }

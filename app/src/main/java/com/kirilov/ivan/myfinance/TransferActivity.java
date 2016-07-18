@@ -47,6 +47,9 @@ import java.util.regex.Pattern;
  * Created by Ivan on 07-Jun-16.
  */
 public class TransferActivity extends BaseActivity {
+// TODO: 14-Jul-16 When new transfer is added in the past, if there are no other transactions in this month
+//                  -> the month is not shown in History, because it checks for transactions in TOTAL BALANCE, but transfers doesn't change it
+
 
 
     private DatePickerDialog datePickerDialog;
@@ -504,10 +507,19 @@ public class TransferActivity extends BaseActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
-                        if (newDate.get(Calendar.YEAR) < year || newDate.get(Calendar.MONTH) < monthOfYear){
+                        // prevent the user to add transactions in the future
+                        if (year > newDate.get(Calendar.YEAR)){
+                            // it's future year => return
                             Toast.makeText(context, "Can't add transactions in future!", Toast.LENGTH_SHORT).show();
                             return;
-                        }
+                        } else if (year == newDate.get(Calendar.YEAR)){
+                            // it's this year => check if it's future month
+                            if (monthOfYear > newDate.get(Calendar.MONTH)){
+                                // it's future month => return
+                                Toast.makeText(context, "Can't add transactions in future!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }   //ELSE: it's current or past month => OK
+                        }//ELSE: it's past year => OK
 
                         newDate.set(year, monthOfYear, dayOfMonth);
 

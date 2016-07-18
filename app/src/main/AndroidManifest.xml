@@ -158,16 +158,5 @@
             android:theme="@style/AppTheme.SettingsTheme"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
-
-        <!-- TEST ACTIVITIES -->
-        <activity
-            android:name=".junk_yard.TestFirebaseDb"
-            android:label=""
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
     </application>
 </manifest>
