@@ -114,7 +114,10 @@ public class AnalyzeActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        fetchDataQuery.keepSynced(false);
+        if (fetchDataQuery != null){
+            fetchDataQuery.keepSynced(false);
+        }
+
     }
 
     public void setupCategoriesRecycleView(){
@@ -203,7 +206,10 @@ public class AnalyzeActivity extends BaseActivity{
                 + categoryId + "/");
 
         fetchDataQuery = reference.orderByKey().startAt(Long.toString(startOfYearInMs)).endAt(Long.toString(endOfYearInMs));
-        fetchDataQuery.keepSynced(true);
+        if (fetchDataQuery != null){
+            fetchDataQuery.keepSynced(true);
+        }
+
 
         fetchDataQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
